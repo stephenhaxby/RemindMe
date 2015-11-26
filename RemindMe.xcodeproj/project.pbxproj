@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		0E40FE2C1C0702EC00ACB6F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */; };
-		0E40FE2E1C0702EC00ACB6F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2D1C0702EC00ACB6F6 /* ViewController.swift */; };
+		0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */; };
 		0E40FE311C0702EC00ACB6F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE2F1C0702EC00ACB6F6 /* Main.storyboard */; };
 		0E40FE331C0702EC00ACB6F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */; };
 		0E40FE361C0702EC00ACB6F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE341C0702EC00ACB6F6 /* LaunchScreen.storyboard */; };
+		0E40FE3E1C07114200ACB6F6 /* iCloudReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */; };
+		0E40FE401C0711BB00ACB6F6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0E40FE281C0702EC00ACB6F6 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0E40FE2D1C0702EC00ACB6F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindMeViewController.swift; sourceTree = "<group>"; };
 		0E40FE301C0702EC00ACB6F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E40FE351C0702EC00ACB6F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E40FE371C0702EC00ACB6F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderManager.swift; sourceTree = "<group>"; };
+		0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +58,14 @@
 		0E40FE2A1C0702EC00ACB6F6 /* RemindMe */ = {
 			isa = PBXGroup;
 			children = (
+				0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */,
 				0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */,
-				0E40FE2D1C0702EC00ACB6F6 /* ViewController.swift */,
+				0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */,
 				0E40FE2F1C0702EC00ACB6F6 /* Main.storyboard */,
 				0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */,
 				0E40FE341C0702EC00ACB6F6 /* LaunchScreen.storyboard */,
 				0E40FE371C0702EC00ACB6F6 /* Info.plist */,
+				0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */,
 			);
 			path = RemindMe;
 			sourceTree = "<group>";
@@ -136,8 +142,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E40FE2E1C0702EC00ACB6F6 /* ViewController.swift in Sources */,
+				0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */,
+				0E40FE3E1C07114200ACB6F6 /* iCloudReminderManager.swift in Sources */,
 				0E40FE2C1C0702EC00ACB6F6 /* AppDelegate.swift in Sources */,
+				0E40FE401C0711BB00ACB6F6 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +293,7 @@
 				0E40FE3C1C0702EC00ACB6F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
