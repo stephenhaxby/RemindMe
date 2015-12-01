@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Remind Me View Controller-->
@@ -15,7 +16,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5fG-2j-Nom">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderCell" id="5fG-2j-Nom">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5fG-2j-Nom" id="xoN-SC-e4V">
@@ -46,7 +47,15 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="wW8-On-FN9">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                        <connections>
+                            <action selector="refreshControlValueChanged:" destination="WqA-Jf-lpg" eventType="valueChanged" id="O2m-DH-Yh1"/>
+                        </connections>
+                    </refreshControl>
                     <connections>
+                        <outlet property="remindersTableView" destination="Z8Q-mK-G0x" id="TJX-KA-v7Y"/>
                         <outlet property="settingsButton" destination="tmI-Lk-RgU" id="1cR-qC-gip"/>
                     </connections>
                 </tableViewController>
@@ -65,9 +74,73 @@
                     <view key="view" contentMode="scaleToFill" id="Mwe-h5-f7N">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Morning Alert Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSH-Yo-Gb5">
+                                <rect key="frame" x="20" y="72" width="165" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="165" id="9h7-yn-cQ6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="5or-ti-WUQ">
+                                <rect key="frame" x="0.0" y="101" width="600" height="100"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="yJ4-1Y-jhD"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="470571938.10570598">
+                                    <!--2015-11-30 10:25:38 +0000-->
+                                </date>
+                            </datePicker>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ble-Xs-lVR">
+                                <rect key="frame" x="0.0" y="278" width="600" height="100"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="v5S-F9-yej"/>
+                                </constraints>
+                                <date key="date" timeIntervalSinceReferenceDate="470571938.10570598">
+                                    <!--2015-11-30 10:25:38 +0000-->
+                                </date>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Afternoon Alert Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWJ-1Q-EWR">
+                                <rect key="frame" x="20" y="249" width="179" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="179" id="4LG-qh-jxw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OT8-Ke-oqC" firstAttribute="top" secondItem="ble-Xs-lVR" secondAttribute="bottom" constant="222" id="Acj-up-Xyu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5or-ti-WUQ" secondAttribute="trailing" constant="-20" id="KEV-bx-nrp"/>
+                            <constraint firstItem="ble-Xs-lVR" firstAttribute="trailing" secondItem="5or-ti-WUQ" secondAttribute="trailing" id="aSl-qg-o4k"/>
+                            <constraint firstItem="EWJ-1Q-EWR" firstAttribute="leading" secondItem="GSH-Yo-Gb5" secondAttribute="leading" id="ddX-dX-eAg"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="GSH-Yo-Gb5" secondAttribute="leading" id="e8B-Bi-FLx"/>
+                            <constraint firstItem="GSH-Yo-Gb5" firstAttribute="leading" secondItem="Mwe-h5-f7N" secondAttribute="leadingMargin" id="jo8-pe-ORs"/>
+                            <constraint firstItem="5or-ti-WUQ" firstAttribute="leading" secondItem="Mwe-h5-f7N" secondAttribute="leadingMargin" constant="-20" id="ldr-aD-fqS"/>
+                            <constraint firstItem="GSH-Yo-Gb5" firstAttribute="top" secondItem="nOM-n8-CgF" secondAttribute="bottom" constant="8" symbolic="YES" id="lia-Iu-rQx"/>
+                            <constraint firstItem="5or-ti-WUQ" firstAttribute="top" secondItem="GSH-Yo-Gb5" secondAttribute="bottom" constant="8" symbolic="YES" id="rTb-gH-i4a"/>
+                            <constraint firstItem="ble-Xs-lVR" firstAttribute="top" secondItem="EWJ-1Q-EWR" secondAttribute="bottom" constant="8" symbolic="YES" id="sKm-vC-lng"/>
+                            <constraint firstItem="ble-Xs-lVR" firstAttribute="leading" secondItem="5or-ti-WUQ" secondAttribute="leading" id="yzv-eH-yqU"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="e8B-Bi-FLx"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="afternoonAlertTimeDatePicker" destination="ble-Xs-lVR" id="bMF-e6-bYz"/>
+                        <outlet property="morningAlertTimeDatePicker" destination="5or-ti-WUQ" id="1Ur-HO-vqA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIM-GI-8Yq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
