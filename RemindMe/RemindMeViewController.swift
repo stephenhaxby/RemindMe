@@ -27,6 +27,7 @@ class RemindMeViewController: UITableViewController {
         settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
         
+        reminderManager.remindersListName = Constants.RemindersListName
         // Request access to Reminders
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }

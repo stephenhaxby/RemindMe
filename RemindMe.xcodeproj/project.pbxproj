@@ -14,6 +14,7 @@
 		0E40FE361C0702EC00ACB6F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE341C0702EC00ACB6F6 /* LaunchScreen.storyboard */; };
 		0E40FE3E1C07114200ACB6F6 /* iCloudReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */; };
 		0E40FE401C0711BB00ACB6F6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */; };
+		0E565C721C0DAA7700057488 /* RemindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */; };
 		0EE685861C0C656100E3317D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE685851C0C656100E3317D /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		0E40FE371C0702EC00ACB6F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderManager.swift; sourceTree = "<group>"; };
 		0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMeTableViewCell.swift; sourceTree = "<group>"; };
 		0EE685851C0C656100E3317D /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +71,7 @@
 				0E40FE371C0702EC00ACB6F6 /* Info.plist */,
 				0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */,
 				0EE685851C0C656100E3317D /* Constants.swift */,
+				0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */,
 			);
 			path = RemindMe;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 				0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */,
 				0E40FE3E1C07114200ACB6F6 /* iCloudReminderManager.swift in Sources */,
 				0E40FE2C1C0702EC00ACB6F6 /* AppDelegate.swift in Sources */,
+				0E565C721C0DAA7700057488 /* RemindMeTableViewCell.swift in Sources */,
 				0E40FE401C0711BB00ACB6F6 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

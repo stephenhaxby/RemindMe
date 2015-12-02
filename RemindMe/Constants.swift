@@ -10,6 +10,8 @@ import Foundation
 
 class Constants{
 
+    static let RemindersListName:String = "Remind Me"
+    
     static let MorningAlertTime:String = "MorningAlertTime"
     
     static let AfternoonAlertTime:String = "AfternoonAlertTime"
