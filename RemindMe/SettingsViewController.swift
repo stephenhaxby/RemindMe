@@ -54,7 +54,7 @@ class SettingsViewController : UIViewController {
         }
         else{
             
-            morningAlertTimeDatePicker.date = newDate(7, minute: 0)
+            morningAlertTimeDatePicker.date = NSDateManager.currentDateWithHour(7, minute: 0, second: 0)
         }
     }
     
@@ -69,31 +69,7 @@ class SettingsViewController : UIViewController {
         }
         else{
 
-            afternoonAlertTimeDatePicker.date = newDate(18, minute: 0)
+            afternoonAlertTimeDatePicker.date = NSDateManager.currentDateWithHour(18, minute: 0, second: 0)
         }
-    }
-    
-    func newDateFrom(components : NSDateComponents) -> NSDate {
-        
-        let gregorian = NSCalendar(identifier:NSCalendarIdentifierGregorian)
-        let date = gregorian!.dateFromComponents(components)
-        
-        return date!
-    }
-    
-    func newDate(hour : Int, minute : Int) -> NSDate {
-        
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        
-        let dateComponents : NSDateComponents = NSDateComponents()
-        dateComponents.year = calendar.component(NSCalendarUnit.Year, fromDate: date)
-        dateComponents.month = calendar.component(NSCalendarUnit.Month, fromDate: date)
-        dateComponents.day = calendar.component(NSCalendarUnit.Day, fromDate: date)
-        dateComponents.hour = hour
-        dateComponents.minute = minute
-        dateComponents.second = 0
-        
-        return newDateFrom(dateComponents)
     }
 }

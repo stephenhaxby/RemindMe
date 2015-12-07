@@ -39,6 +39,8 @@ class RemindMeViewController: UITableViewController {
     
     @IBAction func refreshControlValueChanged(sender: UIRefreshControl) {
         
+        loadRemindersList()
+        
         sender.endRefreshing()
     }
     
@@ -49,7 +51,13 @@ class RemindMeViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as UITableViewCell
+        //TODO: None of this is checked for nulls blah blah blah...
+        
+        let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
+        
+        let reminderListItem : EKReminder? = reminderList[indexPath.row]
+        
+        cell.reminder = reminderListItem!
         
         return cell
     }
@@ -112,6 +120,37 @@ class RemindMeViewController: UITableViewController {
         }
         
         endRefreshControl()
+    }
+    
+    
+    
+    
+    
+//    //This method is setting which cells can be edited
+//    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+//        
+//        //Don't allow delete of the last blank row...
+//        if(indexPath.row < reminderList.count){
+//            return true
+//        }
+//        
+//        return false
+//    }
+    
+    //This method is for the swipe left to delete
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if(indexPath.row < reminderList.count){
+            
+            let listItem : EKReminder = reminderList[indexPath.row]
+            
+            guard reminderManager.removeReminder(listItem) else {
+                
+                displayError("Your reminder list item could not be removed...")
+                
+                return
+            }
+        }
     }
 }
 
