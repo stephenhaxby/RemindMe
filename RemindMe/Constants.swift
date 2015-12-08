@@ -10,6 +10,13 @@ import Foundation
 
 class Constants{
 
+    struct ReminderItemTableViewCell {
+        
+        static let EmptyCell:String = "<EMPTY_CELL>"
+        
+        static let NewItemCell:String = "<NEW_ITEM_CELL>"
+    }
+    
     static let RemindersListName:String = "Remind Me"
     
     static let MorningAlertTime:String = "MorningAlertTime"

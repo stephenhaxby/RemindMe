@@ -46,7 +46,7 @@ class RemindMeViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return reminderList.count
+        return reminderList.count+1
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -55,11 +55,76 @@ class RemindMeViewController: UITableViewController {
         
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
         
-        let reminderListItem : EKReminder? = reminderList[indexPath.row]
+        if reminderList.count > 0 {
+            
+            var reminderListItem : EKReminder?
+            
+            if indexPath.row < reminderList.count {
+                
+                reminderListItem  = reminderList[indexPath.row]
+            }
+            else {
+                
+                reminderListItem = reminderManager.getNewReminder()
+                
+                //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+                guard reminderListItem != nil else {
+                 
+                    return RemindMeTableViewCell()
+                }
+                
+                reminderListItem!.title = Constants.ReminderItemTableViewCell.NewItemCell
+            }
         
-        cell.reminder = reminderListItem!
+            cell.reminder = reminderListItem!
+        }
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var reminderListItem : EKReminder?
+        
+        if indexPath.row == reminderList.count {
+            
+            reminderListItem = reminderManager.getNewReminder()
+            
+            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+            guard reminderListItem != nil else {
+                
+                return //TODO: Error message...
+            }
+        }
+        else {
+            
+            reminderListItem  = reminderList[indexPath.row]
+        }
+        
+        performSegueWithIdentifier("tableViewCellSegue", sender: reminderListItem)
+    }
+    
+//    override func presentViewController(viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
+//        
+//        
+//    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if let reminderListItem : EKReminder = sender as? EKReminder {
+            
+            if segue.identifier == "tableViewCellSegue" {
+                
+                let remindMeEditViewController : RemindMeEditViewController = segue.destinationViewController as! RemindMeEditViewController
+                
+                remindMeEditViewController.reminder = reminderListItem
+            }
+        }
+        
+//        let cell = sender as MyTableViewCell
+//        if let indexPath = tableView.indexPathForCell(cell){
+//            let seguedToMVC = segue.destinationViewController as MyMVC
+//            seguedToMVC.publiceAPI = data[indexPath.section][indexPath.row] //get the actual data.
     }
     
     func endRefreshControl(){

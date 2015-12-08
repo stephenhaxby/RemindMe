@@ -56,7 +56,11 @@ class NSDateManager {
         
         let dateCompareResult = currentDate!.compare(dateComponentsDate!)
         
-        let timeString : String = "\((dateComponents.hour > 12) ? dateComponents.hour-12 : dateComponents.hour):\((dateComponents.minute < 10) ? "00" : (String)(dateComponents.minute)) \((dateComponents.hour > 12) ? "PM" : "AM")"
+        let displayHour = (dateComponents.hour > 12) ? dateComponents.hour-12 : dateComponents.hour
+        let displayMinute = (dateComponents.minute < 10) ? "0\(dateComponents.minute)" : String(dateComponents.minute)
+        let displayAMPM = (dateComponents.hour > 12) ? "PM" : "AM"
+        
+        let timeString : String = "\(displayHour):\(displayMinute) \(displayAMPM)"
         
         var dateString : String
         

@@ -37,11 +37,23 @@
                                             <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAh-Gf-sTZ">
+                                            <rect key="frame" x="8" y="6" width="30" height="37"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                            <state key="normal" title="+">
+                                                <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="addNewButtonTouchUpInside:" destination="5fG-2j-Nom" eventType="touchUpInside" id="ght-xb-0us"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
+                                    <outlet property="addNewButton" destination="LAh-Gf-sTZ" id="FQZ-Sz-W2k"/>
                                     <outlet property="reminderTextLabel" destination="cgR-2L-ngz" id="RX2-EQ-DGq"/>
                                     <outlet property="reminderTimeLable" destination="bLt-dr-kFe" id="S4j-CO-b6S"/>
                                 </connections>
@@ -77,11 +89,54 @@
                     <connections>
                         <outlet property="remindersTableView" destination="Z8Q-mK-G0x" id="TJX-KA-v7Y"/>
                         <outlet property="settingsButton" destination="tmI-Lk-RgU" id="1cR-qC-gip"/>
+                        <segue destination="1Fl-ka-kXO" kind="show" identifier="tableViewCellSegue" id="RuX-yA-r1x"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ea0-rt-NaC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1662" y="951"/>
+        </scene>
+        <!--Remind Me Edit View Controller-->
+        <scene sceneID="bN5-bO-rVT">
+            <objects>
+                <viewController id="1Fl-ka-kXO" customClass="RemindMeEditViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3W8-a2-l23"/>
+                        <viewControllerLayoutGuide type="bottom" id="5LR-ah-ZBm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pWQ-c8-V5M">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-7V-Yux">
+                                <rect key="frame" x="20" y="72" width="560" height="128"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2a-9F-lSH">
+                                <rect key="frame" x="25" y="208" width="273" height="70"/>
+                                <animations/>
+                                <state key="normal" title="Tonight"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zp9-27-fPp">
+                                <rect key="frame" x="306" y="208" width="274" height="70"/>
+                                <animations/>
+                                <state key="normal" title="In the Morning"/>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="reminderTitleTextView" destination="XAk-7V-Yux" id="QFb-zK-6dk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ICY-yH-9Is" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1662" y="1705"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="XXU-Aw-p7W">
