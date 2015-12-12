@@ -3,12 +3,94 @@
 //  RemindMe
 //
 //  Created by Stephen Haxby on 7/12/2015.
-//  Copyright © 2015 Stephen Haxby. All rights reserved.
+//  Copyright � 2015 Stephen Haxby. All rights reserved.
 //
 
 import Foundation
 
 class NSDateManager {
+    
+    //* New date from year, month, day
+    //* New date from year, month, day, hour, minute
+    //* Add days to date
+    //* Subtract days from date
+    //* Get date NSDateComponents from date
+    //* Date is equal to date (two NSDate's)
+    //Date is equal to date (two NSDateComponents's)
+    //* Time is equal to time (two NSDate's)
+    //Time is equal to time (two NSDateComponents's)
+    
+    static func dateWithDay(day : Int, month : Int, year : Int) -> NSDate {
+        
+        let dateComponents : NSDateComponents = NSDateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+
+        return getDateFromComponents(dateComponents)
+    }
+    
+    static func dateWithDay(day : Int, month : Int, year : Int, hour : Int, minute : Int, second : Int) -> NSDate {
+        
+        let dateComponents : NSDateComponents = NSDateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        dateComponents.second = second
+
+        return getDateFromComponents(dateComponents)
+    }
+    
+    static func dateIsEqualToDate(date1 : NSDate, date2 : NSDate) -> Bool {
+    
+        let date1Components : NSDateComponents = getDateComponentsFromDate(date1)
+        let date2Components : NSDateComponents = getDateComponentsFromDate(date2)
+        
+        return (date1Components.year == date2Components.year
+            && date1Components.month == date2Components.month
+            && date1Components.day == date2Components.day)
+    }
+    
+    static func timeIsEqualToTime(date1 : NSDate, date2 : NSDate) -> Bool {
+        
+        let date1Components : NSDateComponents = getDateComponentsFromDate(date1)
+        let date2Components : NSDateComponents = getDateComponentsFromDate(date2)
+        
+        return (date1Components.hour == date2Components.hour
+            && date1Components.minute == date2Components.minute
+            && date1Components.second == date2Components.second)
+    }
+    
+    static func timeIsEqualToTime(date1 : NSDate, date2Components : NSDateComponents) -> Bool {
+        
+        let date1Components : NSDateComponents = getDateComponentsFromDate(date1)
+        
+        return timeIsEqualToTime(date1Components, date2Components: date2Components)
+    }
+    
+    static func dateTimeIsEqualToDateTime(date1 : NSDate, date2 : NSDate) -> Bool {
+    
+        return dateIsEqualToDate(date1, date2: date2) && timeIsEqualToTime(date1, date2: date2)
+    }
+    
+    static func addDaysToDate(date : NSDate, days : Int) -> NSDate {
+
+        let dateComponents : NSDateComponents = NSDateComponents()
+        dateComponents.day = days;
+
+        let calendar = NSCalendar.currentCalendar()         
+        let newDate = calendar.dateByAddingComponents(dateComponents, toDate : date, options: NSCalendarOptions(rawValue: 0))
+        
+        //TODO: Error handling
+        return newDate!
+    }
+    
+    static func subtractDaysFromDate(date : NSDate, days : Int) -> NSDate {
+    
+        return addDaysToDate(date, days : (days - (days * 2)))
+    }
     
     static func currentDateWithHour(hour : Int, minute : Int, second : Int) -> NSDate {
         
@@ -23,17 +105,7 @@ class NSDateManager {
         dateComponents.minute = minute
         dateComponents.second = second
         
-        return newDateFrom(dateComponents)
-    }
-    
-    static func dateWithDay(day : Int, month : Int, year : Int) -> NSDate {
-        
-        let dateComponents : NSDateComponents = NSDateComponents()
-        dateComponents.year = year
-        dateComponents.month = month
-        dateComponents.day = day
-
-        return newDateFrom(dateComponents)
+        return getDateFromComponents(dateComponents)
     }
     
     static func dateStringFromComponents(dateComponents : NSDateComponents) -> String {
@@ -90,11 +162,34 @@ class NSDateManager {
         return dateString
     }
     
-    private static func newDateFrom(components : NSDateComponents) -> NSDate {
+    private static func getDateFromComponents(components : NSDateComponents) -> NSDate {
         
         let gregorian = NSCalendar(identifier:NSCalendarIdentifierGregorian)
         let date = gregorian!.dateFromComponents(components)
         
         return date!
+    }
+    
+    private static func getDateComponentsFromDate(date : NSDate) -> NSDateComponents {
+    
+        let calendar = NSCalendar.currentCalendar()
+        let dateComponents : NSDateComponents = NSDateComponents()
+        
+        dateComponents.calendar = calendar
+        dateComponents.year = calendar.component(NSCalendarUnit.Year, fromDate: date)
+        dateComponents.month = calendar.component(NSCalendarUnit.Month, fromDate: date)
+        dateComponents.day = calendar.component(NSCalendarUnit.Day, fromDate: date)
+        dateComponents.hour = calendar.component(NSCalendarUnit.Hour, fromDate: date)
+        dateComponents.minute = calendar.component(NSCalendarUnit.Minute, fromDate: date)
+        dateComponents.second = calendar.component(NSCalendarUnit.Second, fromDate: date)
+
+        return dateComponents;
+    }
+    
+    private static func timeIsEqualToTime(date1Components : NSDateComponents, date2Components : NSDateComponents) -> Bool {
+        
+        return (date1Components.hour == date2Components.hour
+            && date1Components.minute == date2Components.minute
+            && date1Components.second == date2Components.second)
     }
 }
