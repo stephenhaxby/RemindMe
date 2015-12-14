@@ -32,6 +32,11 @@ class RemindMeViewController: UITableViewController {
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
 
+    override func viewDidAppear(animated: Bool) {
+        
+        loadRemindersListWithRefresh(true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -117,6 +122,7 @@ class RemindMeViewController: UITableViewController {
                 
                 let remindMeEditViewController : RemindMeEditViewController = segue.destinationViewController as! RemindMeEditViewController
                 
+                remindMeEditViewController.reminderManager = reminderManager
                 remindMeEditViewController.reminder = reminderListItem
             }
         }
@@ -125,6 +131,14 @@ class RemindMeViewController: UITableViewController {
 //        if let indexPath = tableView.indexPathForCell(cell){
 //            let seguedToMVC = segue.destinationViewController as MyMVC
 //            seguedToMVC.publiceAPI = data[indexPath.section][indexPath.row] //get the actual data.
+    }
+    
+    func startRefreshControl(){
+        
+        if let refresh = refreshControl{
+            
+            refresh.beginRefreshing()
+        }
     }
     
     func endRefreshControl(){
@@ -148,6 +162,20 @@ class RemindMeViewController: UITableViewController {
         
         //Present the alert
         self.presentViewController(errorAlert, animated: true, completion: nil)
+    }
+    
+    func loadRemindersListWithRefresh(refresh : Bool) {
+        
+        if refresh {
+            
+            startRefreshControl()
+            loadRemindersList()
+            endRefreshControl()
+        }
+        else {
+            
+            loadRemindersList()
+        }
     }
     
     func loadRemindersList(){
@@ -175,11 +203,7 @@ class RemindMeViewController: UITableViewController {
     //Once access is granted to the reminders list
     func requestedAccessToReminders(status : Bool){
         
-        if status {
-            
-            loadRemindersList()
-        }
-        else{
+        if !status {
             
             displayError("Please allow Remind Me to access 'Reminders'...")
         }

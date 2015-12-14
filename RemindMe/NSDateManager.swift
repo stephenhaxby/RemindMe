@@ -66,8 +66,16 @@ class NSDateManager {
     static func timeIsEqualToTime(date1 : NSDate, date2Components : NSDateComponents) -> Bool {
         
         let date1Components : NSDateComponents = getDateComponentsFromDate(date1)
+        let date2CompnentsPassThrough = date2Components
         
-        return timeIsEqualToTime(date1Components, date2Components: date2Components)
+        return timeIsEqualToTime(date1Components, date2Components: date2CompnentsPassThrough)
+    }
+    
+    static func timeIsEqualToTime(date1Components : NSDateComponents, date2Components : NSDateComponents) -> Bool {
+        
+        return (date1Components.hour == date2Components.hour
+            && date1Components.minute == date2Components.minute
+            && date1Components.second == date2Components.second)
     }
     
     static func dateTimeIsEqualToDateTime(date1 : NSDate, date2 : NSDate) -> Bool {
@@ -162,7 +170,21 @@ class NSDateManager {
         return dateString
     }
     
-    private static func getDateFromComponents(components : NSDateComponents) -> NSDate {
+    static func dateIsBeforeDate(date1 : NSDate, date2 : NSDate) -> Bool {
+        
+        let dateCompareResult = date1.compare(date2)
+        
+        return dateCompareResult == NSComparisonResult.OrderedDescending
+    }
+    
+    static func dateIsAfterDate(date1 : NSDate, date2 : NSDate) -> Bool {
+        
+        let dateCompareResult = date1.compare(date2)
+        
+        return dateCompareResult == NSComparisonResult.OrderedAscending
+    }
+    
+    static func getDateFromComponents(components : NSDateComponents) -> NSDate {
         
         let gregorian = NSCalendar(identifier:NSCalendarIdentifierGregorian)
         let date = gregorian!.dateFromComponents(components)
@@ -170,7 +192,7 @@ class NSDateManager {
         return date!
     }
     
-    private static func getDateComponentsFromDate(date : NSDate) -> NSDateComponents {
+    static func getDateComponentsFromDate(date : NSDate) -> NSDateComponents {
     
         let calendar = NSCalendar.currentCalendar()
         let dateComponents : NSDateComponents = NSDateComponents()
@@ -184,12 +206,5 @@ class NSDateManager {
         dateComponents.second = calendar.component(NSCalendarUnit.Second, fromDate: date)
 
         return dateComponents;
-    }
-    
-    private static func timeIsEqualToTime(date1Components : NSDateComponents, date2Components : NSDateComponents) -> Bool {
-        
-        return (date1Components.hour == date2Components.hour
-            && date1Components.minute == date2Components.minute
-            && date1Components.second == date2Components.second)
     }
 }

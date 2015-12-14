@@ -19,6 +19,8 @@ class RemindMeEditViewController : UIViewController {
     
     @IBOutlet weak var saveButton: UIButton!
     
+    weak var reminderManager : iCloudReminderManager?
+    
     var reminder: EKReminder?
     
     var defaults : NSUserDefaults {
@@ -36,42 +38,51 @@ class RemindMeEditViewController : UIViewController {
             
             reminderTitleTextView.text = reminderItem.title
             
-            if let storedMorningDate : AnyObject = defaults.objectForKey(Constants.MorningAlertTime) {
+            if let morningDate : NSDate = getStoredMorningDate() {
                 
-                if let morningDate : NSDate = storedMorningDate as? NSDate {
+                if reminderItem.dueDateComponents != nil &&
+                    NSDateManager.timeIsEqualToTime(morningDate, date2Components : reminderItem.dueDateComponents!) {
                     
-                    if reminderItem.dueDateComponents != nil &&
-                    
-                        NSDateManager.timeIsEqualToTime(morningDate, date2Components : reminderItem.dueDateComponents!) {
-                        
-                        morningButton.selected = true
-                    }
-                    else {
-                        
-                        morningButton.selected = false
-                    }
+                    morningButton.selected = true
+                }
+                else {
+
+                    morningButton.selected = false
                 }
             }
             
-            if let storedAfternoonDate : AnyObject = defaults.objectForKey(Constants.AfternoonAlertTime) {
-            
-                if let afternoonDate : NSDate = storedAfternoonDate as? NSDate {
+            if let afternoonDate : NSDate = getStoredAfternoonDate() {
 
-                    if reminderItem.dueDateComponents != nil &&
-                        NSDateManager.timeIsEqualToTime(afternoonDate, date2Components: reminderItem.dueDateComponents!) {
-                            
-                            tonightButton.selected = true
-                    }
-                    else {
+                if reminderItem.dueDateComponents != nil &&
+                    NSDateManager.timeIsEqualToTime(afternoonDate, date2Components: reminderItem.dueDateComponents!) {
                         
-                        tonightButton.selected = false
-                    }
+                        tonightButton.selected = true
+                }
+                else {
+                    
+                    tonightButton.selected = false
                 }
             }
         }
     }
     
+    @IBAction func timeButtonTouchUpInside(sender: AnyObject) {
+     
+        tonightButton.selected = false
+        morningButton.selected = false
+        
+        if let timeButton : UIButton = sender as? UIButton {
+            
+            timeButton.selected = true
+        }
+    }
+    
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
+        
+        guard reminderManager != nil else {
+            
+            return
+        }
         
         if let reminderItem = reminder {
          
@@ -79,26 +90,62 @@ class RemindMeEditViewController : UIViewController {
             
             if morningButton.selected {
                 
-                if let storedMorningDate : AnyObject = defaults.objectForKey(Constants.MorningAlertTime) {
+                if let morningDate : NSDate = getStoredMorningDate() {
                     
-                    if let morningDate : NSDate = storedMorningDate as? NSDate {
-                        
-                        let date : NSDate = NSDate()
-                        let calendar = NSCalendar.currentCalendar()
-                        
-                        
-                        let firstDateHour = calendar.component(NSCalendarUnit.Hour, fromDate: date)
-                        let firstDateMinute = calendar.component(NSCalendarUnit.Minute, fromDate: date)
-
-                        
-//                        reminderItem.dueDateComponents =
-                    }
+                    reminderItem.dueDateComponents = getSelectedDueDateComponentsFromDate(morningDate)
                 }
             }
             else if (tonightButton.selected) {
                 
-  //              reminderItem.dueDateComponents =
+                if let afternoonDate : NSDate = getStoredAfternoonDate() {
+                    
+                    reminderItem.dueDateComponents = getSelectedDueDateComponentsFromDate(afternoonDate)
+                }
             }
+    
+            reminderManager!.saveReminder(reminderItem)
         }
+    }
+    
+    private func getSelectedDueDateComponentsFromDate(date : NSDate) -> NSDateComponents {
+        
+        let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
+        
+        let currentDateTime = NSDate()
+        let reminderDate = NSDateManager.currentDateWithHour(morningDateComponents.hour, minute: morningDateComponents.minute, second: morningDateComponents.second)
+        
+        if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
+            
+            return NSDateManager.getDateComponentsFromDate(reminderDate)
+        }
+        else {
+            
+            return NSDateManager.getDateComponentsFromDate(NSDateManager.addDaysToDate(reminderDate, days: 1))
+        }
+    }
+    
+    private func getStoredMorningDate() -> NSDate? {
+        
+        return getStoredDateForKey(Constants.MorningAlertTime)
+    }
+    
+    private func getStoredAfternoonDate() -> NSDate? {
+        
+        return getStoredDateForKey(Constants.AfternoonAlertTime)
+    }
+    
+    private func getStoredDateObjectForKey(key : String) -> AnyObject? {
+        
+        return defaults.objectForKey(key)
+    }
+    
+    private func getStoredDateForKey(key : String) -> NSDate? {
+        
+        if let storedMorningDate = getStoredDateObjectForKey(key) {
+            
+            return storedMorningDate as? NSDate
+        }
+        
+        return nil
     }
 }
