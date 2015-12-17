@@ -38,29 +38,30 @@ class RemindMeEditViewController : UIViewController {
             
             reminderTitleTextView.text = reminderItem.title
             
-            if let morningDate : NSDate = getStoredMorningDate() {
-                
-                if reminderItem.dueDateComponents != nil &&
-                    NSDateManager.timeIsEqualToTime(morningDate, date2Components : reminderItem.dueDateComponents!) {
+            if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms) {
+
+                if let morningDate : NSDate = getStoredMorningDate() {
                     
-                    morningButton.selected = true
-                }
-                else {
-
-                    morningButton.selected = false
-                }
-            }
-            
-            if let afternoonDate : NSDate = getStoredAfternoonDate() {
-
-                if reminderItem.dueDateComponents != nil &&
-                    NSDateManager.timeIsEqualToTime(afternoonDate, date2Components: reminderItem.dueDateComponents!) {
+                    if NSDateManager.timeIsEqualToTime(morningDate, date2Components : itemReminderAlarmDateComponents) {
+                            
+                            morningButton.selected = true
+                    }
+                    else {
                         
-                        tonightButton.selected = true
+                        morningButton.selected = false
+                    }
                 }
-                else {
-                    
-                    tonightButton.selected = false
+                
+                if let afternoonDate : NSDate = getStoredAfternoonDate() {
+
+                    if NSDateManager.timeIsEqualToTime(afternoonDate, date2Components: itemReminderAlarmDateComponents) {
+                            
+                            tonightButton.selected = true
+                    }
+                    else {
+                        
+                        tonightButton.selected = false
+                    }
                 }
             }
         }
@@ -92,14 +93,18 @@ class RemindMeEditViewController : UIViewController {
                 
                 if let morningDate : NSDate = getStoredMorningDate() {
                     
-                    reminderItem.dueDateComponents = getSelectedDueDateComponentsFromDate(morningDate)
+                    reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(morningDate)]
+                    
+                    //reminderItem.dueDateComponents = getSelectedDueDateComponentsFromDate(morningDate)
                 }
             }
             else if (tonightButton.selected) {
                 
                 if let afternoonDate : NSDate = getStoredAfternoonDate() {
+
+                    reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(afternoonDate)]
                     
-                    reminderItem.dueDateComponents = getSelectedDueDateComponentsFromDate(afternoonDate)
+                    //reminderItem.dueDateComponents = getSelectedDueDateComponentsFromDate(afternoonDate)
                 }
             }
     
@@ -107,7 +112,7 @@ class RemindMeEditViewController : UIViewController {
         }
     }
     
-    private func getSelectedDueDateComponentsFromDate(date : NSDate) -> NSDateComponents {
+    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> EKAlarm {
         
         let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
         
@@ -116,11 +121,15 @@ class RemindMeEditViewController : UIViewController {
         
         if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
             
-            return NSDateManager.getDateComponentsFromDate(reminderDate)
+            return EKAlarm(absoluteDate: reminderDate)
+            
+            //return NSDateManager.getDateComponentsFromDate(reminderDate)
         }
         else {
             
-            return NSDateManager.getDateComponentsFromDate(NSDateManager.addDaysToDate(reminderDate, days: 1))
+            return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
+            
+            //return NSDateManager.getDateComponentsFromDate(NSDateManager.addDaysToDate(reminderDate, days: 1))
         }
     }
     

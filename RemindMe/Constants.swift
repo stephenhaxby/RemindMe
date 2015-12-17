@@ -17,7 +17,7 @@ class Constants{
         static let NewItemCell:String = "<NEW_ITEM_CELL>"
     }
     
-    static let RemindersListName:String = "Remind Me"
+    static let RemindersListName:String = "Reminders"
     
     static let MorningAlertTime:String = "MorningAlertTime"
     

@@ -105,8 +105,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-7V-Yux">
+                                <rect key="frame" x="8" y="72" width="305" height="93"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zp9-27-fPp">
-                                <rect key="frame" x="169" y="216" width="135" height="30"/>
+                                <rect key="frame" x="16" y="204" width="139" height="30"/>
                                 <state key="normal" title="In the Morning"/>
                                 <connections>
                                     <action selector="timeButtonTouchUpInside:" destination="1Fl-ka-kXO" eventType="touchUpInside" id="6pH-oq-YDn"/>
@@ -128,7 +135,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2a-9F-lSH">
-                                <rect key="frame" x="20" y="216" width="131" height="30"/>
+                                <rect key="frame" x="169" y="204" width="131" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="131" id="Fel-bk-4uH"/>
                                     <constraint firstAttribute="width" constant="273" id="kXu-jg-o5D"/>
@@ -136,6 +143,7 @@
                                 <state key="normal" title="Tonight"/>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="Fel-bk-4uH"/>
                                         <exclude reference="kXu-jg-o5D"/>
                                     </mask>
                                 </variation>
@@ -143,42 +151,50 @@
                                     <action selector="timeButtonTouchUpInside:" destination="1Fl-ka-kXO" eventType="touchUpInside" id="V3U-Na-1oA"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-7V-Yux">
-                                <rect key="frame" x="8" y="72" width="305" height="93"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="leading" secondItem="N2a-9F-lSH" secondAttribute="trailing" constant="-108" id="2hG-OH-lhh"/>
+                            <constraint firstItem="xJc-jx-KGz" firstAttribute="leading" secondItem="zp9-27-fPp" secondAttribute="trailing" constant="-11" id="2xX-mu-Khb"/>
                             <constraint firstItem="zp9-27-fPp" firstAttribute="baseline" secondItem="N2a-9F-lSH" secondAttribute="baseline" id="4K7-oI-GEa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XAk-7V-Yux" secondAttribute="trailing" constant="-9" id="5vG-lz-avT"/>
                             <constraint firstItem="N2a-9F-lSH" firstAttribute="leading" secondItem="pWQ-c8-V5M" secondAttribute="leadingMargin" constant="4" id="8Ep-jb-7qV"/>
                             <constraint firstItem="zp9-27-fPp" firstAttribute="leading" secondItem="xJc-jx-KGz" secondAttribute="trailing" constant="17" id="9op-bS-mzE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zp9-27-fPp" secondAttribute="trailing" id="ABZ-Qf-S2y"/>
+                            <constraint firstItem="5LR-ah-ZBm" firstAttribute="top" secondItem="xJc-jx-KGz" secondAttribute="bottom" constant="284" id="Bc5-LN-DPf"/>
                             <constraint firstItem="5LR-ah-ZBm" firstAttribute="top" secondItem="xJc-jx-KGz" secondAttribute="bottom" constant="284" id="Idt-dG-Qxz"/>
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="leading" secondItem="pWQ-c8-V5M" secondAttribute="leadingMargin" constant="-4" id="MBM-GX-SqH"/>
+                            <constraint firstItem="xJc-jx-KGz" firstAttribute="top" secondItem="N2a-9F-lSH" secondAttribute="bottom" constant="20" id="MVn-qR-QHZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="N2a-9F-lSH" secondAttribute="trailing" constant="4" id="Ojg-R4-Odc"/>
+                            <constraint firstItem="N2a-9F-lSH" firstAttribute="baseline" secondItem="zp9-27-fPp" secondAttribute="baseline" id="RSH-nu-36G"/>
+                            <constraint firstItem="N2a-9F-lSH" firstAttribute="leading" secondItem="zp9-27-fPp" secondAttribute="trailing" constant="14" id="TZy-Ec-h82"/>
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="centerX" secondItem="pWQ-c8-V5M" secondAttribute="centerX" id="XJR-Pg-PrK"/>
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="centerX" secondItem="xJc-jx-KGz" secondAttribute="centerX" id="bFC-2C-5bk"/>
                             <constraint firstItem="zp9-27-fPp" firstAttribute="top" secondItem="XAk-7V-Yux" secondAttribute="bottom" constant="51" id="bHf-cs-C3H"/>
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="top" secondItem="3W8-a2-l23" secondAttribute="bottom" constant="8" id="cAp-TJ-bdo"/>
                             <constraint firstAttribute="leadingMargin" secondItem="N2a-9F-lSH" secondAttribute="leading" id="dcv-tC-Fd4"/>
+                            <constraint firstItem="zp9-27-fPp" firstAttribute="top" secondItem="XAk-7V-Yux" secondAttribute="bottom" constant="39" id="e9A-iS-2Nj"/>
                             <constraint firstItem="zp9-27-fPp" firstAttribute="leading" secondItem="N2a-9F-lSH" secondAttribute="trailing" constant="18" id="hLW-Sl-Uai"/>
                             <constraint firstItem="xJc-jx-KGz" firstAttribute="leading" secondItem="N2a-9F-lSH" secondAttribute="trailing" constant="14" id="nyu-Sf-6Pu"/>
                             <constraint firstItem="5LR-ah-ZBm" firstAttribute="top" secondItem="zp9-27-fPp" secondAttribute="bottom" constant="322" id="uup-yT-2fa"/>
                             <constraint firstItem="zp9-27-fPp" firstAttribute="leading" secondItem="N2a-9F-lSH" secondAttribute="trailing" constant="73" id="vKt-dW-k1I"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="zp9-27-fPp" secondAttribute="leading" id="x5g-IF-gRh"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="2hG-OH-lhh"/>
                                 <exclude reference="MBM-GX-SqH"/>
-                                <exclude reference="dcv-tC-Fd4"/>
+                                <exclude reference="4K7-oI-GEa"/>
                                 <exclude reference="9op-bS-mzE"/>
+                                <exclude reference="ABZ-Qf-S2y"/>
+                                <exclude reference="bHf-cs-C3H"/>
+                                <exclude reference="hLW-Sl-Uai"/>
                                 <exclude reference="vKt-dW-k1I"/>
+                                <exclude reference="8Ep-jb-7qV"/>
+                                <exclude reference="dcv-tC-Fd4"/>
                                 <exclude reference="nyu-Sf-6Pu"/>
+                                <exclude reference="Idt-dG-Qxz"/>
+                                <exclude reference="uup-yT-2fa"/>
                             </mask>
                         </variation>
                     </view>

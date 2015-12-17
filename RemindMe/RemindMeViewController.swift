@@ -11,6 +11,8 @@ import EventKit
 
 class RemindMeViewController: UITableViewController {
 
+    var eventStoreObserver : NSObjectProtocol?
+    
     var reminderList = [EKReminder]()
     
     let reminderManager : iCloudReminderManager = iCloudReminderManager()
@@ -18,6 +20,24 @@ class RemindMeViewController: UITableViewController {
     @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet var remindersTableView: UITableView!
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.loadRemindersListWithRefresh(true)
+        }
+    }
+    
+    deinit {
+        
+        if let observer = eventStoreObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: EKEventStoreChangedNotification, object: nil)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,66 +67,6 @@ class RemindMeViewController: UITableViewController {
         loadRemindersList()
         
         sender.endRefreshing()
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return reminderList.count+1
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        //TODO: None of this is checked for nulls blah blah blah...
-        
-        let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
-        
-        if reminderList.count > 0 {
-            
-            var reminderListItem : EKReminder?
-            
-            if indexPath.row < reminderList.count {
-                
-                reminderListItem  = reminderList[indexPath.row]
-            }
-            else {
-                
-                reminderListItem = reminderManager.getNewReminder()
-                
-                //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-                guard reminderListItem != nil else {
-                 
-                    return RemindMeTableViewCell()
-                }
-                
-                reminderListItem!.title = Constants.ReminderItemTableViewCell.NewItemCell
-            }
-        
-            cell.reminder = reminderListItem!
-        }
-        
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        var reminderListItem : EKReminder?
-        
-        if indexPath.row == reminderList.count {
-            
-            reminderListItem = reminderManager.getNewReminder()
-            
-            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-            guard reminderListItem != nil else {
-                
-                return //TODO: Error message...
-            }
-        }
-        else {
-            
-            reminderListItem  = reminderList[indexPath.row]
-        }
-        
-        performSegueWithIdentifier("tableViewCellSegue", sender: reminderListItem)
     }
     
 //    override func presentViewController(viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
@@ -189,7 +149,7 @@ class RemindMeViewController: UITableViewController {
             
             if let reminderListTable = self.tableView{
                 
-                let scheduledItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.dueDateComponents != nil})
+                let scheduledItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.alarms != nil})
                 
                 //Join the two lists from above
                 self.reminderList = scheduledItems
@@ -211,27 +171,93 @@ class RemindMeViewController: UITableViewController {
         endRefreshControl()
     }
     
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return reminderList.count + 2
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        //TODO: None of this is checked for nulls blah blah blah...
+        
+        let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
+        
+        var reminderListItem : EKReminder?
+        
+        if indexPath.row == 0 {
+            
+            reminderListItem = reminderManager.getNewReminder()
+            
+            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+            guard reminderListItem != nil else {
+                
+                return RemindMeTableViewCell()
+            }
+            
+            reminderListItem!.title = Constants.ReminderItemTableViewCell.EmptyCell
+        }
+        else if indexPath.row == reminderList.count+1 {
+            
+            reminderListItem = reminderManager.getNewReminder()
+            
+            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+            guard reminderListItem != nil else {
+                
+                return RemindMeTableViewCell()
+            }
+            
+            reminderListItem!.title = Constants.ReminderItemTableViewCell.NewItemCell
+        }
+        else {
+            
+            reminderListItem  = reminderList[indexPath.row-1]
+        }
+        
+        cell.reminder = reminderListItem!
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var reminderListItem : EKReminder?
+        
+        if indexPath.row-1 == reminderList.count {
+            
+            reminderListItem = reminderManager.getNewReminder()
+            
+            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+            guard reminderListItem != nil else {
+                
+                return //TODO: Error message...
+            }
+        }
+        else {
+            
+            reminderListItem  = reminderList[indexPath.row-1]
+        }
+        
+        performSegueWithIdentifier("tableViewCellSegue", sender: reminderListItem)
+    }
     
     
-    
-    
-//    //This method is setting which cells can be edited
-//    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-//        
-//        //Don't allow delete of the last blank row...
-//        if(indexPath.row < reminderList.count){
-//            return true
-//        }
-//        
-//        return false
-//    }
+    //This method is setting which cells can be edited
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        //Don't allow delete of the last blank row...
+        if(indexPath.row < reminderList.count+1){
+            return true
+        }
+        
+        return false
+    }
     
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(indexPath.row < reminderList.count){
+        if(indexPath.row < reminderList.count+1){
             
-            let listItem : EKReminder = reminderList[indexPath.row]
+            let listItem : EKReminder = reminderList[indexPath.row-1]
             
             guard reminderManager.removeReminder(listItem) else {
                 
@@ -240,6 +266,17 @@ class RemindMeViewController: UITableViewController {
                 return
             }
         }
+    }
+    
+    //This method is to set the row height of the first spacer row...
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if indexPath.row == 0{
+            
+            return CGFloat(16)
+        }
+        
+        return tableView.rowHeight
     }
 }
 

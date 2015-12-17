@@ -41,9 +41,9 @@ class RemindMeTableViewCell: UITableViewCell {
                 
                 reminderTextLabel.text = newReminderText
                 
-                if let dueDateComponents = itemReminder.dueDateComponents {
-
-                    reminderTimeLable.text = NSDateManager.dateStringFromComponents(dueDateComponents)
+                if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(itemReminder.alarms) {
+                    
+                    reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
                 }
                 
                 setupCellVisibilityFor(itemReminder)

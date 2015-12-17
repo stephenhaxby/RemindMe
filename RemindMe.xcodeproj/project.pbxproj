@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1DE2991C22B8950041D864 /* EKAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */; };
 		0E27BF4F1C16E5BC0053D90D /* RemindMeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */; };
 		0E40FE2C1C0702EC00ACB6F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */; };
 		0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EKAlarmManager.swift; sourceTree = "<group>"; };
 		0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMeEditViewController.swift; sourceTree = "<group>"; };
 		0E40FE281C0702EC00ACB6F6 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */,
 				0E8B72B81C153D69000C71D7 /* NSDateManager.swift */,
 				0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */,
+				0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */,
 			);
 			path = RemindMe;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			files = (
 				0E8B72B91C153D69000C71D7 /* NSDateManager.swift in Sources */,
 				0EE685861C0C656100E3317D /* Constants.swift in Sources */,
+				0E1DE2991C22B8950041D864 /* EKAlarmManager.swift in Sources */,
 				0E27BF4F1C16E5BC0053D90D /* RemindMeEditViewController.swift in Sources */,
 				0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */,
 				0E40FE3E1C07114200ACB6F6 /* iCloudReminderManager.swift in Sources */,
