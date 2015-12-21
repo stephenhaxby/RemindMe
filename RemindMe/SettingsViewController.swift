@@ -54,7 +54,7 @@ class SettingsViewController : UIViewController {
         }
         else{
             
-            morningAlertTimeDatePicker.date = NSDateManager.currentDateWithHour(7, minute: 0, second: 0)
+            morningAlertTimeDatePicker.date = Constants.DefaultMorningTime
         }
     }
     
@@ -69,7 +69,7 @@ class SettingsViewController : UIViewController {
         }
         else{
 
-            afternoonAlertTimeDatePicker.date = NSDateManager.currentDateWithHour(18, minute: 0, second: 0)
+            afternoonAlertTimeDatePicker.date = Constants.DefaultAfternoonTime
         }
     }
 }
