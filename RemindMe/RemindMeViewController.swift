@@ -47,6 +47,8 @@ class RemindMeViewController: UITableViewController {
         settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
         
+        startRefreshControl()
+        
         reminderManager.remindersListName = Constants.RemindersListName
         // Request access to Reminders
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
@@ -177,6 +179,8 @@ class RemindMeViewController: UITableViewController {
             
             displayError("Please allow Remind Me to access 'Reminders'...")
         }
+        
+        loadRemindersList()
         
         endRefreshControl()
     }
