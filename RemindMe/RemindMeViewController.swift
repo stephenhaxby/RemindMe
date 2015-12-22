@@ -52,10 +52,10 @@ class RemindMeViewController: UITableViewController {
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
 
-    override func viewDidAppear(animated: Bool) {
-        
-        loadRemindersListWithRefresh(true)
-    }
+//    override func viewDidAppear(animated: Bool) {
+//        
+//        loadRemindersListWithRefresh(true)
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -82,6 +82,7 @@ class RemindMeViewController: UITableViewController {
                 
                 let remindMeEditViewController : RemindMeEditViewController = segue.destinationViewController as! RemindMeEditViewController
                 
+                remindMeEditViewController.remindMeViewController = self
                 remindMeEditViewController.reminderManager = reminderManager
                 remindMeEditViewController.reminder = reminderListItem
             }
@@ -91,6 +92,15 @@ class RemindMeViewController: UITableViewController {
 //        if let indexPath = tableView.indexPathForCell(cell){
 //            let seguedToMVC = segue.destinationViewController as MyMVC
 //            seguedToMVC.publiceAPI = data[indexPath.section][indexPath.row] //get the actual data.
+    }
+    
+    func refreshInMainThread() {
+        
+        //As we a in another thread, post back to the main thread so we can update the UI
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            
+            self.loadRemindersListWithRefresh(true)
+        }
     }
     
     func startRefreshControl(){

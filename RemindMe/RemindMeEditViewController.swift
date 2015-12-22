@@ -19,6 +19,8 @@ class RemindMeEditViewController : UIViewController {
     
     @IBOutlet weak var saveButton: UIButton!
     
+    weak var remindMeViewController : RemindMeViewController?
+    
     weak var reminderManager : iCloudReminderManager?
     
     var reminder: EKReminder?
@@ -29,6 +31,12 @@ class RemindMeEditViewController : UIViewController {
             
             return NSUserDefaults.standardUserDefaults()
         }
+    }
+    
+    deinit{
+        
+        remindMeViewController = nil
+        reminderManager = nil
     }
     
     override func viewDidLoad() {
@@ -133,6 +141,11 @@ class RemindMeEditViewController : UIViewController {
             }
     
             reminderManager!.saveReminder(reminderItem)
+        }
+        
+        if let mainViewController = remindMeViewController {
+            
+            mainViewController.refreshInMainThread()
         }
     }
     
