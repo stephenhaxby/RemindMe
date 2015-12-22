@@ -19,11 +19,19 @@ class Constants{
     
     static let RemindersListName : String = "Reminders"
     
+    static let MorningTimeText : String = "MorningTimeText"
+    
     static let MorningAlertTime : String = "MorningAlertTime"
+    
+    static let DefaultMorningTimeText : String = "In the Morning"
+    
+    static let DefaultMorningTime : NSDate = NSDateManager.currentDateWithHour(7, minute: 0, second: 0)
+    
+    static let AfternoonTimeText : String = "AfternoonTimeText"
     
     static let AfternoonAlertTime : String = "AfternoonAlertTime"
     
-    static let DefaultMorningTime : NSDate = NSDateManager.currentDateWithHour(7, minute: 0, second: 0)
+    static let DefaultAfternoonTimeText : String = "Tonight"
     
     static let DefaultAfternoonTime : NSDate = NSDateManager.currentDateWithHour(18, minute: 0, second: 0)
 }

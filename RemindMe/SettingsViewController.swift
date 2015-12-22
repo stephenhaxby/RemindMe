@@ -8,7 +8,12 @@
 
 import UIKit
 
-class SettingsViewController : UIViewController {
+class SettingsViewController : UIViewController, UITextFieldDelegate {
+    
+    
+    @IBOutlet weak var morningTimeTextField: UITextField!    
+    
+    @IBOutlet weak var afternoonTimeTextField: UITextField!
     
     @IBOutlet weak var morningAlertTimeDatePicker: UIDatePicker!
     
@@ -26,8 +31,12 @@ class SettingsViewController : UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        loadMorningTimeTextField()
+        
         loadMorningAlertTime()
 
+        loadAfternoonTimeTextField()
+        
         loadAfternoonAlertTime()
     }
     
@@ -35,12 +44,49 @@ class SettingsViewController : UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     override func viewWillDisappear(animated : Bool){
+        
+        defaults.setObject(morningTimeTextField.text, forKey: Constants.MorningTimeText)
+        
+        defaults.setObject(afternoonTimeTextField.text, forKey: Constants.AfternoonTimeText)
         
         defaults.setObject(morningAlertTimeDatePicker.date, forKey: Constants.MorningAlertTime)
         
         defaults.setObject(afternoonAlertTimeDatePicker.date, forKey: Constants.AfternoonAlertTime)
+    }
+    
+    
+    @IBAction func timeValueChanged(sender: AnyObject) {
+        
+        morningTimeTextField.resignFirstResponder()
+        afternoonTimeTextField.resignFirstResponder()
+    }
+    
+    //Delegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func loadMorningTimeTextField() {
+        
+        morningTimeTextField.delegate = self
+        
+        if let storedMorningTimeText: AnyObject = defaults.objectForKey(Constants.MorningTimeText) {
+            
+            if let morningTimeText : String = storedMorningTimeText as? String {
+                
+                morningTimeTextField.text = morningTimeText
+                return
+            }
+        }
+        
+        if morningTimeTextField.text == nil || morningTimeTextField.text! == "" {
+            
+            morningTimeTextField.text = Constants.DefaultMorningTimeText
+        }
     }
     
     func loadMorningAlertTime() {
@@ -51,10 +97,33 @@ class SettingsViewController : UIViewController {
                 
                 morningAlertTimeDatePicker.date = morningDate
             }
+            else {
+                
+                morningAlertTimeDatePicker.date = Constants.DefaultMorningTime
+            }
         }
         else{
             
             morningAlertTimeDatePicker.date = Constants.DefaultMorningTime
+        }
+    }
+    
+    func loadAfternoonTimeTextField() {
+        
+        afternoonTimeTextField.delegate = self
+        
+        if let storedAfternoonTimeText: AnyObject = defaults.objectForKey(Constants.AfternoonTimeText) {
+            
+            if let afternoonTimeText : String = storedAfternoonTimeText as? String {
+                
+                afternoonTimeTextField.text = afternoonTimeText
+                return
+            }
+        }
+        
+        if afternoonTimeTextField.text == nil || afternoonTimeTextField.text! == "" {
+            
+            afternoonTimeTextField.text = Constants.DefaultAfternoonTimeText
         }
     }
     
@@ -65,6 +134,10 @@ class SettingsViewController : UIViewController {
             if let afternoonDate : NSDate = storedAfternoonDate as? NSDate {
                 
                 afternoonAlertTimeDatePicker.date = afternoonDate
+            }
+            else {
+                
+                afternoonAlertTimeDatePicker.date = Constants.DefaultAfternoonTime
             }
         }
         else{

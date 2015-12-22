@@ -34,6 +34,10 @@ class RemindMeEditViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
+        populateMorningButtonText()
+        
+        populateAfternoonButtonText()
+        
         if let reminderItem = reminder {
             
             reminderTitleTextView.text = reminderItem.title
@@ -72,12 +76,14 @@ class RemindMeEditViewController : UIViewController {
                 
                 let afternoonDateCompare : NSDate = NSDateManager.currentDateWithHour(afternoonDateComponents.hour, minute: afternoonDateComponents.minute, second: afternoonDateComponents.second)
                 
-                if NSDateManager.dateIsBeforeDate(NSDate(), date2: morningDateCompare)
-                    || NSDateManager.dateIsAfterDate(NSDate(), date2: afternoonDateCompare) {
+                let currentDate : NSDate = NSDate()
+                
+                if NSDateManager.dateIsBeforeDate(morningDateCompare, date2: currentDate)
+                    || NSDateManager.dateIsAfterDate(afternoonDateCompare, date2: currentDate) {
                  
                     morningButton.selected = true
                 }
-                else if NSDateManager.dateIsBeforeDate(NSDate(), date2: afternoonDateCompare) {
+                else if NSDateManager.dateIsBeforeDate(afternoonDateCompare, date2: currentDate) {
                  
                     tonightButton.selected = true
                 }
@@ -127,6 +133,38 @@ class RemindMeEditViewController : UIViewController {
             }
     
             reminderManager!.saveReminder(reminderItem)
+        }
+    }
+    
+    private func populateMorningButtonText() {
+        
+        if let storedMorningTimeText: AnyObject = defaults.objectForKey(Constants.MorningTimeText) {
+            
+            if let morningTimeText : String = storedMorningTimeText as? String {
+                
+                morningButton.setTitle(morningTimeText, forState: UIControlState.Normal)
+            }
+        }
+        
+        if morningButton.currentTitle == nil || morningButton.currentTitle! == "" {
+            
+            morningButton.setTitle(Constants.DefaultMorningTimeText, forState: UIControlState.Normal)
+        }
+    }
+    
+    private func populateAfternoonButtonText() {
+     
+        if let storedAfternoonTimeText: AnyObject = defaults.objectForKey(Constants.AfternoonTimeText) {
+            
+            if let afternoonTimeText : String = storedAfternoonTimeText as? String {
+                
+                tonightButton.setTitle(afternoonTimeText, forState: UIControlState.Normal)
+            }
+        }
+        
+        if tonightButton.currentTitle == nil || tonightButton.currentTitle! == "" {
+            
+            tonightButton.setTitle(Constants.DefaultAfternoonTimeText, forState: UIControlState.Normal)
         }
     }
     

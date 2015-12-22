@@ -13,7 +13,6 @@
 		0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */; };
 		0E40FE311C0702EC00ACB6F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE2F1C0702EC00ACB6F6 /* Main.storyboard */; };
 		0E40FE331C0702EC00ACB6F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */; };
-		0E40FE361C0702EC00ACB6F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE341C0702EC00ACB6F6 /* LaunchScreen.storyboard */; };
 		0E40FE3E1C07114200ACB6F6 /* iCloudReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */; };
 		0E40FE401C0711BB00ACB6F6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */; };
 		0E565C721C0DAA7700057488 /* RemindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */; };
@@ -29,7 +28,6 @@
 		0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindMeViewController.swift; sourceTree = "<group>"; };
 		0E40FE301C0702EC00ACB6F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0E40FE351C0702EC00ACB6F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E40FE371C0702EC00ACB6F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderManager.swift; sourceTree = "<group>"; };
 		0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 				0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */,
 				0E40FE2F1C0702EC00ACB6F6 /* Main.storyboard */,
 				0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */,
-				0E40FE341C0702EC00ACB6F6 /* LaunchScreen.storyboard */,
 				0E40FE371C0702EC00ACB6F6 /* Info.plist */,
 				0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */,
 				0EE685851C0C656100E3317D /* Constants.swift */,
@@ -144,7 +141,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E40FE361C0702EC00ACB6F6 /* LaunchScreen.storyboard in Resources */,
 				0E40FE331C0702EC00ACB6F6 /* Assets.xcassets in Resources */,
 				0E40FE311C0702EC00ACB6F6 /* Main.storyboard in Resources */,
 			);
@@ -178,14 +174,6 @@
 				0E40FE301C0702EC00ACB6F6 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		0E40FE341C0702EC00ACB6F6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0E40FE351C0702EC00ACB6F6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
