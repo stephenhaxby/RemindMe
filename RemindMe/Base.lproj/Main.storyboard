@@ -230,9 +230,9 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ble-Xs-lVR">
-                                        <rect key="frame" x="20" y="237" width="560" height="150"/>
+                                        <rect key="frame" x="20" y="237" width="560" height="120"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="ess-nf-HxD"/>
+                                            <constraint firstAttribute="height" constant="120" id="ess-nf-HxD"/>
                                         </constraints>
                                         <date key="date" timeIntervalSinceReferenceDate="470571938.10570598">
                                             <!--2015-11-30 10:25:38 +0000-->
