@@ -166,6 +166,8 @@ class RemindMeViewController: UITableViewController {
                 //Join the two lists from above
                 self.reminderList = scheduledItems
                 
+                UIApplication.sharedApplication().applicationIconBadgeNumber = scheduledItems.count
+                
                 //Request a reload of the Table
                 reminderListTable.reloadData()
             }
