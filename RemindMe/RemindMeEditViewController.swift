@@ -42,6 +42,18 @@ class RemindMeEditViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
+        reminderTitleTextView.layer.borderColor = UIColor(red:0.76, green:0.76, blue:0.76, alpha:1.0).CGColor
+        reminderTitleTextView.layer.borderWidth = 1.0
+        reminderTitleTextView.layer.cornerRadius = 5
+        
+        
+//        [yourTextView.layer setBorderColor:[[[UIColor lightGrayColor] colorWithAlphaComponent:0.2] CGColor]];
+//        [yourTextView.layer setBorderWidth:2.0];
+//        yourTextView.layer.cornerRadius = 5;
+//        yourTextView.clipsToBounds = YES;
+//        yourTextView.textColor = [UIColor lightGrayColor];
+        
+        
         populateMorningButtonText()
         
         populateAfternoonButtonText()
