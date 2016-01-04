@@ -17,6 +17,8 @@ class RemindMeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var addNewButton: UIButton!
     
+    weak var remindMeViewController : RemindMeViewController?
+    
     var reminder: EKReminder? {
         didSet {
             
@@ -67,7 +69,12 @@ class RemindMeTableViewCell: UITableViewCell {
     
     @IBAction func addNewButtonTouchUpInside(sender: AnyObject) {
         
-        
+        if remindMeViewController != nil && reminder != nil {
+            
+            reminder!.title = ""
+            
+            remindMeViewController!.performSegueWithIdentifier("tableViewCellSegue", sender: reminder)
+        }
     }
     
     func setupCellVisibilityFor(reminder : EKReminder){

@@ -223,6 +223,7 @@ class RemindMeViewController: UITableViewController {
             }
             
             reminderListItem!.title = Constants.ReminderItemTableViewCell.NewItemCell
+            cell.remindMeViewController = self
         }
         else {
             
@@ -234,6 +235,7 @@ class RemindMeViewController: UITableViewController {
         return cell
     }
     
+    //This method is for when an item is selected
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         var reminderListItem : EKReminder?
