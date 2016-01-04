@@ -42,17 +42,19 @@ class RemindMeEditViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
+        //This makes the textview look like a normal text box
         reminderTitleTextView.layer.borderColor = UIColor(red:0.76, green:0.76, blue:0.76, alpha:1.0).CGColor
         reminderTitleTextView.layer.borderWidth = 1.0
         reminderTitleTextView.layer.cornerRadius = 5
         
+        //calibratedWhite
         
-//        [yourTextView.layer setBorderColor:[[[UIColor lightGrayColor] colorWithAlphaComponent:0.2] CGColor]];
-//        [yourTextView.layer setBorderWidth:2.0];
-//        yourTextView.layer.cornerRadius = 5;
-//        yourTextView.clipsToBounds = YES;
-//        yourTextView.textColor = [UIColor lightGrayColor];
+        //red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+
         
+        saveButton.layer.borderColor = UIColor(red:0.94901960784313721, green:0.94901960784313721, blue:0.94901960784313721, alpha:1.0).CGColor
+        saveButton.layer.borderWidth = 1.0
+        saveButton.layer.cornerRadius = 5
         
         populateMorningButtonText()
         
