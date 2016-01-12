@@ -93,6 +93,4 @@ class RemindMeTableViewCell: UITableViewCell {
             addNewButton.hidden = true
         }
     }
-    
-    
 }

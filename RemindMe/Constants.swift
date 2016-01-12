@@ -19,6 +19,8 @@ class Constants{
     
     static let RemindersListName : String = "Reminders"
     
+    static let Setting : String = "Setting"
+    
     static let MorningTimeText : String = "MorningTimeText"
     
     static let MorningAlertTime : String = "MorningAlertTime"
