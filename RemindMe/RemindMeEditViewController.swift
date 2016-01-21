@@ -15,6 +15,8 @@ class RemindMeEditViewController : UIViewController {
     
     @IBOutlet weak var saveButton: UIButton!
     
+    @IBOutlet weak var reminderTimeTableViewControllerContainer: UIView!
+    
     weak var reminderTimeTableViewController : ReminderTimeTableViewController?
     
     weak var remindMeViewController : RemindMeViewController?
@@ -105,7 +107,7 @@ class RemindMeEditViewController : UIViewController {
 //            let afternoonDate : NSDate = getStoredAfternoonDate()
             
 //            if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms) {
-//                
+//
 //                if NSDateManager.timeIsEqualToTime(morningDate, date2Components : itemReminderAlarmDateComponents) {
 //                        
 //                        morningButton.selected = true
@@ -146,6 +148,8 @@ class RemindMeEditViewController : UIViewController {
 //                    tonightButton.selected = true
 //                }
 //            }
+            
+            
         }
     }
     
@@ -165,6 +169,8 @@ class RemindMeEditViewController : UIViewController {
         if let destinationViewController : ReminderTimeTableViewController = segue.destinationViewController as? ReminderTimeTableViewController {
             
             reminderTimeTableViewController = destinationViewController
+            
+            destinationViewController.remindMeEditViewController = self
         }
     }
     

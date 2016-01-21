@@ -150,6 +150,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="reminderTimeTableViewControllerContainer" destination="DRN-tb-41R" id="Dg5-Vb-5If"/>
                         <outlet property="reminderTitleTextView" destination="XAk-7V-Yux" id="QFb-zK-6dk"/>
                         <outlet property="saveButton" destination="xJc-jx-KGz" id="QYQ-pm-zjb"/>
                     </connections>

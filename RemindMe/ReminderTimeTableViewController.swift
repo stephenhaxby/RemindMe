@@ -12,6 +12,8 @@ class ReminderTimeTableViewController: UITableViewController {
     
     var reminderTimeTableViewCellItems : [ReminderTimeTableViewCellItem] = [ReminderTimeTableViewCellItem]()
     
+    weak var remindMeEditViewController : RemindMeEditViewController?
+    
     var defaults : NSUserDefaults {
         
         get {
@@ -66,6 +68,8 @@ class ReminderTimeTableViewController: UITableViewController {
     
     func deselectSettingTimeButtons() {
         
+        reminderTitleTextViewResignFirstResponder()
+        
         for var i = 0; i < tableView.visibleCells.count; i++ {
             
             if let reminderTimeTableViewCell : ReminderTimeTableViewCell = tableView.visibleCells[i] as? ReminderTimeTableViewCell {
@@ -83,6 +87,14 @@ class ReminderTimeTableViewController: UITableViewController {
          }
     }
     
+    func reminderTitleTextViewResignFirstResponder() {
+        
+        if remindMeEditViewController != nil && remindMeEditViewController!.reminderTitleTextView != nil {
+            
+            remindMeEditViewController!.reminderTitleTextView!.resignFirstResponder()
+        }
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return reminderTimeTableViewCellItems.count
@@ -96,5 +108,10 @@ class ReminderTimeTableViewController: UITableViewController {
         cell.reminderTimeTableViewController = self
         
         return cell
+    }
+
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        reminderTitleTextViewResignFirstResponder()
     }
 }
