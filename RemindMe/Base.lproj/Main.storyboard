@@ -35,7 +35,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAh-Gf-sTZ">
-                                            <rect key="frame" x="8" y="6" width="30" height="37"/>
+                                            <rect key="frame" x="8" y="7" width="30" height="37"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="48"/>
                                             <state key="normal" title="+">
                                                 <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -150,7 +150,6 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="reminderTimeTableViewControllerContainer" destination="DRN-tb-41R" id="Dg5-Vb-5If"/>
                         <outlet property="reminderTitleTextView" destination="XAk-7V-Yux" id="QFb-zK-6dk"/>
                         <outlet property="saveButton" destination="xJc-jx-KGz" id="QYQ-pm-zjb"/>
                     </connections>
@@ -176,29 +175,31 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzW-9Q-3yt">
-                                            <rect key="frame" x="8" y="5" width="140" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="140" id="rCq-Dj-jvO"/>
-                                            </constraints>
-                                            <state key="normal" title="Button"/>
-                                            <connections>
-                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="h1M-yZ-V0J"/>
-                                            </connections>
-                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY4-pg-qRC">
-                                            <rect key="frame" x="172" y="7" width="140" height="30"/>
+                                            <rect key="frame" x="167" y="0.0" width="145" height="36"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <state key="normal" title="Button"/>
                                             <connections>
                                                 <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="qk4-MR-TTf"/>
                                             </connections>
                                         </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzW-9Q-3yt">
+                                            <rect key="frame" x="8" y="0.0" width="145" height="36"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="145" id="rCq-Dj-jvO"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="h1M-yZ-V0J"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="wzW-9Q-3yt" firstAttribute="leading" secondItem="arE-eE-t4o" secondAttribute="leadingMargin" id="4Zy-8R-E67"/>
-                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="bottom" secondItem="arE-eE-t4o" secondAttribute="bottomMargin" id="PCW-Qe-H5k"/>
-                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="leading" secondItem="wzW-9Q-3yt" secondAttribute="trailing" constant="24" id="QNd-7l-87p"/>
-                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="centerY" secondItem="arE-eE-t4o" secondAttribute="centerY" id="gkI-Vf-Rfp"/>
+                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="bottom" secondItem="arE-eE-t4o" secondAttribute="bottomMargin" constant="1" id="PCW-Qe-H5k"/>
+                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="leading" secondItem="wzW-9Q-3yt" secondAttribute="trailing" constant="14" id="QNd-7l-87p"/>
+                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="centerY" secondItem="arE-eE-t4o" secondAttribute="centerY" constant="-3.5" id="gkI-Vf-Rfp"/>
                                         <constraint firstItem="xY4-pg-qRC" firstAttribute="trailing" secondItem="arE-eE-t4o" secondAttribute="trailingMargin" id="ikn-lf-OXz"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -218,99 +219,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wz6-O9-Thw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1662" y="2441"/>
-        </scene>
-        <!--Settings View Controller-->
-        <scene sceneID="XXU-Aw-p7W">
-            <objects>
-                <viewController id="9DN-qR-mCV" customClass="SettingsViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="nOM-n8-CgF"/>
-                        <viewControllerLayoutGuide type="bottom" id="OT8-Ke-oqC"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Mwe-h5-f7N">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GoI-fR-tqo">
-                                <rect key="frame" x="0.0" y="10" width="600" height="590"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N1I-qo-42A">
-                                        <rect key="frame" x="20" y="8" width="240" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="XA1-NZ-FQr"/>
-                                            <constraint firstAttribute="width" constant="240" id="zmU-vk-BHD"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="5or-ti-WUQ">
-                                        <rect key="frame" x="20" y="46" width="560" height="120"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="120" id="S1q-p8-xuW"/>
-                                        </constraints>
-                                        <date key="date" timeIntervalSinceReferenceDate="470571938.10570598">
-                                            <!--2015-11-30 10:25:38 +0000-->
-                                        </date>
-                                        <connections>
-                                            <action selector="timeValueChanged:" destination="9DN-qR-mCV" eventType="valueChanged" id="H51-E7-w8H"/>
-                                        </connections>
-                                    </datePicker>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gbj-Aa-2ht">
-                                        <rect key="frame" x="20" y="199" width="240" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Gq1-tU-825"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ble-Xs-lVR">
-                                        <rect key="frame" x="20" y="237" width="560" height="120"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="120" id="ess-nf-HxD"/>
-                                        </constraints>
-                                        <date key="date" timeIntervalSinceReferenceDate="470571938.10570598">
-                                            <!--2015-11-30 10:25:38 +0000-->
-                                        </date>
-                                        <connections>
-                                            <action selector="timeValueChanged:" destination="9DN-qR-mCV" eventType="valueChanged" id="4La-Hk-mmw"/>
-                                        </connections>
-                                    </datePicker>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="5or-ti-WUQ" secondAttribute="trailing" constant="20" id="99h-OW-gdI"/>
-                                    <constraint firstItem="Gbj-Aa-2ht" firstAttribute="leading" secondItem="ble-Xs-lVR" secondAttribute="leading" id="Iyk-Ew-vK2"/>
-                                    <constraint firstItem="Gbj-Aa-2ht" firstAttribute="top" secondItem="5or-ti-WUQ" secondAttribute="bottom" constant="33" id="L1w-wa-M1g"/>
-                                    <constraint firstItem="5or-ti-WUQ" firstAttribute="trailing" secondItem="ble-Xs-lVR" secondAttribute="trailing" id="Rxh-B8-fNr"/>
-                                    <constraint firstItem="ble-Xs-lVR" firstAttribute="top" secondItem="Gbj-Aa-2ht" secondAttribute="bottom" constant="8" symbolic="YES" id="Tup-xe-VsS"/>
-                                    <constraint firstItem="N1I-qo-42A" firstAttribute="top" secondItem="GoI-fR-tqo" secondAttribute="top" constant="8" id="UQx-Wg-Dm4"/>
-                                    <constraint firstItem="N1I-qo-42A" firstAttribute="trailing" secondItem="Gbj-Aa-2ht" secondAttribute="trailing" id="V4n-Lz-oHZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="ble-Xs-lVR" secondAttribute="bottom" constant="151" id="cM3-Cl-sX3"/>
-                                    <constraint firstItem="5or-ti-WUQ" firstAttribute="top" secondItem="N1I-qo-42A" secondAttribute="bottom" constant="8" symbolic="YES" id="cQZ-bp-yM3"/>
-                                    <constraint firstItem="5or-ti-WUQ" firstAttribute="centerX" secondItem="GoI-fR-tqo" secondAttribute="centerX" id="kEs-T3-8Ld"/>
-                                    <constraint firstItem="5or-ti-WUQ" firstAttribute="leading" secondItem="N1I-qo-42A" secondAttribute="leading" id="m7q-MF-zEw"/>
-                                    <constraint firstItem="N1I-qo-42A" firstAttribute="leading" secondItem="GoI-fR-tqo" secondAttribute="leading" constant="20" id="vT4-2p-Jqe"/>
-                                    <constraint firstItem="Gbj-Aa-2ht" firstAttribute="leading" secondItem="5or-ti-WUQ" secondAttribute="leading" id="yYw-uc-v8C"/>
-                                </constraints>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="GoI-fR-tqo" firstAttribute="bottom" secondItem="OT8-Ke-oqC" secondAttribute="top" id="0OW-A3-pdo"/>
-                            <constraint firstItem="GoI-fR-tqo" firstAttribute="top" secondItem="Mwe-h5-f7N" secondAttribute="topMargin" constant="10" id="I8y-vN-dgC"/>
-                            <constraint firstAttribute="trailing" secondItem="GoI-fR-tqo" secondAttribute="trailing" id="J0V-2d-OLh"/>
-                            <constraint firstItem="GoI-fR-tqo" firstAttribute="leading" secondItem="Mwe-h5-f7N" secondAttribute="leading" id="mN3-YL-iSS"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="afternoonAlertTimeDatePicker" destination="ble-Xs-lVR" id="bMF-e6-bYz"/>
-                        <outlet property="afternoonTimeTextField" destination="Gbj-Aa-2ht" id="O55-Pb-aAW"/>
-                        <outlet property="morningAlertTimeDatePicker" destination="5or-ti-WUQ" id="1Ur-HO-vqA"/>
-                        <outlet property="morningTimeTextField" destination="N1I-qo-42A" id="U4U-mW-bQl"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WIM-GI-8Yq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2369" y="1642"/>
         </scene>
         <!--Settings Table View Controller-->
         <scene sceneID="TQK-fy-SYz">
@@ -335,12 +243,23 @@
                                                 <constraint firstAttribute="width" constant="240" id="VuM-3D-bEB"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZ0-So-TRl">
+                                            <rect key="frame" x="0.0" y="0.0" width="30" height="37"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                            <state key="normal" title="+">
+                                                <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="addNewButtonTouchUpInside:" destination="727-Os-qKM" eventType="touchUpInside" id="Ad0-yK-TAR"/>
+                                            </connections>
+                                        </button>
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="8jY-a8-qNJ">
-                                            <rect key="frame" x="8" y="46" width="584" height="120"/>
+                                            <rect key="frame" x="200" y="46" width="200" height="120"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="120" id="8Og-EM-uLz"/>
+                                                <constraint firstAttribute="width" constant="200" id="kOy-8Q-tVR"/>
                                                 <constraint firstAttribute="height" constant="120" id="qFX-Zv-8ti"/>
                                             </constraints>
                                             <date key="date" timeIntervalSinceReferenceDate="470571938.10570598">
@@ -355,19 +274,10 @@
                                                 <action selector="timeValueChanged:" destination="727-Os-qKM" eventType="valueChanged" id="vba-MK-iu4"/>
                                             </connections>
                                         </datePicker>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZ0-So-TRl">
-                                            <rect key="frame" x="8" y="0.0" width="30" height="37"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                            <state key="normal" title="+">
-                                                <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="addNewButtonTouchUpInside:" destination="727-Os-qKM" eventType="touchUpInside" id="Ad0-yK-TAR"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="8jY-a8-qNJ" secondAttribute="bottom" id="38k-yD-5Gt"/>
+                                        <constraint firstItem="8jY-a8-qNJ" firstAttribute="centerX" secondItem="iD0-na-HEl" secondAttribute="centerX" id="DCF-T8-Qtl"/>
                                         <constraint firstItem="8jY-a8-qNJ" firstAttribute="top" secondItem="CH1-fn-n6S" secondAttribute="bottom" constant="8" id="JJL-fg-4vU"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="8jY-a8-qNJ" secondAttribute="leading" id="Pyb-CB-RTE"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="8jY-a8-qNJ" secondAttribute="trailing" id="ao9-qN-ugz"/>
@@ -377,6 +287,8 @@
                                     <variation key="default">
                                         <mask key="constraints">
                                             <exclude reference="vLb-OW-cjH"/>
+                                            <exclude reference="Pyb-CB-RTE"/>
+                                            <exclude reference="ao9-qN-ugz"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>

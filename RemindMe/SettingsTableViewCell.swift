@@ -66,7 +66,5 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         nameTextField.hidden = isNewCell
         timeDatePicker.hidden = isNewCell
         addNewButton.hidden = !isNewCell
-        
-        
     }
 }

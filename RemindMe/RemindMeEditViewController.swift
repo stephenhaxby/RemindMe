@@ -54,10 +54,6 @@ class RemindMeEditViewController : UIViewController {
         saveButton.layer.borderWidth = 1.0
         saveButton.layer.cornerRadius = 5
         
-//        populateMorningButtonText()
-//        
-//        populateAfternoonButtonText()
-        
         if let reminderItem = reminder {
             
             reminderTitleTextView.text = reminderItem.title
@@ -100,64 +96,11 @@ class RemindMeEditViewController : UIViewController {
                     }
                 }
             }
-            
-
-            
-//            let morningDate : NSDate = getStoredMorningDate()
-//            let afternoonDate : NSDate = getStoredAfternoonDate()
-            
-//            if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms) {
-//
-//                if NSDateManager.timeIsEqualToTime(morningDate, date2Components : itemReminderAlarmDateComponents) {
-//                        
-//                        morningButton.selected = true
-//                }
-//                else {
-//                    
-//                    morningButton.selected = false
-//                }
-//                
-//                if NSDateManager.timeIsEqualToTime(afternoonDate, date2Components: itemReminderAlarmDateComponents) {
-//                        
-//                        tonightButton.selected = true
-//                }
-//                else {
-//                    
-//                    tonightButton.selected = false
-//                }
-//            }
-//            else {
-//                
-//                let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(morningDate)
-//                
-//                let afternoonDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(afternoonDate)
-//                
-//                let morningDateCompare : NSDate = NSDateManager.currentDateWithHour(morningDateComponents.hour, minute: morningDateComponents.minute, second: morningDateComponents.second)
-//                
-//                let afternoonDateCompare : NSDate = NSDateManager.currentDateWithHour(afternoonDateComponents.hour, minute: afternoonDateComponents.minute, second: afternoonDateComponents.second)
-//                
-//                let currentDate : NSDate = NSDate()
-//                
-//                if NSDateManager.dateIsBeforeDate(morningDateCompare, date2: currentDate)
-//                    || NSDateManager.dateIsAfterDate(afternoonDateCompare, date2: currentDate) {
-//                 
-//                    morningButton.selected = true
-//                }
-//                else if NSDateManager.dateIsBeforeDate(afternoonDateCompare, date2: currentDate) {
-//                 
-//                    tonightButton.selected = true
-//                }
-//            }
-            
-            
         }
     }
     
     @IBAction func timeButtonTouchUpInside(sender: AnyObject) {
      
-//        tonightButton.selected = false
-//        morningButton.selected = false
-        
         if let timeButton : UIButton = sender as? UIButton {
             
             timeButton.selected = true
@@ -230,38 +173,6 @@ class RemindMeEditViewController : UIViewController {
         }
     }
     
-    private func populateMorningButtonText() {
-        
-//        if let storedMorningTimeText: AnyObject = defaults.objectForKey(Constants.MorningTimeText) {
-//            
-//            if let morningTimeText : String = storedMorningTimeText as? String {
-//                
-//                morningButton.setTitle(morningTimeText, forState: UIControlState.Normal)
-//            }
-//        }
-//        
-//        if morningButton.currentTitle == nil || morningButton.currentTitle! == "" {
-//            
-//            morningButton.setTitle(Constants.DefaultMorningTimeText, forState: UIControlState.Normal)
-//        }
-    }
-    
-    private func populateAfternoonButtonText() {
-     
-//        if let storedAfternoonTimeText: AnyObject = defaults.objectForKey(Constants.AfternoonTimeText) {
-//
-//            if let afternoonTimeText : String = storedAfternoonTimeText as? String {
-//                
-//                tonightButton.setTitle(afternoonTimeText, forState: UIControlState.Normal)
-//            }
-//        }
-//        
-//        if tonightButton.currentTitle == nil || tonightButton.currentTitle! == "" {
-//            
-//            tonightButton.setTitle(Constants.DefaultAfternoonTimeText, forState: UIControlState.Normal)
-//        }
-    }
-    
     private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> EKAlarm {
         
         let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
@@ -272,14 +183,10 @@ class RemindMeEditViewController : UIViewController {
         if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
             
             return EKAlarm(absoluteDate: reminderDate)
-            
-            //return NSDateManager.getDateComponentsFromDate(reminderDate)
         }
         else {
             
             return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
-            
-            //return NSDateManager.getDateComponentsFromDate(NSDateManager.addDaysToDate(reminderDate, days: 1))
         }
     }
     

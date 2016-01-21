@@ -10,16 +10,6 @@ import Foundation
 
 class NSDateManager {
     
-    //* New date from year, month, day
-    //* New date from year, month, day, hour, minute
-    //* Add days to date
-    //* Subtract days from date
-    //* Get date NSDateComponents from date
-    //* Date is equal to date (two NSDate's)
-    //Date is equal to date (two NSDateComponents's)
-    //* Time is equal to time (two NSDate's)
-    //Time is equal to time (two NSDateComponents's)
-    
     static func dateWithDay(day : Int, month : Int, year : Int) -> NSDate {
         
         let dateComponents : NSDateComponents = NSDateComponents()

@@ -53,11 +53,6 @@ class RemindMeViewController: UITableViewController {
         // Request access to Reminders
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
-
-//    override func viewDidAppear(animated: Bool) {
-//        
-//        loadRemindersListWithRefresh(true)
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -70,11 +65,6 @@ class RemindMeViewController: UITableViewController {
         
         sender.endRefreshing()
     }
-    
-//    override func presentViewController(viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
-//        
-//        
-//    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -89,11 +79,6 @@ class RemindMeViewController: UITableViewController {
                 remindMeEditViewController.reminder = reminderListItem
             }
         }
-        
-//        let cell = sender as MyTableViewCell
-//        if let indexPath = tableView.indexPathForCell(cell){
-//            let seguedToMVC = segue.destinationViewController as MyMVC
-//            seguedToMVC.publiceAPI = data[indexPath.section][indexPath.row] //get the actual data.
     }
     
     func refreshInMainThread() {

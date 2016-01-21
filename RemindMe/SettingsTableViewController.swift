@@ -84,9 +84,6 @@ class SettingsTableViewController : UITableViewController {
         
         if indexPath.row < settingsList.count {
             
-//            cell.layer.borderWidth = 0.5
-//            cell.layer.borderColor = UIColor.grayColor().CGColor
-            
             cell.setting = settingsList[indexPath.row]
         }
         else{
@@ -102,7 +99,7 @@ class SettingsTableViewController : UITableViewController {
         
         if indexPath.row == settingsList.count {
             
-            return CGFloat(40)
+            return CGFloat(45)
         }
         
         return tableView.rowHeight
@@ -123,11 +120,6 @@ class SettingsTableViewController : UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if(indexPath.row < settingsList.count){
-        
-            //TODO: Find the setting in the user defaults
-            //TODO: Update SettingUserDefaultCount
-            
-            //getSettingForKeyIndex
             
             if let userDefaultSettingsObject: AnyObject = defaults.objectForKey(Constants.Setting) {
                 
