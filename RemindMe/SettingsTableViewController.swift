@@ -178,4 +178,15 @@ class SettingsTableViewController : UITableViewController {
         
         defaults.setObject(settingsArray, forKey: Constants.Setting)
     }
+    
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        
+        for cell in tableView.visibleCells {
+            
+            if let settingTableViewCell : SettingsTableViewCell = cell as? SettingsTableViewCell {
+                
+                settingTableViewCell.nameTextField.resignFirstResponder()
+            }
+        }
+    }
 }

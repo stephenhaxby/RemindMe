@@ -41,7 +41,7 @@ class RemindMeEditViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
         //This makes the textview look like a normal text box
         reminderTitleTextView.layer.borderColor = UIColor(red:0.76, green:0.76, blue:0.76, alpha:1.0).CGColor
         reminderTitleTextView.layer.borderWidth = 1.0
@@ -57,7 +57,6 @@ class RemindMeEditViewController : UIViewController {
         if let reminderItem = reminder {
             
             reminderTitleTextView.text = reminderItem.title
-            reminderTitleTextView.becomeFirstResponder()
             
             if reminderTimeTableViewController != nil{
                 
@@ -95,6 +94,17 @@ class RemindMeEditViewController : UIViewController {
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        if let reminderItem = reminder {
+        
+            if reminderItem.title == "" {
+
+                reminderTitleTextView.becomeFirstResponder()
             }
         }
     }
