@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class RemindMeViewController: UITableViewController {
+class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate {
 
     var eventStoreObserver : NSObjectProtocol?
     
@@ -20,6 +20,8 @@ class RemindMeViewController: UITableViewController {
     @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet var remindersTableView: UITableView!
+    
+    @IBOutlet weak var doneButton: UIButton!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -64,6 +66,15 @@ class RemindMeViewController: UITableViewController {
         loadRemindersList()
         
         sender.endRefreshing()
+    }
+    
+    @IBAction func doneButtonTouchUpInside(sender: UIButton) {
+        
+        self.editing = false
+        
+        sender.hidden = true
+        
+        //setAddNewButton(false)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -172,6 +183,48 @@ class RemindMeViewController: UITableViewController {
         endRefreshControl()
     }
     
+    func cellLongPressed(gestureRecognizer:UIGestureRecognizer) {
+        
+//        if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
+//
+//            self.editing = true
+//
+//            var point = gestureRecognizer.locationInView(self.tableView)
+//            
+//            if let indexPath = self.tableView.indexPathForRowAtPoint(point) {
+//
+//                let data = reminderList[indexPath.row] as EKReminder
+//            }
+//        }
+        if (gestureRecognizer.state == UIGestureRecognizerState.Began){
+
+            self.editing = true
+            
+            doneButton.hidden = false
+            
+            //setAddNewButton(true)
+            
+            reminderList.removeAtIndex(reminderList.count-1)
+
+            let indexPath : NSIndexPath = NSIndexPath(forRow: tableView.visibleCells.count-1, inSection: 0)
+            var indexPaths : [NSIndexPath] = [NSIndexPath]()
+            indexPaths.append(indexPath)
+            
+            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.None)
+        }
+    }
+    
+//    func setAddNewButton(hidden : Bool) {
+//        
+//        if let tableViewCell = tableView.visibleCells[tableView.visibleCells.count-1] as? RemindMeTableViewCell {
+//            
+//            if let addNewButton = tableViewCell.addNewButton {
+//                
+//                addNewButton.hidden = hidden
+//            }
+//        }
+//    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return reminderList.count + 2
@@ -182,6 +235,18 @@ class RemindMeViewController: UITableViewController {
         //TODO: None of this is checked for nulls blah blah blah...
         
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
+        
+        if indexPath.row > 0 {
+            
+            //table.allowsSelectionDuringEditing
+            
+            let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
+            longPress.delegate = self
+            longPress.minimumPressDuration = 1
+            longPress.numberOfTouchesRequired = 1
+            
+            cell.addGestureRecognizer(longPress)
+        }
         
         var reminderListItem : EKReminder?
         
@@ -220,6 +285,48 @@ class RemindMeViewController: UITableViewController {
         return cell
     }
     
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        return false
+    }
+    
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        //TODO: You don't want to move the spacer cells...
+        
+        if let tableViewCell = tableView.visibleCells[indexPath.row] as? RemindMeTableViewCell {
+
+            if tableViewCell.reminderTextLabel == Constants.ReminderItemTableViewCell.NewItemCell{
+                
+                return false
+            }
+        }
+        
+        return true
+    }
+
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        
+        //return indexPath.row != 0 ? UITableViewCellEditingStyle.Delete : UITableViewCellEditingStyle.None
+
+        return UITableViewCellEditingStyle.None
+    }
+    
+    
+    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        
+        let itemToMove = reminderList[sourceIndexPath.row]
+        
+        reminderList.removeAtIndex(sourceIndexPath.row-1)
+        
+        reminderList.insert(itemToMove, atIndex: destinationIndexPath.row-1)
+    }
+    
     //This method is for when an item is selected
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -242,7 +349,6 @@ class RemindMeViewController: UITableViewController {
         
         performSegueWithIdentifier("tableViewCellSegue", sender: reminderListItem)
     }
-    
     
     //This method is setting which cells can be edited
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
