@@ -15,8 +15,6 @@ class RemindMeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var reminderTimeLable: UILabel!
     
-    @IBOutlet weak var addNewButton: UIButton!
-    
     weak var remindMeViewController : RemindMeViewController?
     
     var reminder: EKReminder? {
@@ -47,8 +45,6 @@ class RemindMeTableViewCell: UITableViewCell {
                     
                     reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
                 }
-                
-                setupCellVisibilityFor(itemReminder)
             }
         }
     }
@@ -64,33 +60,6 @@ class RemindMeTableViewCell: UITableViewCell {
             text = text.substringWithRange(NSRange(location: 0, length: text.length-1))
             
             truncateText(text, forLabel: forLabel)
-        }
-    }
-    
-    @IBAction func addNewButtonTouchUpInside(sender: AnyObject) {
-        
-        if remindMeViewController != nil && reminder != nil {
-            
-            reminder!.title = ""
-            
-            remindMeViewController!.performSegueWithIdentifier("tableViewCellSegue", sender: reminder)
-        }
-    }
-    
-    func setupCellVisibilityFor(reminder : EKReminder){
-        
-        switch reminder.title{
-            
-        case Constants.ReminderItemTableViewCell.EmptyCell:
-            reminderTextLabel.text = ""
-            reminderTimeLable.text = ""
-            addNewButton.hidden = true
-        case Constants.ReminderItemTableViewCell.NewItemCell:
-            reminderTextLabel.text = ""
-            reminderTimeLable.text = ""
-            addNewButton.hidden = false
-        default:
-            addNewButton.hidden = true
         }
     }
 }

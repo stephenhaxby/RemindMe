@@ -228,7 +228,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return reminderList.count + 2
+        return reminderList.count
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -242,8 +242,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
         
-        if indexPath.row > 0 && indexPath.row < reminderList.count + 1 {
-            
+//        if indexPath.row > 0 && indexPath.row < reminderList.count {
+//            
             //table.allowsSelectionDuringEditing
             
             let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
@@ -252,39 +252,39 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             longPress.numberOfTouchesRequired = 1
             
             cell.addGestureRecognizer(longPress)
-        }
+//        }
         
         var reminderListItem : EKReminder?
         
-        if indexPath.row == 0 {
-            
-            reminderListItem = reminderManager.getNewReminder()
-            
-            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-            guard reminderListItem != nil else {
-                
-                return RemindMeTableViewCell()
-            }
-            
-            reminderListItem!.title = Constants.ReminderItemTableViewCell.EmptyCell
-        }
-        else if indexPath.row == reminderList.count+1 {
-            
-            reminderListItem = reminderManager.getNewReminder()
-            
-            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-            guard reminderListItem != nil else {
-                
-                return RemindMeTableViewCell()
-            }
-            
-            reminderListItem!.title = Constants.ReminderItemTableViewCell.NewItemCell
-            cell.remindMeViewController = self
-        }
-        else {
-            
-            reminderListItem  = reminderList[indexPath.row-1]
-        }
+//        if indexPath.row == 0 {
+//            
+//            reminderListItem = reminderManager.getNewReminder()
+//            
+//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+//            guard reminderListItem != nil else {
+//                
+//                return RemindMeTableViewCell()
+//            }
+//            
+//            reminderListItem!.title = Constants.ReminderItemTableViewCell.EmptyCell
+//        }
+//        else if indexPath.row == reminderList.count+1 {
+//            
+//            reminderListItem = reminderManager.getNewReminder()
+//            
+//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+//            guard reminderListItem != nil else {
+//                
+//                return RemindMeTableViewCell()
+//            }
+//            
+//            reminderListItem!.title = Constants.ReminderItemTableViewCell.NewItemCell
+//            cell.remindMeViewController = self
+//        }
+//        else {
+        
+            reminderListItem  = reminderList[indexPath.row]
+//        }
         
         cell.reminder = reminderListItem!
         
@@ -325,30 +325,30 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         let itemToMove = reminderList[sourceIndexPath.row]
         
-        reminderList.removeAtIndex(sourceIndexPath.row-1)
+        reminderList.removeAtIndex(sourceIndexPath.row)
         
-        reminderList.insert(itemToMove, atIndex: destinationIndexPath.row-1)
+        reminderList.insert(itemToMove, atIndex: destinationIndexPath.row)
     }
     
     //This method is for when an item is selected
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         var reminderListItem : EKReminder?
+//        
+//        if indexPath.row-1 == reminderList.count {
+//            
+//            reminderListItem = reminderManager.getNewReminder()
+//            
+//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
+//            guard reminderListItem != nil else {
+//                
+//                return //TODO: Error message...
+//            }
+//        }
+//        else {
         
-        if indexPath.row-1 == reminderList.count {
-            
-            reminderListItem = reminderManager.getNewReminder()
-            
-            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-            guard reminderListItem != nil else {
-                
-                return //TODO: Error message...
-            }
-        }
-        else {
-            
-            reminderListItem  = reminderList[indexPath.row-1]
-        }
+            reminderListItem  = reminderList[indexPath.row]
+//        }
         
         performSegueWithIdentifier("tableViewCellSegue", sender: reminderListItem)
     }
@@ -357,7 +357,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         //Don't allow delete of the last blank row...
-        if(indexPath.row < reminderList.count+1){
+        if(indexPath.row < reminderList.count){
             return true
         }
         
@@ -367,9 +367,9 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(indexPath.row < reminderList.count+1){
+        if(indexPath.row < reminderList.count){
             
-            let listItem : EKReminder = reminderList[indexPath.row-1]
+            let listItem : EKReminder = reminderList[indexPath.row]
             
             guard reminderManager.removeReminder(listItem) else {
                 
@@ -380,15 +380,49 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         }
     }
     
-    //This method is to set the row height of the first spacer row...
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if indexPath.row == 0{
-            
-            return CGFloat(16)
-        }
+        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
         
-        return tableView.rowHeight
+//        headerRow.layer.borderWidth = 0.5
+//        headerRow.layer.borderColor = UIColor.orangeColor().CGColor
+        
+//        cell.layer.borderWidth = 2.0
+//        cell.layer.borderColor = UIColor.grayColor().CGColor
+        
+        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        
+        return headerRow
     }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return CGFloat(12)
+    }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        let  footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowFooterAddNew
+        
+        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        
+        return footerRow
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        return CGFloat(64)
+    }
+    
+//    //This method is to set the row height of the first spacer row...
+//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        
+//        if indexPath.row == 0{
+//            
+//            return CGFloat(16)
+//        }
+//        
+//        return tableView.rowHeight
+//    }
 }
 

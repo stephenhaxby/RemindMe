@@ -15,8 +15,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="16" id="rnM-Cx-Gas" customClass="TableRowHeaderSpacer" customModule="RemindMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rnM-Cx-Gas" id="XSe-vU-BTG">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="64" id="5fG-2j-Nom" customClass="RemindMeTableViewCell" customModule="RemindMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="64"/>
+                                <rect key="frame" x="0.0" y="108" width="600" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5fG-2j-Nom" id="xoN-SC-e4V">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="63"/>
@@ -34,16 +42,6 @@
                                             <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAh-Gf-sTZ">
-                                            <rect key="frame" x="8" y="7" width="30" height="37"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                            <state key="normal" title="+">
-                                                <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="addNewButtonTouchUpInside:" destination="5fG-2j-Nom" eventType="touchUpInside" id="ght-xb-0us"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="topMargin" secondItem="cgR-2L-ngz" secondAttribute="top" id="73q-eV-wNw"/>
@@ -52,10 +50,29 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="addNewButton" destination="LAh-Gf-sTZ" id="FQZ-Sz-W2k"/>
                                     <outlet property="reminderTextLabel" destination="cgR-2L-ngz" id="RX2-EQ-DGq"/>
                                     <outlet property="reminderTimeLable" destination="bLt-dr-kFe" id="S4j-CO-b6S"/>
                                 </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FooterCell" rowHeight="64" id="Ra5-1y-TQU" customClass="TableRowFooterAddNew" customModule="RemindMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="172" width="600" height="64"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ra5-1y-TQU" id="UKs-nk-V56">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="63"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAh-Gf-sTZ">
+                                            <rect key="frame" x="8" y="9" width="30" height="37"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                            <state key="normal" title="+">
+                                                <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <segue destination="1Fl-ka-kXO" kind="show" id="hub-ei-YRI"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -80,7 +97,9 @@
                             <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nrd-FU-aCx">
                                 <rect key="frame" x="530" y="7" width="50" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Done"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="doneButtonTouchUpInside:" destination="WqA-Jf-lpg" eventType="touchUpInside" id="iFH-8w-YNU"/>
                                 </connections>
@@ -342,4 +361,7 @@
             <point key="canvasLocation" x="850" y="951"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="hub-ei-YRI"/>
+    </inferredMetricsTieBreakers>
 </document>
