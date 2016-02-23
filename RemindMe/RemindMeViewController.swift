@@ -203,14 +203,15 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             doneButton.hidden = false
             
             //setAddNewButton(true)
-            
-            reminderList.removeAtIndex(reminderList.count-1)
 
-            let indexPath : NSIndexPath = NSIndexPath(forRow: tableView.visibleCells.count-1, inSection: 0)
-            var indexPaths : [NSIndexPath] = [NSIndexPath]()
-            indexPaths.append(indexPath)
-            
-            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.None)
+            //Remove a table row
+//            reminderList.removeAtIndex(reminderList.count-1)
+//
+//            let indexPath : NSIndexPath = NSIndexPath(forRow: tableView.visibleCells.count-1, inSection: 0)
+//            var indexPaths : [NSIndexPath] = [NSIndexPath]()
+//            indexPaths.append(indexPath)
+//            
+//            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.None)
         }
     }
     
@@ -230,13 +231,18 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         return reminderList.count + 2
     }
     
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         //TODO: None of this is checked for nulls blah blah blah...
         
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
         
-        if indexPath.row > 0 {
+        if indexPath.row > 0 && indexPath.row < reminderList.count + 1 {
             
             //table.allowsSelectionDuringEditing
             
@@ -285,11 +291,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         return cell
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        return 1
-    }
-    
     override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         return false
@@ -301,7 +302,9 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         if let tableViewCell = tableView.visibleCells[indexPath.row] as? RemindMeTableViewCell {
 
-            if tableViewCell.reminderTextLabel == Constants.ReminderItemTableViewCell.NewItemCell{
+            if tableViewCell.reminderTextLabel.text == Constants.ReminderItemTableViewCell.NewItemCell
+                || tableViewCell.reminderTextLabel.text == Constants.ReminderItemTableViewCell.EmptyCell
+                || tableViewCell.reminderTextLabel.text == "" {
                 
                 return false
             }
