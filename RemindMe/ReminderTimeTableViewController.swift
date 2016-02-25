@@ -110,6 +110,11 @@ class ReminderTimeTableViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        return false
+    }
+    
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
         reminderTitleTextViewResignFirstResponder()

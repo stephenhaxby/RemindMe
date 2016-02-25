@@ -79,16 +79,25 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        guard segue.identifier != "settingsSegue" else {
+            
+            return
+        }
+        
+        let remindMeEditViewController : RemindMeEditViewController = segue.destinationViewController as! RemindMeEditViewController
+        remindMeEditViewController.remindMeViewController = self
+        remindMeEditViewController.reminderManager = reminderManager
+        
         if let reminderListItem : EKReminder = sender as? EKReminder {
             
             if segue.identifier == "tableViewCellSegue" {
-                
-                let remindMeEditViewController : RemindMeEditViewController = segue.destinationViewController as! RemindMeEditViewController
-                
-                remindMeEditViewController.remindMeViewController = self
-                remindMeEditViewController.reminderManager = reminderManager
+
                 remindMeEditViewController.reminder = reminderListItem
             }
+        }
+        else if sender is TableRowFooterAddNew || sender is UIButton {
+            
+            remindMeEditViewController.reminder = reminderManager.getNewReminder()
         }
     }
     
@@ -295,31 +304,16 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         return false
     }
-    
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        
-        //TODO: You don't want to move the spacer cells...
-        
-        if let tableViewCell = tableView.visibleCells[indexPath.row] as? RemindMeTableViewCell {
 
-            if tableViewCell.reminderTextLabel.text == Constants.ReminderItemTableViewCell.NewItemCell
-                || tableViewCell.reminderTextLabel.text == Constants.ReminderItemTableViewCell.EmptyCell
-                || tableViewCell.reminderTextLabel.text == "" {
-                
-                return false
-            }
-        }
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         return true
     }
 
     override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        
-        //return indexPath.row != 0 ? UITableViewCellEditingStyle.Delete : UITableViewCellEditingStyle.None
 
-        return UITableViewCellEditingStyle.None
+        return UITableViewCellEditingStyle.Delete
     }
-    
     
     override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
         
@@ -403,6 +397,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let  footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowFooterAddNew
+        
+        footerRow.remindMeViewController = self
         
         footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
         

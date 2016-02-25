@@ -61,18 +61,33 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAh-Gf-sTZ">
-                                            <rect key="frame" x="8" y="9" width="30" height="37"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                            <state key="normal" title="+">
-                                                <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <segue destination="1Fl-ka-kXO" kind="show" id="hub-ei-YRI"/>
-                                            </connections>
-                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-4i-zyp">
+                                            <rect key="frame" x="8" y="8" width="584" height="47"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAh-Gf-sTZ">
+                                                    <rect key="frame" x="0.0" y="1" width="30" height="37"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                                    <state key="normal" title="+">
+                                                        <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="1Fl-ka-kXO" kind="show" id="hub-ei-YRI"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="iaW-4i-zyp" secondAttribute="bottom" id="FmX-kA-DmG"/>
+                                        <constraint firstItem="iaW-4i-zyp" firstAttribute="leading" secondItem="UKs-nk-V56" secondAttribute="leadingMargin" id="fpv-wu-NyT"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="iaW-4i-zyp" secondAttribute="trailing" id="qJK-M5-cKI"/>
+                                        <constraint firstItem="iaW-4i-zyp" firstAttribute="top" secondItem="UKs-nk-V56" secondAttribute="topMargin" id="rfu-tr-MLm"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="footerAddNewView" destination="iaW-4i-zyp" id="gb2-VK-VDW"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -81,15 +96,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Remind Me" id="c7T-Gq-VaC">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="4Zo-5N-ycW"/>
                         <barButtonItem key="leftBarButtonItem" style="done" id="JLx-yn-bLq">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="tmI-Lk-RgU">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="tmI-Lk-RgU" userLabel="settingsButton">
                                 <rect key="frame" x="20" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal">
                                     <attributedString key="attributedTitle"/>
                                 </state>
                                 <connections>
-                                    <segue destination="fml-qY-3KS" kind="show" id="o6B-By-xn5"/>
+                                    <segue destination="fml-qY-3KS" kind="show" identifier="settingsSegue" id="o6B-By-xn5"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -97,6 +113,7 @@
                             <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nrd-FU-aCx">
                                 <rect key="frame" x="530" y="7" width="50" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <state key="normal" title="Done">
                                     <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -140,7 +157,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="93" id="HGY-1A-BI7"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -205,14 +221,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY4-pg-qRC">
-                                            <rect key="frame" x="167" y="0.0" width="145" height="36"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                            <state key="normal" title="Button"/>
-                                            <connections>
-                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="qk4-MR-TTf"/>
-                                            </connections>
-                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzW-9Q-3yt">
                                             <rect key="frame" x="8" y="0.0" width="145" height="36"/>
                                             <constraints>
@@ -222,6 +230,14 @@
                                             <state key="normal" title="Button"/>
                                             <connections>
                                                 <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="h1M-yZ-V0J"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY4-pg-qRC">
+                                            <rect key="frame" x="167" y="0.0" width="145" height="36"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="qk4-MR-TTf"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -362,6 +378,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hub-ei-YRI"/>
+        <segue reference="RuX-yA-r1x"/>
     </inferredMetricsTieBreakers>
 </document>
