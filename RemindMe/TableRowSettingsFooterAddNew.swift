@@ -1,18 +1,18 @@
 //
-//  TableRowFooterAddNew.swift
+//  TableRowSettingsFooterAddNew.swift
 //  RemindMe
 //
-//  Created by Stephen Haxby on 23/02/2016.
+//  Created by Stephen Haxby on 29/02/2016.
 //  Copyright © 2016 Stephen Haxby. All rights reserved.
 //
 
 import UIKit
 
-class TableRowFooterAddNew : UITableViewCell {
-    
-    weak var remindMeViewController : RemindMeViewController?
-    
+class TableRowSettingsFooterAddNew : UITableViewCell {
+
     @IBOutlet weak var footerAddNewView: UIView!
+    
+    weak var settingsTableViewController: SettingsTableViewController!
     
     override func layoutSubviews() {
         
@@ -29,13 +29,21 @@ class TableRowFooterAddNew : UITableViewCell {
         self.addGestureRecognizer(selectPress)
     }
     
+    @IBAction func addNewButtonTouchUpInside(sender: AnyObject) {
+        
+        if let tableViewController = settingsTableViewController {
+            
+            tableViewController.addNewSettingRow()
+        }
+    }
+
     func viewSelected(gestureRecognizer:UIGestureRecognizer) {
-     
+        
         if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
-         
-            if let tableViewController = remindMeViewController {
+            
+            if let tableViewController = settingsTableViewController {
                 
-                tableViewController.performSegueWithIdentifier("tableViewCellSegue", sender: self)
+                tableViewController.addNewSettingRow()
             }
         }
     }

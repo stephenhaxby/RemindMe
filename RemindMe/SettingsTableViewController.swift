@@ -8,9 +8,11 @@
 
 import UIKit
 
-class SettingsTableViewController : UITableViewController {
+class SettingsTableViewController : UITableViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var settingsTableView: UITableView!
+    
+    @IBOutlet weak var doneButton: UIButton!
     
     var settingsList : [Setting] = [Setting]()
     
@@ -59,6 +61,13 @@ class SettingsTableViewController : UITableViewController {
         }
     }
     
+    @IBAction func doneButtonTouchUpInside(sender: UIButton) {
+        
+        self.editing = false
+        
+        sender.hidden = true
+    }
+    
     override func viewWillDisappear(animated : Bool){
         
         var settingsArray : [NSData] = []
@@ -75,34 +84,23 @@ class SettingsTableViewController : UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-        return settingsList.count + 1
+        return settingsList.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
      
         let cell : SettingsTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")! as! SettingsTableViewCell
         
-        if indexPath.row < settingsList.count {
-            
-            cell.setting = settingsList[indexPath.row]
-        }
-        else{
-            
-            cell.setting = Setting(name: Constants.ReminderItemTableViewCell.NewItemCell, time: NSDate())
-            cell.settingsTableViewController = self
-        }
+        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
+        longPress.delegate = self
+        longPress.minimumPressDuration = 1
+        longPress.numberOfTouchesRequired = 1
+        
+        cell.addGestureRecognizer(longPress)
+        
+        cell.setting = settingsList[indexPath.row]
         
         return cell
-    }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if indexPath.row == settingsList.count {
-            
-            return CGFloat(45)
-        }
-        
-        return tableView.rowHeight
     }
     
     //This method is setting which cells can be edited
@@ -119,29 +117,77 @@ class SettingsTableViewController : UITableViewController {
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(indexPath.row < settingsList.count){
+        if let userDefaultSettingsObject: AnyObject = defaults.objectForKey(Constants.Setting) {
             
-            if let userDefaultSettingsObject: AnyObject = defaults.objectForKey(Constants.Setting) {
+            if var userDefaultSettings : [NSData] = userDefaultSettingsObject as? [NSData] {
                 
-                if var userDefaultSettings : [NSData] = userDefaultSettingsObject as? [NSData] {
-                    
-                    userDefaultSettings.removeAtIndex(indexPath.row)
-                    
-                    defaults.setObject(userDefaultSettings, forKey: Constants.Setting)
-                }
+                userDefaultSettings.removeAtIndex(indexPath.row)
+                
+                defaults.setObject(userDefaultSettings, forKey: Constants.Setting)
             }
-            
-            loadUserDefaultSettings()
         }
+        
+        loadUserDefaultSettings()
     }
     
-    //This method is for when an item is selected
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-        if indexPath.row == settingsList.count {
+    override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
-            addNewSettingRow()
-        }
+        return false
+    }
+    
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        
+        return UITableViewCellEditingStyle.Delete
+    }
+    
+    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        
+        let itemToMove = settingsList[sourceIndexPath.row]
+        
+        settingsList.removeAtIndex(sourceIndexPath.row)
+        
+        settingsList.insert(itemToMove, atIndex: destinationIndexPath.row)
+    }
+
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
+        
+        //        headerRow.layer.borderWidth = 0.5
+        //        headerRow.layer.borderColor = UIColor.orangeColor().CGColor
+        
+        //        cell.layer.borderWidth = 2.0
+        //        cell.layer.borderColor = UIColor.grayColor().CGColor
+        
+        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        
+        return headerRow
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return CGFloat(12)
+    }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        let  footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowSettingsFooterAddNew
+        
+        footerRow.settingsTableViewController = self
+        
+        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        
+        return footerRow
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        return CGFloat(64)
     }
     
     func addNewSettingRow() {
@@ -161,6 +207,16 @@ class SettingsTableViewController : UITableViewController {
         }
         
         loadUserDefaultSettings()
+        
+        
+        
+        let indexPath = NSIndexPath(forRow: settingsList.count-1, inSection: 0)
+        
+        settingsTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        
+        
+        
+        
     }
     
     func createDefaultSettings() {
@@ -187,6 +243,16 @@ class SettingsTableViewController : UITableViewController {
                 
                 settingTableViewCell.nameTextField.resignFirstResponder()
             }
+        }
+    }
+    
+    func cellLongPressed(gestureRecognizer:UIGestureRecognizer) {
+
+        if (gestureRecognizer.state == UIGestureRecognizerState.Began){
+            
+            self.editing = true
+            
+            doneButton.hidden = false
         }
     }
 }

@@ -14,8 +14,6 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBOutlet weak var timeDatePicker: UIDatePicker!
     
-    @IBOutlet weak var addNewButton: UIButton!
-    
     weak var settingsTableViewController: SettingsTableViewController!
     
     var setting: Setting? {
@@ -65,6 +63,5 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         nameTextField.hidden = isNewCell
         timeDatePicker.hidden = isNewCell
-        addNewButton.hidden = !isNewCell
     }
 }
