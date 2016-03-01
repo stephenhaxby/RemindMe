@@ -26,6 +26,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        // Sets the method to run when the Event Store is updated in the background
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
             
@@ -35,6 +36,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     deinit {
         
+        // Dealocate the observer above
         if let observer = eventStoreObserver{
             
             NSNotificationCenter.defaultCenter().removeObserver(observer, name: EKEventStoreChangedNotification, object: nil)
@@ -45,22 +47,20 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //Set the text and font of the Settings button (unicode)
+        // Set the text and font of the Settings button (unicode)
         settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
         
         startRefreshControl()
         
+        // Set the name of the reminder list we are going to use
         reminderManager.remindersListName = Constants.RemindersListName
+        
         // Request access to Reminders
         reminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    // When a refresh is actioned
     @IBAction func refreshControlValueChanged(sender: UIRefreshControl) {
         
         loadRemindersList()
@@ -68,26 +68,29 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         sender.endRefreshing()
     }
     
+    // Disable table editing once the Done button is pressed
     @IBAction func doneButtonTouchUpInside(sender: UIButton) {
         
         self.editing = false
         
+        // Hide the Done button
         sender.hidden = true
-        
-        //setAddNewButton(false)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        // If it's from the settings button, don't do anything
         guard segue.identifier != "settingsSegue" else {
             
             return
         }
         
+        // Setup the destination view controllers data
         let remindMeEditViewController : RemindMeEditViewController = segue.destinationViewController as! RemindMeEditViewController
         remindMeEditViewController.remindMeViewController = self
         remindMeEditViewController.reminderManager = reminderManager
         
+        // If we are editing an existing item
         if let reminderListItem : EKReminder = sender as? EKReminder {
             
             if segue.identifier == "tableViewCellSegue" {
@@ -97,10 +100,12 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         }
         else if sender is TableRowFooterAddNew || sender is UIButton {
             
+            // If we are creating a new item
             remindMeEditViewController.reminder = reminderManager.getNewReminder()
         }
     }
     
+    // Refresh the list in the main UI thread
     func refreshInMainThread() {
         
         //As we a in another thread, post back to the main thread so we can update the UI
@@ -166,20 +171,22 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             if let reminderListTable = self.tableView{
                 
+                // Filter out reminder items that don't have an alarm set
                 let scheduledItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.alarms != nil})
                 
-                //Join the two lists from above
+                // Join the two lists from above
                 self.reminderList = scheduledItems
                 
+                // Update the app's badge icon
                 UIApplication.sharedApplication().applicationIconBadgeNumber = scheduledItems.count
                 
-                //Request a reload of the Table
+                // Request a reload of the Table
                 reminderListTable.reloadData()
             }
         }
     }
     
-    //Once access is granted to the reminders list
+    // Once access is granted to the reminders list
     func requestedAccessToReminders(status : Bool){
         
         if !status {
@@ -192,48 +199,17 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         endRefreshControl()
     }
     
+    // This method gets called for our Gesture Recognizer
     func cellLongPressed(gestureRecognizer:UIGestureRecognizer) {
         
-//        if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
-//
-//            self.editing = true
-//
-//            var point = gestureRecognizer.locationInView(self.tableView)
-//            
-//            if let indexPath = self.tableView.indexPathForRowAtPoint(point) {
-//
-//                let data = reminderList[indexPath.row] as EKReminder
-//            }
-//        }
+        // If it's the begining of the gesture, set the table to editing mode
         if (gestureRecognizer.state == UIGestureRecognizerState.Began){
 
             self.editing = true
             
             doneButton.hidden = false
-            
-            //setAddNewButton(true)
-
-            //Remove a table row
-//            reminderList.removeAtIndex(reminderList.count-1)
-//
-//            let indexPath : NSIndexPath = NSIndexPath(forRow: tableView.visibleCells.count-1, inSection: 0)
-//            var indexPaths : [NSIndexPath] = [NSIndexPath]()
-//            indexPaths.append(indexPath)
-//            
-//            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.None)
         }
     }
-    
-//    func setAddNewButton(hidden : Bool) {
-//        
-//        if let tableViewCell = tableView.visibleCells[tableView.visibleCells.count-1] as? RemindMeTableViewCell {
-//            
-//            if let addNewButton = tableViewCell.addNewButton {
-//                
-//                addNewButton.hidden = hidden
-//            }
-//        }
-//    }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -247,54 +223,20 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        //TODO: None of this is checked for nulls blah blah blah...
-        
+        // Get the table cell
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
         
-//        if indexPath.row > 0 && indexPath.row < reminderList.count {
-//            
-            //table.allowsSelectionDuringEditing
-            
-            let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
-            longPress.delegate = self
-            longPress.minimumPressDuration = 1
-            longPress.numberOfTouchesRequired = 1
-            
-            cell.addGestureRecognizer(longPress)
-//        }
+        // Setup a Long Press Gesture for each cell, calling the cellLongPressed method
+        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
+        longPress.delegate = self
+        longPress.minimumPressDuration = 1
+        longPress.numberOfTouchesRequired = 1
         
+        cell.addGestureRecognizer(longPress)
+
+        // Sets the reminder list item for the cell
         var reminderListItem : EKReminder?
-        
-//        if indexPath.row == 0 {
-//            
-//            reminderListItem = reminderManager.getNewReminder()
-//            
-//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-//            guard reminderListItem != nil else {
-//                
-//                return RemindMeTableViewCell()
-//            }
-//            
-//            reminderListItem!.title = Constants.ReminderItemTableViewCell.EmptyCell
-//        }
-//        else if indexPath.row == reminderList.count+1 {
-//            
-//            reminderListItem = reminderManager.getNewReminder()
-//            
-//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-//            guard reminderListItem != nil else {
-//                
-//                return RemindMeTableViewCell()
-//            }
-//            
-//            reminderListItem!.title = Constants.ReminderItemTableViewCell.NewItemCell
-//            cell.remindMeViewController = self
-//        }
-//        else {
-        
-            reminderListItem  = reminderList[indexPath.row]
-//        }
-        
+        reminderListItem  = reminderList[indexPath.row]
         cell.reminder = reminderListItem!
         
         return cell
@@ -324,38 +266,21 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         reminderList.insert(itemToMove, atIndex: destinationIndexPath.row)
     }
     
-    //This method is for when an item is selected
+    // This method is for when an item is selected
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         var reminderListItem : EKReminder?
-//        
-//        if indexPath.row-1 == reminderList.count {
-//            
-//            reminderListItem = reminderManager.getNewReminder()
-//            
-//            //getNewReminder can return nil if the EventStore isn't ready. This happens when the table is first loaded...
-//            guard reminderListItem != nil else {
-//                
-//                return //TODO: Error message...
-//            }
-//        }
-//        else {
+
+        reminderListItem  = reminderList[indexPath.row]
         
-            reminderListItem  = reminderList[indexPath.row]
-//        }
-        
+        // Manually perform the tableViewCellSegue to go to the edit page
         performSegueWithIdentifier("tableViewCellSegue", sender: reminderListItem)
     }
     
-    //This method is setting which cells can be edited
+    // This method is setting which cells can be edited
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
-        //Don't allow delete of the last blank row...
-        if(indexPath.row < reminderList.count){
-            return true
-        }
-        
-        return false
+        return true
     }
     
     //This method is for the swipe left to delete
@@ -378,12 +303,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
         
-//        headerRow.layer.borderWidth = 0.5
-//        headerRow.layer.borderColor = UIColor.orangeColor().CGColor
-        
-//        cell.layer.borderWidth = 2.0
-//        cell.layer.borderColor = UIColor.grayColor().CGColor
-        
+        // Set the background color of the header cell
         headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
         
         return headerRow
@@ -391,6 +311,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
+        // Set's the height of the Header
         return CGFloat(12)
     }
     
@@ -398,8 +319,10 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         let  footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowFooterAddNew
         
+        // Set's up the footer cell so we can perform actions on it
         footerRow.remindMeViewController = self
         
+        // Set the background color of the footer cell
         footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
         
         return footerRow
@@ -407,18 +330,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
+        // Set's the height for the footer cell
         return CGFloat(64)
     }
-    
-//    //This method is to set the row height of the first spacer row...
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        
-//        if indexPath.row == 0{
-//            
-//            return CGFloat(16)
-//        }
-//        
-//        return tableView.rowHeight
-//    }
 }
 

@@ -42,9 +42,6 @@ class iCloudReminderManager{
             
             if(reminderList == nil){
   
-                //Create a new calendar as we can't set this to nil... We'll set it below
-                //var shoppingListCalendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: eventStore)
-                
                 //Get the Reminders
                 let calendars = eventStore.calendarsForEntityType(EKEntityType.Reminder) 
                 
@@ -109,8 +106,7 @@ class iCloudReminderManager{
         }
     }
 
-    //NOTE: Not currently used, but may come in handy...
-    func addReminder(title : String) -> EKReminder?{
+    func addReminder(title : String) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()
         
@@ -135,7 +131,7 @@ class iCloudReminderManager{
         return reminder
     }
     
-    func saveReminder(reminder : EKReminder) -> Bool{
+    func saveReminder(reminder : EKReminder) -> Bool {
         
         do {
             
@@ -153,7 +149,7 @@ class iCloudReminderManager{
         return true
     }
     
-    func removeReminder(reminder : EKReminder) -> Bool{
+    func removeReminder(reminder : EKReminder) -> Bool {
         
         do {
 
@@ -167,7 +163,7 @@ class iCloudReminderManager{
         }
     }
     
-    func getNewReminder() -> EKReminder?{
+    func getNewReminder() -> EKReminder? {
         
         if reminderList != nil
         {

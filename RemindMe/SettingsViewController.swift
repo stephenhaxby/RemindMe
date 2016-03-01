@@ -40,11 +40,6 @@ class SettingsViewController : UIViewController, UITextFieldDelegate {
         loadAfternoonAlertTime()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override func viewWillDisappear(animated : Bool){
         
         defaults.setObject(morningTimeTextField.text, forKey: Constants.MorningTimeText)
