@@ -42,7 +42,7 @@ class RemindMeEditViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        //This makes the textview look like a normal text box
+        //This makes the textview look like a normal text box (as by default it wont!)
         reminderTitleTextView.layer.borderColor = UIColor(red:0.76, green:0.76, blue:0.76, alpha:1.0).CGColor
         reminderTitleTextView.layer.borderWidth = 1.0
         reminderTitleTextView.layer.cornerRadius = 5
@@ -50,6 +50,7 @@ class RemindMeEditViewController : UIViewController {
         //Color of the backgroud
         //red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" />
         
+        //Create a save button that looks like a button...
         saveButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).CGColor
         saveButton.layer.borderWidth = 1.0
         saveButton.layer.cornerRadius = 5
@@ -62,6 +63,7 @@ class RemindMeEditViewController : UIViewController {
                 
                 reminderTimeTableViewController!.deselectSettingTimeButtons()
                 
+                // Loop through each alarm time and set the button to selected when it finds a match (left or right button)
                 if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms) {
                     
                     for var i = 0; i < reminderTimeTableViewController!.tableView.visibleCells.count; i++ {
@@ -100,6 +102,7 @@ class RemindMeEditViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
+        // Make the text box the first reponder for new reminders
         if let reminderItem = reminder {
         
             if reminderItem.title == "" {
@@ -117,6 +120,7 @@ class RemindMeEditViewController : UIViewController {
         }
     }
     
+    // Sets up the relationships between controllers
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if let destinationViewController : ReminderTimeTableViewController = segue.destinationViewController as? ReminderTimeTableViewController {
@@ -127,6 +131,7 @@ class RemindMeEditViewController : UIViewController {
         }
     }
     
+    // When the back button is pressed we need to save everything
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
         guard reminderManager != nil else {
@@ -142,6 +147,7 @@ class RemindMeEditViewController : UIViewController {
                 
                 var selectedTime : NSDate?
                 
+                // Loop through each cell button to find which one was selected (left and right)
                 for var i = 0; i < reminderTimeTableViewController!.tableView.visibleCells.count; i++ {
                     
                     if let reminderTimeTableViewCell : ReminderTimeTableViewCell = reminderTimeTableViewController!.tableView.visibleCells[i] as? ReminderTimeTableViewCell {
@@ -177,12 +183,14 @@ class RemindMeEditViewController : UIViewController {
             }
         }
         
+        // Refresh the main list in the main UI thread
         if let mainViewController = remindMeViewController {
             
             mainViewController.refreshInMainThread()
         }
     }
     
+    // Return an alarm date/time for the selected date, making it either today or tomorrow depending on if the time has passed
     private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> EKAlarm {
         
         let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
@@ -200,30 +208,7 @@ class RemindMeEditViewController : UIViewController {
         }
     }
     
-    private func getStoredMorningDate() -> NSDate {
-        
-        let morningTime : NSDate? = getStoredDateForKey(Constants.MorningAlertTime)
-        
-        guard morningTime != nil else {
-         
-            return Constants.DefaultMorningTime
-        }
-        
-        return morningTime!
-    }
-    
-    private func getStoredAfternoonDate() -> NSDate {
-        
-        let afternoonTime : NSDate? = getStoredDateForKey(Constants.AfternoonAlertTime)
-        
-        guard afternoonTime != nil else {
-            
-            return Constants.DefaultMorningTime
-        }
-        
-        return afternoonTime!
-    }
-    
+    // Get a stored date form the user defaults
     private func getStoredDateObjectForKey(key : String) -> AnyObject? {
         
         return defaults.objectForKey(key)

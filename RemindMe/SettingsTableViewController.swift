@@ -39,6 +39,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
             createDefaultSettings()
         }
         
+        // Load up the saved user default settings for reminder alarm times (with names)
         if let userDefaultSettingsObject: AnyObject = defaults.objectForKey(Constants.Setting) {
             
             if let userDefaultSettings : [NSData] = userDefaultSettingsObject as? [NSData] {
@@ -68,6 +69,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         sender.hidden = true
     }
     
+    // When the user navigates away form this page, save all the settings (another way of doing an unwind segue)
     override func viewWillDisappear(animated : Bool){
         
         var settingsArray : [NSData] = []
@@ -91,6 +93,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
      
         let cell : SettingsTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")! as! SettingsTableViewCell
         
+        // Setup a long press gesture recognizer to call the cellLongPressed method
         let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
         longPress.delegate = self
         longPress.minimumPressDuration = 1
@@ -106,12 +109,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     //This method is setting which cells can be edited
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
-        //Don't allow delete of the last blank row...
-        if(indexPath.row < settingsList.count){
-            return true
-        }
-        
-        return false
+        return true
     }
     
     //This method is for the swipe left to delete
@@ -164,6 +162,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         //        cell.layer.borderWidth = 2.0
         //        cell.layer.borderColor = UIColor.grayColor().CGColor
         
+        // Set the background color of the Header cell
         headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
         
         return headerRow
@@ -171,6 +170,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
+        // Set the height for the Header cell
         return CGFloat(12)
     }
     
@@ -178,8 +178,10 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         let  footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowSettingsFooterAddNew
         
+        // Set up properties on the Footer so we can call methods from the controller
         footerRow.settingsTableViewController = self
         
+        // Set the background color of the footer cell
         footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
         
         return footerRow
@@ -187,9 +189,11 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
+        // Set the height of the footer cell
         return CGFloat(64)
     }
     
+    // Add a new setting row to the user defaults. Need to use the keyed archiver to save our custom Settings object to make it compatable with NSData
     func addNewSettingRow() {
         
         let newSetting : Setting = Setting(name: "", time : NSDate())
@@ -208,17 +212,12 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         loadUserDefaultSettings()
         
-        
-        
+        // Scroll to the last item in the list
         let indexPath = NSIndexPath(forRow: settingsList.count-1, inSection: 0)
-        
         settingsTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-        
-        
-        
-        
     }
     
+    // Create a new setting using some default values
     func createDefaultSettings() {
         
         var settingsArray : [NSData] = []
@@ -235,6 +234,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         defaults.setObject(settingsArray, forKey: Constants.Setting)
     }
     
+    // Resign first responder on the text field if the user starts to scroll
     override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
         for cell in tableView.visibleCells {
@@ -246,6 +246,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         }
     }
     
+    // Method for the long press gesture recognizer 
     func cellLongPressed(gestureRecognizer:UIGestureRecognizer) {
 
         if (gestureRecognizer.state == UIGestureRecognizerState.Began){

@@ -21,8 +21,6 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
             
             if setting != nil {
 
-                setupCellVisibilityFor(setting!)
-                    
                 nameTextField.text = setting!.name
                 
                 timeDatePicker.date = setting!.time
@@ -32,19 +30,15 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
+    // Resign first responder on the text field if the time value changes
     @IBAction func timeValueChanged(sender: AnyObject) {
         
         nameTextField.resignFirstResponder()
         
         setting!.time = timeDatePicker.date
     }
-    
-    @IBAction func addNewButtonTouchUpInside(sender: AnyObject) {
         
-        settingsTableViewController.addNewSettingRow()
-    }
-        
-    //Delegate
+    // Delegate method to resign first reponder on the text field when the user hits return
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
@@ -52,16 +46,9 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         return true
     }
     
+    // Delegate method to set the setting name
     func textFieldDidEndEditing(textField: UITextField) {
         
         setting!.name = textField.text!
-    }
-    
-    func setupCellVisibilityFor(setting : Setting) {
-        
-        let isNewCell : Bool = setting.name == Constants.ReminderItemTableViewCell.NewItemCell
-        
-        nameTextField.hidden = isNewCell
-        timeDatePicker.hidden = isNewCell
     }
 }

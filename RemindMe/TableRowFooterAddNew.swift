@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Footer cell class for adding a new reminder with a gesture recognizer to perform a segue to the edit page
 class TableRowFooterAddNew : UITableViewCell {
     
     weak var remindMeViewController : RemindMeViewController?

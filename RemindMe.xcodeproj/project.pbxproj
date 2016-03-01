@@ -14,7 +14,6 @@
 		0E40FE311C0702EC00ACB6F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE2F1C0702EC00ACB6F6 /* Main.storyboard */; };
 		0E40FE331C0702EC00ACB6F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */; };
 		0E40FE3E1C07114200ACB6F6 /* iCloudReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */; };
-		0E40FE401C0711BB00ACB6F6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */; };
 		0E4F75AB1C3BBDA9003AFF2C /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F75AA1C3BBDA9003AFF2C /* SettingsTableViewController.swift */; };
 		0E4F75AD1C3BBF28003AFF2C /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F75AC1C3BBF28003AFF2C /* SettingsTableViewCell.swift */; };
 		0E4F75AF1C3BC0B4003AFF2C /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F75AE1C3BC0B4003AFF2C /* Setting.swift */; };
@@ -39,7 +38,6 @@
 		0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E40FE371C0702EC00ACB6F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderManager.swift; sourceTree = "<group>"; };
-		0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		0E4F75AA1C3BBDA9003AFF2C /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0E4F75AC1C3BBF28003AFF2C /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		0E4F75AE1C3BC0B4003AFF2C /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -90,7 +88,6 @@
 				0E40FE2F1C0702EC00ACB6F6 /* Main.storyboard */,
 				0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */,
 				0E40FE371C0702EC00ACB6F6 /* Info.plist */,
-				0E40FE3F1C0711BB00ACB6F6 /* SettingsViewController.swift */,
 				0EE685851C0C656100E3317D /* Constants.swift */,
 				0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */,
 				0E8B72B81C153D69000C71D7 /* NSDateManager.swift */,
@@ -197,7 +194,6 @@
 				0E932BEF1C7C55290010CE0F /* TableRowHeaderSpacer.swift in Sources */,
 				0E40FE2C1C0702EC00ACB6F6 /* AppDelegate.swift in Sources */,
 				0E565C721C0DAA7700057488 /* RemindMeTableViewCell.swift in Sources */,
-				0E40FE401C0711BB00ACB6F6 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Implement the NSCoding stuff so we can save it into the user defaults using the keyed archiver
 class Setting : NSObject, NSCoding {
     
     var name : String = ""

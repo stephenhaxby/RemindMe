@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Footer cell class for adding a new settings alarm item; complete with gesture recogniser to add the new row
 class TableRowSettingsFooterAddNew : UITableViewCell {
 
     @IBOutlet weak var footerAddNewView: UIView!

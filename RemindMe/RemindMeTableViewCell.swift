@@ -32,6 +32,7 @@ class RemindMeTableViewCell: UITableViewCell {
                 
                 var newReminderText = String(reminderText)
                 
+                // If the original text is greater than the truncated version, replace the final 3 characters with "..."
                 if originalReminderText.length > reminderText.length {
                     
                     reminderText = reminderText.substringWithRange(NSRange(location: 0, length: reminderText.length-3))
@@ -41,6 +42,7 @@ class RemindMeTableViewCell: UITableViewCell {
                 
                 reminderTextLabel.text = newReminderText
                 
+                // Set's the reminder time label
                 if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(itemReminder.alarms) {
                     
                     reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
@@ -49,6 +51,7 @@ class RemindMeTableViewCell: UITableViewCell {
         }
     }
     
+    // Function to truncate the text for a label based on it's visible size.
     func truncateText(var text : NSString, forLabel : UILabel) {
         
         let size : CGSize = text.sizeWithAttributes([NSFontAttributeName : reminderTextLabel.font!])

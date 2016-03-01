@@ -25,8 +25,10 @@ class ReminderTimeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Clear the table separator color
         tableView.separatorColor = UIColor.clearColor();
         
+        // Setup the table cells to display the user default alarm options (left and right)
         if let userDefaultSettingsObject: AnyObject = defaults.objectForKey(Constants.Setting) {
             
             if let userDefaultSettings : [NSData] = userDefaultSettingsObject as? [NSData] {
@@ -66,6 +68,7 @@ class ReminderTimeTableViewController: UITableViewController {
         }
     }
     
+    // Function to clear all the setting buttons
     func deselectSettingTimeButtons() {
         
         reminderTitleTextViewResignFirstResponder()
