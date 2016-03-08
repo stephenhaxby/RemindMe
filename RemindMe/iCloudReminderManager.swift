@@ -133,9 +133,14 @@ class iCloudReminderManager{
     
     func saveReminder(reminder : EKReminder) -> Bool {
         
+        return saveReminder(reminder, commit: true)
+    }
+    
+    func saveReminder(reminder : EKReminder, commit : Bool) -> Bool {
+     
         do {
             
-            try eventStore.saveReminder(reminder, commit: true)
+            try eventStore.saveReminder(reminder, commit: commit)
             
         } catch let error as NSError {
             
@@ -151,14 +156,33 @@ class iCloudReminderManager{
     
     func removeReminder(reminder : EKReminder) -> Bool {
         
+        return removeReminder(reminder, commit: true)
+    }
+    
+    func removeReminder(reminder : EKReminder, commit : Bool) -> Bool {
+        
         do {
-
-            try eventStore.removeReminder(reminder, commit: true)
+            
+            try eventStore.removeReminder(reminder, commit: commit)
             
             return true
             
         } catch {
             
+            return false
+        }
+    }
+    
+    func commit() -> Bool {
+    
+        do {
+        
+            try eventStore.commit()
+            
+            return true
+        }
+        catch {
+
             return false
         }
     }
@@ -174,5 +198,30 @@ class iCloudReminderManager{
         }
         
         return nil
+    }
+    
+    func cloneReminder(reminder : EKReminder) -> EKReminder? {
+        
+        let calendar : EKCalendar? = getReminderList()
+        
+        guard calendar != nil else {
+            
+            return nil
+        }
+        
+        let newReminder : EKReminder = EKReminder(eventStore: eventStore)
+        newReminder.calendar = calendar!
+        newReminder.title = reminder.title
+        
+        var newAlarms : [EKAlarm] = [EKAlarm]()
+
+        for reminder in reminder.alarms! {
+            
+            newAlarms.append(EKAlarm(absoluteDate: reminder.absoluteDate!))
+        }
+        
+        newReminder.alarms = newAlarms
+        
+        return newReminder
     }
 }

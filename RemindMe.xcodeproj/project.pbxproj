@@ -17,6 +17,7 @@
 		0E4F75AB1C3BBDA9003AFF2C /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F75AA1C3BBDA9003AFF2C /* SettingsTableViewController.swift */; };
 		0E4F75AD1C3BBF28003AFF2C /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F75AC1C3BBF28003AFF2C /* SettingsTableViewCell.swift */; };
 		0E4F75AF1C3BC0B4003AFF2C /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4F75AE1C3BC0B4003AFF2C /* Setting.swift */; };
+		0E514DE81C8ED12100028AF8 /* ReminderItemSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E514DE71C8ED12100028AF8 /* ReminderItemSequence.swift */; };
 		0E565C721C0DAA7700057488 /* RemindMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */; };
 		0E5839301C43AB4900FA3138 /* ReminderTimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E58392F1C43AB4900FA3138 /* ReminderTimeTableViewController.swift */; };
 		0E5839321C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5839311C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift */; };
@@ -41,6 +42,7 @@
 		0E4F75AA1C3BBDA9003AFF2C /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		0E4F75AC1C3BBF28003AFF2C /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		0E4F75AE1C3BC0B4003AFF2C /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		0E514DE71C8ED12100028AF8 /* ReminderItemSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderItemSequence.swift; sourceTree = "<group>"; };
 		0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMeTableViewCell.swift; sourceTree = "<group>"; };
 		0E58392F1C43AB4900FA3138 /* ReminderTimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTimeTableViewController.swift; sourceTree = "<group>"; };
 		0E5839311C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTimeTableViewCell.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				0E932BEE1C7C55290010CE0F /* TableRowHeaderSpacer.swift */,
 				0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */,
 				0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */,
+				0E514DE71C8ED12100028AF8 /* ReminderItemSequence.swift */,
 			);
 			path = RemindMe;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E8B72B91C153D69000C71D7 /* NSDateManager.swift in Sources */,
+				0E514DE81C8ED12100028AF8 /* ReminderItemSequence.swift in Sources */,
 				0E932BF11C7C55A10010CE0F /* TableRowFooterAddNew.swift in Sources */,
 				0EE685861C0C656100E3317D /* Constants.swift in Sources */,
 				0E4F75AF1C3BC0B4003AFF2C /* Setting.swift in Sources */,

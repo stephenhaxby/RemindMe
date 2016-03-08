@@ -75,6 +75,24 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         // Hide the Done button
         sender.hidden = true
+
+        var reminderItemSequence : [ReminderItemSequence] = [ReminderItemSequence]()
+        
+        // Loop through each reminder and save it's order to a new list
+        for var i = 0; i < reminderList.count; i++ {
+            
+            reminderItemSequence.append(ReminderItemSequence(calendarItemExternalIdentifier: reminderList[i].calendarItemExternalIdentifier, sequenceNumber: i))
+        }
+        
+        // Save our reminder sequence to disk
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL.path!)
+        
+        if !isSuccessfulSave {
+            
+            displayError("Unable to save Reminder Order!")
+        }
+        
+        loadRemindersList()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -174,8 +192,36 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 // Filter out reminder items that don't have an alarm set
                 let scheduledItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.alarms != nil})
                 
-                // Join the two lists from above
-                self.reminderList = scheduledItems
+                // Load up the reminder item sequence from disk
+                if let reminderItemSequence : [ReminderItemSequence] = NSKeyedUnarchiver.unarchiveObjectWithFile(ReminderItemSequence.ArchiveURL.path!) as? [ReminderItemSequence] {
+                    
+                    var sortedScheduledItems : [EKReminder] = [EKReminder]()
+                    
+                    // For each item sequence that was saved
+                    for itemSequence in reminderItemSequence {
+                        
+                        // Get the first matching item by calendarItemExternalIdentifier and add to our new list
+                        if let matchingReminderItem : EKReminder = scheduledItems.filter({(reminderItem : EKReminder) in
+                            reminderItem.calendarItemExternalIdentifier == itemSequence.calendarItemExternalIdentifier}).first {
+                            
+                            sortedScheduledItems.append(matchingReminderItem)
+                        }
+                    }
+                    
+                    // Add the new sorted items to our list
+                    self.reminderList = sortedScheduledItems
+                    
+                    // Get all items that were not in our sorted item list and append them to the sorted list
+                    let unSortedScheduleItems : [EKReminder] = scheduledItems.filter({(reminder : EKReminder) in
+                        sortedScheduledItems.indexOf(reminder) == nil})
+                    
+                    self.reminderList.appendContentsOf(unSortedScheduleItems)
+                }
+                else{
+                    
+                    // If no sequence could be loaded from disk
+                    self.reminderList = scheduledItems
+                }
                 
                 // Update the app's badge icon
                 UIApplication.sharedApplication().applicationIconBadgeNumber = scheduledItems.count
