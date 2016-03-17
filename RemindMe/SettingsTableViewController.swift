@@ -24,10 +24,10 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         tableView.separatorColor = UIColor.orangeColor();
         
-        loadUserDefaultSettings()
+        loadUserSettings()
     }
     
-    func loadUserDefaultSettings() {
+    func loadUserSettings() {
         
         settingsList = settingRepository.getSettings()
         

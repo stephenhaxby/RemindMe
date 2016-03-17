@@ -10,17 +10,11 @@ import UIKit
 
 class ReminderTimeTableViewController: UITableViewController {
     
+    var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
+    
     var reminderTimeTableViewCellItems : [ReminderTimeTableViewCellItem] = [ReminderTimeTableViewCellItem]()
     
     weak var remindMeEditViewController : RemindMeEditViewController?
-    
-    var defaults : NSUserDefaults {
-        
-        get {
-            
-            return NSUserDefaults.standardUserDefaults()
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,37 +23,31 @@ class ReminderTimeTableViewController: UITableViewController {
         tableView.separatorColor = UIColor.clearColor();
         
         // Setup the table cells to display the user default alarm options (left and right)
-        if let userDefaultSettingsObject: AnyObject = defaults.objectForKey(Constants.Setting) {
+        reminderTimeTableViewCellItems.removeAll()
+        
+        var settingsList : [Setting] = settingRepository.getSettings()
+        
+        if settingsList.count > 1 {
             
-            if let userDefaultSettings : [NSData] = userDefaultSettingsObject as? [NSData] {
+            settingsList.sortInPlace({(setting1, setting2) in
                 
-                reminderTimeTableViewCellItems.removeAll()
+                setting1.sequence < setting2.sequence
+            })
+        }
+        
+        for var i = 0; i < settingsList.count; i++ {
+            
+            let reminderTimeTableViewCellItem : ReminderTimeTableViewCellItem = ReminderTimeTableViewCellItem()
+            reminderTimeTableViewCellItem.settingOne = settingsList[i]
+            
+            if i+1 < settingsList.count {
                 
-                var settingsList : [Setting] = [Setting]()
+                reminderTimeTableViewCellItem.settingTwo = settingsList[i+1]
                 
-                for defaultSetting in userDefaultSettings {
-                    
-                    if let unarchivedSetting = NSKeyedUnarchiver.unarchiveObjectWithData(defaultSetting) as? Setting {
-                        
-                        settingsList.append(unarchivedSetting)
-                    }
-                }
-                
-                for var i = 0; i < settingsList.count; i++ {
-                    
-                    let reminderTimeTableViewCellItem : ReminderTimeTableViewCellItem = ReminderTimeTableViewCellItem()
-                    reminderTimeTableViewCellItem.settingOne = settingsList[i]
-                    
-                    if i+1 < settingsList.count {
-                        
-                        reminderTimeTableViewCellItem.settingTwo = settingsList[i+1]
-                        
-                        i++
-                    }
-                    
-                    reminderTimeTableViewCellItems.append(reminderTimeTableViewCellItem)
-                }
+                i++
             }
+            
+            reminderTimeTableViewCellItems.append(reminderTimeTableViewCellItem)
         }
         
         if let reminderTimeListTable = self.tableView {

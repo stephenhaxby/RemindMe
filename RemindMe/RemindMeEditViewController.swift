@@ -25,14 +25,6 @@ class RemindMeEditViewController : UIViewController {
     
     var reminder: EKReminder?
     
-    var defaults : NSUserDefaults {
-        
-        get {
-            
-            return NSUserDefaults.standardUserDefaults()
-        }
-    }
-    
     deinit{
         
         remindMeViewController = nil
@@ -206,21 +198,5 @@ class RemindMeEditViewController : UIViewController {
             
             return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
         }
-    }
-    
-    // Get a stored date form the user defaults
-    private func getStoredDateObjectForKey(key : String) -> AnyObject? {
-        
-        return defaults.objectForKey(key)
-    }
-    
-    private func getStoredDateForKey(key : String) -> NSDate? {
-        
-        if let storedMorningDate = getStoredDateObjectForKey(key) {
-            
-            return storedMorningDate as? NSDate
-        }
-        
-        return nil
     }
 }
