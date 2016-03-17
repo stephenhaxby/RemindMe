@@ -140,7 +140,7 @@
             </objects>
             <point key="canvasLocation" x="1662" y="951"/>
         </scene>
-        <!--Remind Me Edit View Controller-->
+        <!--Remind Me-->
         <scene sceneID="bN5-bO-rVT">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="1Fl-ka-kXO" customClass="RemindMeEditViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -194,6 +194,7 @@
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="centerX" secondItem="pWQ-c8-V5M" secondAttribute="centerX" id="yTB-M3-aI0"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Remind Me" id="slt-qT-pXb"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="reminderTitleTextView" destination="XAk-7V-Yux" id="QFb-zK-6dk"/>
@@ -266,7 +267,7 @@
             </objects>
             <point key="canvasLocation" x="1662" y="2441"/>
         </scene>
-        <!--Settings Table View Controller-->
+        <!--Remind Me-->
         <scene sceneID="TQK-fy-SYz">
             <objects>
                 <tableViewController id="fml-qY-3KS" customClass="SettingsTableViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -382,7 +383,7 @@
                             <outlet property="delegate" destination="fml-qY-3KS" id="G9Y-yx-Jg3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="f6W-am-ybN">
+                    <navigationItem key="navigationItem" title="Remind Me" id="f6W-am-ybN">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="kxP-R1-p1f">
                             <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UYc-9E-fNV">
                                 <rect key="frame" x="530" y="7" width="50" height="30"/>
@@ -426,6 +427,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RuX-yA-r1x"/>
+        <segue reference="hub-ei-YRI"/>
     </inferredMetricsTieBreakers>
 </document>
