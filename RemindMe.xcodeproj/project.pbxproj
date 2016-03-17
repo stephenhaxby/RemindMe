@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0E1DE2991C22B8950041D864 /* EKAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */; };
 		0E27BF4F1C16E5BC0053D90D /* RemindMeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */; };
+		0E2E3DA81C98099100D64CA2 /* Setting.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E3DA61C98099100D64CA2 /* Setting.xcdatamodeld */; };
+		0E2E3DCD1C981F1000D64CA2 /* SettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E3DCC1C981F1000D64CA2 /* SettingRepository.swift */; };
 		0E40FE2C1C0702EC00ACB6F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */; };
 		0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */; };
 		0E40FE311C0702EC00ACB6F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E40FE2F1C0702EC00ACB6F6 /* Main.storyboard */; };
@@ -32,6 +34,8 @@
 /* Begin PBXFileReference section */
 		0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EKAlarmManager.swift; sourceTree = "<group>"; };
 		0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMeEditViewController.swift; sourceTree = "<group>"; };
+		0E2E3DA71C98099100D64CA2 /* Setting.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Setting.xcdatamodel; sourceTree = "<group>"; };
+		0E2E3DCC1C981F1000D64CA2 /* SettingRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingRepository.swift; sourceTree = "<group>"; };
 		0E40FE281C0702EC00ACB6F6 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindMeViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 				0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */,
 				0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */,
 				0E514DE71C8ED12100028AF8 /* ReminderItemSequence.swift */,
+				0E2E3DA61C98099100D64CA2 /* Setting.xcdatamodeld */,
+				0E2E3DCC1C981F1000D64CA2 /* SettingRepository.swift */,
 			);
 			path = RemindMe;
 			sourceTree = "<group>";
@@ -180,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E2E3DCD1C981F1000D64CA2 /* SettingRepository.swift in Sources */,
 				0E8B72B91C153D69000C71D7 /* NSDateManager.swift in Sources */,
 				0E514DE81C8ED12100028AF8 /* ReminderItemSequence.swift in Sources */,
 				0E932BF11C7C55A10010CE0F /* TableRowFooterAddNew.swift in Sources */,
@@ -189,6 +196,7 @@
 				0E5839301C43AB4900FA3138 /* ReminderTimeTableViewController.swift in Sources */,
 				0E1DE2991C22B8950041D864 /* EKAlarmManager.swift in Sources */,
 				0E27BF4F1C16E5BC0053D90D /* RemindMeEditViewController.swift in Sources */,
+				0E2E3DA81C98099100D64CA2 /* Setting.xcdatamodeld in Sources */,
 				0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */,
 				0E40FE3E1C07114200ACB6F6 /* iCloudReminderManager.swift in Sources */,
 				0ED2E8AE1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift in Sources */,
@@ -340,6 +348,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0E2E3DA61C98099100D64CA2 /* Setting.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0E2E3DA71C98099100D64CA2 /* Setting.xcdatamodel */,
+			);
+			currentVersion = 0E2E3DA71C98099100D64CA2 /* Setting.xcdatamodel */;
+			path = Setting.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0E40FE201C0702EC00ACB6F6 /* Project object */;
 }
