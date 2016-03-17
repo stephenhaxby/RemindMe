@@ -17,6 +17,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     var settingsList : [Setting] = [Setting]()
     
+    // Create an instance of our repository
     var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
     
     override func viewDidLoad() {
@@ -27,16 +28,10 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         loadUserSettings()
     }
     
+    // Load up the settings from Core Data
     func loadUserSettings() {
         
         settingsList = settingRepository.getSettings()
-        
-        if settingsList.count == 0 {
-            
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime))
-            
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime))
-        }
         
         if settingsList.count > 1 {
             

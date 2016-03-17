@@ -25,8 +25,18 @@ class ReminderTimeTableViewController: UITableViewController {
         // Setup the table cells to display the user default alarm options (left and right)
         reminderTimeTableViewCellItems.removeAll()
         
+        // Get the settings from CoreData
         var settingsList : [Setting] = settingRepository.getSettings()
         
+        // Create default values for morning and afternoon if none exist...
+        if settingsList.count == 0 {
+            
+            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime))
+            
+            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime))
+        }
+        
+        // Sort the settings before displaying them
         if settingsList.count > 1 {
             
             settingsList.sortInPlace({(setting1, setting2) in
@@ -35,6 +45,7 @@ class ReminderTimeTableViewController: UITableViewController {
             })
         }
         
+        // Lay out the table cells from left to right
         for var i = 0; i < settingsList.count; i++ {
             
             let reminderTimeTableViewCellItem : ReminderTimeTableViewCellItem = ReminderTimeTableViewCellItem()
