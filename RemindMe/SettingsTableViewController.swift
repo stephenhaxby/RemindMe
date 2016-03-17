@@ -17,6 +17,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     var settingsList : [Setting] = [Setting]()
     
+    var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,79 +29,30 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     func loadUserDefaultSettings() {
         
-//        //TODO: Remove all defaults code...
-//        if defaults.objectForKey(Constants.Setting) == nil{
-//            
-//            createDefaultSettings()
-//        }
-//        
-//        // Load up the saved user default settings for reminder alarm times (with names)
-//        if let userDefaultSettingsObject: AnyObject = defaults.objectForKey(Constants.Setting) {
-//            
-//            if let userDefaultSettings : [NSData] = userDefaultSettingsObject as? [NSData] {
-//                
-//                settingsList.removeAll()
-//                
-//                for defaultSetting in userDefaultSettings {
-//                    
-//                    if let unarchivedSetting = NSKeyedUnarchiver.unarchiveObjectWithData(defaultSetting) as? Setting {
-//                        
-//                        settingsList.append(unarchivedSetting)
-//                    }
-//                }
-//            }
-//        }
+        settingsList = settingRepository.getSettings()
         
-        
-        
-
-        
-        
-        let managedContext = getManagedContext()
-        //2
-        let fetchRequest = NSFetchRequest(entityName: "Setting")
-        
-        //3
-        do {
+        if settingsList.count == 0 {
             
-            //TODO: Make sure this doesn't exception when using the app for the first time!
+            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime))
             
-            //TODO: This is duplicated below...
-            settingsList =
-                (try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]).map({
-                    (managedObject : NSManagedObject) -> Setting in
-                    
-                    return Setting(managedObject: managedObject)
-                })
-            
-            if settingsList.count == 0 {
-                
-                createDefaultSettings()
-                
-                settingsList =
-                    (try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]).map({
-                        (managedObject : NSManagedObject) -> Setting in
-                        
-                        return Setting(managedObject: managedObject)
-                    })
-            }
-            
-        }
-        catch let error as NSError {
-            
-            print("Could not fetch \(error), \(error.userInfo)")
+            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime))
         }
         
+        if settingsList.count > 1 {
+            
+            settingsList.sortInPlace({(setting1, setting2) in
+                
+                setting1.sequence < setting2.sequence
+            })
+        }
         
-        
-        
-        
-        
-        
-        
+        reloadSettingsListTable()
+    }
+    
+    func reloadSettingsListTable() {
         
         if let settingsListTable = self.tableView {
-        
+            
             settingsListTable.reloadData()
         }
     }
@@ -114,35 +67,12 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     // When the user navigates away form this page, save all the settings (another way of doing an unwind segue)
     override func viewWillDisappear(animated : Bool){
 
-        let managedContext = getManagedContext()
-
-        //4
-        do {
-
-            try managedContext.save()
-            //5
-            //settingsList.append(setting)
-        }
-        catch let error as NSError  {
-
-            print("Could not save \(error), \(error.userInfo)")
+        for var i = 0; i < settingsList.count; i++ {
+            
+            settingsList[i].sequence = i
         }
         
-//        for setting in settingsList {
-//         
-//            saveSetting(setting)
-//        }
-        
-//        var settingsArray : [NSData] = []
-//        
-//        for setting in settingsList {
-//            
-//            let settingData = NSKeyedArchiver.archivedDataWithRootObject(setting)
-//            
-//            settingsArray.append(settingData)
-//        }
-//
-//        defaults.setObject(settingsArray, forKey: Constants.Setting)
+        settingRepository.commit()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -176,32 +106,11 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     //This method is for the swipe left to delete
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        let managedContext = getManagedContext()
+        settingRepository.removeSetting(settingsList[indexPath.row])
         
-        managedContext.deleteObject(settingsList[indexPath.row].setting)
+        settingsList.removeAtIndex(indexPath.row)
         
-        do {
-            
-            try managedContext.save()
-            
-            settingsList.removeAtIndex(indexPath.row)
-        }
-        catch let error as NSError  {
-            
-            print("Could not save \(error), \(error.userInfo)")
-        }
-        
-//        if let userDefaultSettingsObject: AnyObject = defaults.objectForKey(Constants.Setting) {
-//            
-//            if var userDefaultSettings : [NSData] = userDefaultSettingsObject as? [NSData] {
-//                
-//                userDefaultSettings.removeAtIndex(indexPath.row)
-//                
-//                defaults.setObject(userDefaultSettings, forKey: Constants.Setting)
-//            }
-//        }
-        
-        loadUserDefaultSettings()
+        reloadSettingsListTable()
     }
     
     override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -272,118 +181,15 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     // Add a new setting row to the user defaults. Need to use the keyed archiver to save our custom Settings object to make it compatable with NSData
     func addNewSettingRow() {
         
-        createNewSetting("", time: NSDate())
+        let setting : Setting = settingRepository.createNewSetting("", time: NSDate())
         
-//        //1
-//        let appDelegate =
-//            UIApplication.sharedApplication().delegate as! AppDelegate
-//        
-//        let managedContext = appDelegate.managedObjectContext
-//        
-//        //2
-//        let entity = NSEntityDescription.entityForName("Setting", inManagedObjectContext:managedContext)
-//        
-//        let setting = NSManagedObject(entity: entity!,
-//            insertIntoManagedObjectContext: managedContext)
-//        
-//        //3
-//        setting.setValue("", forKey: "name")
-//        setting.setValue(NSDate(), forKey: "time")
-//        
-//        //4
-//        do {
-//            
-//            try managedContext.save()
-//            //5
-//            settingsList.append(setting)
-//        }
-//        catch let error as NSError  {
-//            
-//            print("Could not save \(error), \(error.userInfo)")
-//        }
+        settingsList.append(setting)
         
-//        let newSetting : Setting = Setting(name: "", time : NSDate())
-//        
-//        let newSettingData = NSKeyedArchiver.archivedDataWithRootObject(newSetting)
-//        
-//        if let defaultSetting : AnyObject = defaults.objectForKey(Constants.Setting) {
-//            
-//            if var defaultSettingObject : [NSData] = defaultSetting as? [NSData] {
-//                
-//                defaultSettingObject.append(newSettingData)
-//                
-//                defaults.setObject(defaultSettingObject, forKey: Constants.Setting)
-//            }
-//        }
-        
-        loadUserDefaultSettings()
+        reloadSettingsListTable()
         
         // Scroll to the last item in the list
         let indexPath = NSIndexPath(forRow: settingsList.count-1, inSection: 0)
         settingsTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-    }
-    
-    func getManagedContext() -> NSManagedObjectContext {
-        
-        //1
-        let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        return appDelegate.managedObjectContext
-    }
-    
-//    func saveSetting(setting : Setting) {
-//        
-//        let managedContext = getManagedContext()
-//        
-//        //4
-//        do {
-//            
-//            try managedContext.save()
-//            //5
-//            settingsList.append(setting)
-//        }
-//        catch let error as NSError  {
-//            
-//            print("Could not save \(error), \(error.userInfo)")
-//        }
-//
-//    }
-    
-    func createNewSetting(name : String, time : NSDate) {
-        
-        let managedContext = getManagedContext()
-        
-        //2
-        let entity = NSEntityDescription.entityForName("Setting", inManagedObjectContext:managedContext)
-        
-        let setting = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        
-        //3
-        setting.setValue(name, forKey: "name")
-        setting.setValue(time, forKey: "time")
-        
-        settingsList.append(Setting(managedObject: setting))
-    }
-    
-    // Create a new setting using some default values
-    func createDefaultSettings() {
-        
-        createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime)
-        createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime)
-        
-//        var settingsArray : [NSData] = []
-//        
-//        let defaultMorningSetting : Setting = Setting(name: Constants.DefaultMorningTimeText, time : Constants.DefaultMorningTime)
-//        let defaultAfternoonSetting : Setting = Setting(name : Constants.DefaultAfternoonTimeText, time : Constants.DefaultAfternoonTime)
-//        
-//        let defaultMorningSettingData = NSKeyedArchiver.archivedDataWithRootObject(defaultMorningSetting)
-//        let defaultAfternoonSettingData = NSKeyedArchiver.archivedDataWithRootObject(defaultAfternoonSetting)
-//        
-//        settingsArray.append(defaultMorningSettingData)
-//        settingsArray.append(defaultAfternoonSettingData)
-//        
-//        defaults.setObject(settingsArray, forKey: Constants.Setting)
     }
     
     // Resign first responder on the text field if the user starts to scroll

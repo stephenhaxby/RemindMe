@@ -47,7 +47,7 @@ class SettingRepository {
         getManagedContext().deleteObject(setting.setting)
     }
     
-    func getSettings() -> [Setting]? {
+    func getSettings() -> [Setting] {
         
         do {
         
@@ -65,7 +65,7 @@ class SettingRepository {
             print("Could not fetch \(error), \(error.userInfo)")
         }
         
-        return nil
+        return [Setting]()
     }
     
     func commit() -> Bool {
