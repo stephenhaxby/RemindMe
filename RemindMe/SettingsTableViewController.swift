@@ -87,6 +87,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
      
         let cell : SettingsTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")! as! SettingsTableViewCell
         
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        
         // Setup a long press gesture recognizer to call the cellLongPressed method
         let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
         longPress.delegate = self
@@ -193,6 +195,11 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         // Scroll to the last item in the list
         let indexPath = NSIndexPath(forRow: settingsList.count-1, inSection: 0)
         settingsTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        
+        if let settingTableViewCell : SettingsTableViewCell = settingsTableView.visibleCells[settingsList.count-1] as? SettingsTableViewCell {
+            
+            settingTableViewCell.nameTextField.becomeFirstResponder()
+        }
     }
     
     // Resign first responder on the text field if the user starts to scroll

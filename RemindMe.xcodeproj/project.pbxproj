@@ -88,31 +88,55 @@
 		0E40FE2A1C0702EC00ACB6F6 /* RemindMe */ = {
 			isa = PBXGroup;
 			children = (
-				0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */,
+				0EFDC8671CB7932C00FCF038 /* UITableView */,
+				0EFDC8661CB7921E00FCF038 /* Managers */,
+				0EFDC8641CB791D500FCF038 /* Controllers */,
 				0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */,
-				0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */,
 				0E40FE2F1C0702EC00ACB6F6 /* Main.storyboard */,
 				0E40FE321C0702EC00ACB6F6 /* Assets.xcassets */,
 				0E40FE371C0702EC00ACB6F6 /* Info.plist */,
 				0EE685851C0C656100E3317D /* Constants.swift */,
-				0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */,
-				0E8B72B81C153D69000C71D7 /* NSDateManager.swift */,
-				0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */,
-				0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */,
-				0E4F75AA1C3BBDA9003AFF2C /* SettingsTableViewController.swift */,
-				0E4F75AC1C3BBF28003AFF2C /* SettingsTableViewCell.swift */,
 				0E4F75AE1C3BC0B4003AFF2C /* Setting.swift */,
-				0E58392F1C43AB4900FA3138 /* ReminderTimeTableViewController.swift */,
-				0E5839311C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift */,
-				0E5839331C43B10300FA3138 /* ReminderTimeTableViewCellItem.swift */,
-				0E932BEE1C7C55290010CE0F /* TableRowHeaderSpacer.swift */,
-				0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */,
-				0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */,
 				0E514DE71C8ED12100028AF8 /* ReminderItemSequence.swift */,
 				0E2E3DA61C98099100D64CA2 /* Setting.xcdatamodeld */,
 				0E2E3DCC1C981F1000D64CA2 /* SettingRepository.swift */,
 			);
 			path = RemindMe;
+			sourceTree = "<group>";
+		};
+		0EFDC8641CB791D500FCF038 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */,
+				0E4F75AA1C3BBDA9003AFF2C /* SettingsTableViewController.swift */,
+				0E58392F1C43AB4900FA3138 /* ReminderTimeTableViewController.swift */,
+				0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		0EFDC8661CB7921E00FCF038 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0E8B72B81C153D69000C71D7 /* NSDateManager.swift */,
+				0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */,
+				0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		0EFDC8671CB7932C00FCF038 /* UITableView */ = {
+			isa = PBXGroup;
+			children = (
+				0E565C711C0DAA7700057488 /* RemindMeTableViewCell.swift */,
+				0E4F75AC1C3BBF28003AFF2C /* SettingsTableViewCell.swift */,
+				0E5839311C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift */,
+				0E5839331C43B10300FA3138 /* ReminderTimeTableViewCellItem.swift */,
+				0E932BEE1C7C55290010CE0F /* TableRowHeaderSpacer.swift */,
+				0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */,
+				0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */,
+			);
+			name = UITableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
