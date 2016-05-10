@@ -43,17 +43,20 @@ class ReminderTimeTableViewCell: UITableViewCell {
 
         if reminderTimeTableViewController != nil {
             
+            //When a button is pressed we need to deselect any that are visible
+            //Any selected buttons off screen should be taken care of when the user scrolls
             reminderTimeTableViewController!.deselectSettingTimeButtons()
             
             if let button : UIButton = sender as? UIButton {
                 
+                //Set the parent view controllers reminder setting 
                 if button == leftButton {
                     
-                    reminderTimeTableViewController!.setReminder((settings?.settingOne)!)
+                    reminderTimeTableViewController!.selectedSetting = (settings?.settingOne)!
                 }
                 else if button == rightButton {
                     
-                    reminderTimeTableViewController!.setReminder((settings?.settingTwo)!)
+                    reminderTimeTableViewController!.selectedSetting = (settings?.settingTwo)!
                 }
                 
                 button.selected = true

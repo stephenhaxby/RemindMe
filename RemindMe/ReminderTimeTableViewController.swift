@@ -14,6 +14,8 @@ class ReminderTimeTableViewController: UITableViewController {
     var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
     
     var reminderTimeTableViewCellItems : [ReminderTimeTableViewCellItem] = [ReminderTimeTableViewCellItem]()
+
+    var selectedSetting : Setting?
     
     weak var remindMeEditViewController : RemindMeEditViewController?
     
@@ -111,50 +113,28 @@ class ReminderTimeTableViewController: UITableViewController {
                 
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
                     
-                    if NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time, date2Components : itemReminderAlarmDateComponents) {
-                        
-                        leftButton.selected = true
-
-                    }
+                    leftButton.selected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time, date2Components : itemReminderAlarmDateComponents)
+                    
+                    selectedSetting = reminderTimeTableViewCell.settings!.settingOne
+                    
+                    //setReminderAlarms(reminderTimeTableViewCell.settings!.settingOne)
                 }
             }
             
             if let rightButton = reminderTimeTableViewCell.rightButton {
                 
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingTwo != nil {
+                
+                    rightButton.selected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time, date2Components : itemReminderAlarmDateComponents)
                     
-                    if NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time, date2Components : itemReminderAlarmDateComponents) {
-                        
-                        rightButton.selected = true
-                    }
+                    selectedSetting = reminderTimeTableViewCell.settings!.settingTwo
+                    
+                    //setReminderAlarms(reminderTimeTableViewCell.settings!.settingTwo)
                 }
             }
         }
     }
-    
-    func setReminder(setting : Setting) {
- 
-        reminder?.alarms = [getSelectedAlarmDateComponentsFromDate(setting.time)]
-    }
-    
-    // Return an alarm date/time for the selected date, making it either today or tomorrow depending on if the time has passed
-    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> EKAlarm {
-        
-        let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
-        
-        let currentDateTime = NSDate()
-        let reminderDate = NSDateManager.currentDateWithHour(morningDateComponents.hour, minute: morningDateComponents.minute, second: morningDateComponents.second)
-        
-        if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
-            
-            return EKAlarm(absoluteDate: reminderDate)
-        }
-        else {
-            
-            return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
-        }
-    }
-    
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return reminderTimeTableViewCellItems.count

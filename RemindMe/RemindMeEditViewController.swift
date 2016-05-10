@@ -95,11 +95,15 @@ class RemindMeEditViewController : UIViewController {
          
             reminderItem.title = reminderTitleTextView.text
             
-            if reminderTimeTableViewController != nil {
-
-                //TODO!
-                
-                
+            if reminderTimeTableViewController != nil && reminderTimeTableViewController!.selectedSetting != nil {
+            
+                reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)]
+            
+                reminderManager!.saveReminder(reminderItem)
+            }
+            
+//            if reminderTimeTableViewController != nil {
+            
 //                var selectedTime : NSDate?
                 
 //                // Loop through each cell button to find which one was selected (left and right)
@@ -131,11 +135,11 @@ class RemindMeEditViewController : UIViewController {
                     
 //                    reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(selectedTime!)]
                     
-                    reminderManager!.saveReminder(reminderItem)
+//                    reminderManager!.saveReminder(reminderItem)
                     
-                    return
+//                    return
 //                }
-            }
+//            }
         }
         
 //        // Refresh the main list in the main UI thread
@@ -143,5 +147,23 @@ class RemindMeEditViewController : UIViewController {
 //            
 //            mainViewController.refreshInMainThread()
 //        }
+    }
+    
+    // Return an alarm date/time for the selected date, making it either today or tomorrow depending on if the time has passed
+    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> EKAlarm {
+        
+        let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
+        
+        let currentDateTime = NSDate()
+        let reminderDate = NSDateManager.currentDateWithHour(morningDateComponents.hour, minute: morningDateComponents.minute, second: morningDateComponents.second)
+        
+        if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
+            
+            return EKAlarm(absoluteDate: reminderDate)
+        }
+        else {
+            
+            return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
+        }
     }
 }
