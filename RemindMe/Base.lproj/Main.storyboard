@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="84j-94-rQU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="84j-94-rQU">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -230,7 +230,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <state key="normal" title="Button"/>
                                             <connections>
-                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="h1M-yZ-V0J"/>
+                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="d7t-2e-itl"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY4-pg-qRC">
@@ -238,7 +238,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <state key="normal" title="Button"/>
                                             <connections>
-                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="qk4-MR-TTf"/>
+                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="1ZL-HM-9lP"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -251,8 +251,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="leftButton" destination="wzW-9Q-3yt" id="tKR-gm-hSu"/>
-                                    <outlet property="rightButton" destination="xY4-pg-qRC" id="Y22-bw-UOv"/>
+                                    <outlet property="leftButton" destination="wzW-9Q-3yt" id="7pL-Rw-J4i"/>
+                                    <outlet property="rightButton" destination="xY4-pg-qRC" id="ZQh-Q5-4qq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

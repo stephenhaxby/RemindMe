@@ -47,6 +47,15 @@ class ReminderTimeTableViewCell: UITableViewCell {
             
             if let button : UIButton = sender as? UIButton {
                 
+                if button == leftButton {
+                    
+                    reminderTimeTableViewController!.setReminder((settings?.settingOne)!)
+                }
+                else if button == rightButton {
+                    
+                    reminderTimeTableViewController!.setReminder((settings?.settingTwo)!)
+                }
+                
                 button.selected = true
             }
         }

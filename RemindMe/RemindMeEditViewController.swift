@@ -50,45 +50,11 @@ class RemindMeEditViewController : UIViewController {
         if let reminderItem = reminder {
             
             reminderTitleTextView.text = reminderItem.title
-            
-            if reminderTimeTableViewController != nil{
-                
-                reminderTimeTableViewController!.deselectSettingTimeButtons()
-                
-                // Loop through each alarm time and set the button to selected when it finds a match (left or right button)
-                if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms) {
-                    
-                    for var i = 0; i < reminderTimeTableViewController!.tableView.visibleCells.count; i++ {
-                        
-                        if let reminderTimeTableViewCell : ReminderTimeTableViewCell = reminderTimeTableViewController!.tableView.visibleCells[i] as? ReminderTimeTableViewCell {
-                            
-                            if let leftButton = reminderTimeTableViewCell.leftButton {
-                                
-                                if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
-                                    
-                                    if NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time, date2Components : itemReminderAlarmDateComponents) {
-                                        
-                                        leftButton.selected = true
-                                        break
-                                    }
-                                }
-                            }
-                            
-                            if let rightButton = reminderTimeTableViewCell.rightButton {
-                                
-                                if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingTwo != nil {
-                                    
-                                    if NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time, date2Components : itemReminderAlarmDateComponents) {
-                                     
-                                        rightButton.selected = true
-                                        break
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+//
+//            if reminderTimeTableViewController != nil{
+//                
+//                reminderTimeTableViewController!.deselectSettingTimeButtons()
+//            }
         }
     }
     
@@ -104,14 +70,6 @@ class RemindMeEditViewController : UIViewController {
         }
     }
     
-    @IBAction func timeButtonTouchUpInside(sender: AnyObject) {
-     
-        if let timeButton : UIButton = sender as? UIButton {
-            
-            timeButton.selected = true
-        }
-    }
-    
     // Sets up the relationships between controllers
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -120,6 +78,8 @@ class RemindMeEditViewController : UIViewController {
             reminderTimeTableViewController = destinationViewController
             
             destinationViewController.remindMeEditViewController = self
+            
+            destinationViewController.reminder = reminder
         }
     }
     
@@ -136,67 +96,52 @@ class RemindMeEditViewController : UIViewController {
             reminderItem.title = reminderTitleTextView.text
             
             if reminderTimeTableViewController != nil {
+
+                //TODO!
                 
-                var selectedTime : NSDate?
                 
-                // Loop through each cell button to find which one was selected (left and right)
-                for var i = 0; i < reminderTimeTableViewController!.tableView.visibleCells.count; i++ {
+//                var selectedTime : NSDate?
+                
+//                // Loop through each cell button to find which one was selected (left and right)
+//                for var i = 0; i < reminderTimeTableViewController!.tableView.visibleCells.count; i++ {
+//                    
+//                    if let reminderTimeTableViewCell : ReminderTimeTableViewCell = reminderTimeTableViewController!.tableView.visibleCells[i] as? ReminderTimeTableViewCell {
+//                        
+//                        if let leftButton = reminderTimeTableViewCell.leftButton {
+//                            
+//                            if leftButton.selected && reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
+//                                
+//                                selectedTime = reminderTimeTableViewCell.settings!.settingOne!.time
+//                                break
+//                            }
+//                        }
+//                        
+//                        if let rightButton = reminderTimeTableViewCell.rightButton {
+//                            
+//                            if rightButton.selected && reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingTwo != nil {
+//                                
+//                                selectedTime = reminderTimeTableViewCell.settings!.settingTwo!.time
+//                                break
+//                            }
+//                        }
+//                    }
+//                }
+                
+//                if selectedTime != nil {
                     
-                    if let reminderTimeTableViewCell : ReminderTimeTableViewCell = reminderTimeTableViewController!.tableView.visibleCells[i] as? ReminderTimeTableViewCell {
-                        
-                        if let leftButton = reminderTimeTableViewCell.leftButton {
-                            
-                            if leftButton.selected && reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
-                                
-                                selectedTime = reminderTimeTableViewCell.settings!.settingOne!.time
-                                break
-                            }
-                        }
-                        
-                        if let rightButton = reminderTimeTableViewCell.rightButton {
-                            
-                            if rightButton.selected && reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingTwo != nil {
-                                
-                                selectedTime = reminderTimeTableViewCell.settings!.settingTwo!.time
-                                break
-                            }
-                        }
-                    }
-                }
-                
-                if selectedTime != nil {
-                    
-                    reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(selectedTime!)]
+//                    reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(selectedTime!)]
                     
                     reminderManager!.saveReminder(reminderItem)
                     
                     return
-                }
+//                }
             }
         }
         
-        // Refresh the main list in the main UI thread
-        if let mainViewController = remindMeViewController {
-            
-            mainViewController.refreshInMainThread()
-        }
-    }
-    
-    // Return an alarm date/time for the selected date, making it either today or tomorrow depending on if the time has passed
-    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> EKAlarm {
-        
-        let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
-        
-        let currentDateTime = NSDate()
-        let reminderDate = NSDateManager.currentDateWithHour(morningDateComponents.hour, minute: morningDateComponents.minute, second: morningDateComponents.second)
-        
-        if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
-            
-            return EKAlarm(absoluteDate: reminderDate)
-        }
-        else {
-            
-            return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
-        }
+//        // Refresh the main list in the main UI thread
+//        if let mainViewController = remindMeViewController {
+//            
+//            mainViewController.refreshInMainThread()
+//        }
     }
 }

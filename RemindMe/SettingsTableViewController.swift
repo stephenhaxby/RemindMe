@@ -17,6 +17,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     var settingsList : [Setting] = [Setting]()
     
+    var newSettingIndexPath : NSIndexPath?
+    
     // Create an instance of our repository
     var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
     
@@ -100,6 +102,19 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         cell.setting = settingsList[indexPath.row]
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if let newIndexPath : NSIndexPath = newSettingIndexPath where newIndexPath.section == indexPath.section && newIndexPath.row == indexPath.row
+        {
+            if let settingTableViewCell : SettingsTableViewCell = cell as? SettingsTableViewCell {
+    
+                settingTableViewCell.nameTextField.becomeFirstResponder()
+                
+                newSettingIndexPath = nil
+            }
+        }
     }
     
     //This method is setting which cells can be edited
@@ -196,10 +211,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         let indexPath = NSIndexPath(forRow: settingsList.count-1, inSection: 0)
         settingsTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         
-        if let settingTableViewCell : SettingsTableViewCell = settingsTableView.visibleCells[settingsList.count-1] as? SettingsTableViewCell {
-            
-            settingTableViewCell.nameTextField.becomeFirstResponder()
-        }
+        newSettingIndexPath = indexPath
     }
     
     // Resign first responder on the text field if the user starts to scroll
