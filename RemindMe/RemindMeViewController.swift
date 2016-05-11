@@ -281,9 +281,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         cell.addGestureRecognizer(longPress)
 
         // Sets the reminder list item for the cell
-        var reminderListItem : EKReminder?
-        reminderListItem  = reminderList[indexPath.row]
-        cell.reminder = reminderListItem!
+        var reminderListItem : EKReminder = reminderList[indexPath.row]
+        cell.reminder = reminderListItem
         
         return cell
     }

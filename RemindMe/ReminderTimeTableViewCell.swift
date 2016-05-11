@@ -16,6 +16,10 @@ class ReminderTimeTableViewCell: UITableViewCell {
     
     weak var reminderTimeTableViewController : ReminderTimeTableViewController?
     
+    deinit{
+        reminderTimeTableViewController = nil
+    }
+    
     var settings: ReminderTimeTableViewCellItem? {
         didSet {
             

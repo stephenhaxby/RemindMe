@@ -29,6 +29,7 @@ class RemindMeEditViewController : UIViewController {
         
         remindMeViewController = nil
         reminderManager = nil
+        reminderTimeTableViewController = nil
     }
     
     override func viewDidLoad() {
@@ -50,11 +51,6 @@ class RemindMeEditViewController : UIViewController {
         if let reminderItem = reminder {
             
             reminderTitleTextView.text = reminderItem.title
-//
-//            if reminderTimeTableViewController != nil{
-//                
-//                reminderTimeTableViewController!.deselectSettingTimeButtons()
-//            }
         }
     }
     
@@ -101,45 +97,6 @@ class RemindMeEditViewController : UIViewController {
             
                 reminderManager!.saveReminder(reminderItem)
             }
-            
-//            if reminderTimeTableViewController != nil {
-            
-//                var selectedTime : NSDate?
-                
-//                // Loop through each cell button to find which one was selected (left and right)
-//                for var i = 0; i < reminderTimeTableViewController!.tableView.visibleCells.count; i++ {
-//                    
-//                    if let reminderTimeTableViewCell : ReminderTimeTableViewCell = reminderTimeTableViewController!.tableView.visibleCells[i] as? ReminderTimeTableViewCell {
-//                        
-//                        if let leftButton = reminderTimeTableViewCell.leftButton {
-//                            
-//                            if leftButton.selected && reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
-//                                
-//                                selectedTime = reminderTimeTableViewCell.settings!.settingOne!.time
-//                                break
-//                            }
-//                        }
-//                        
-//                        if let rightButton = reminderTimeTableViewCell.rightButton {
-//                            
-//                            if rightButton.selected && reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingTwo != nil {
-//                                
-//                                selectedTime = reminderTimeTableViewCell.settings!.settingTwo!.time
-//                                break
-//                            }
-//                        }
-//                    }
-//                }
-                
-//                if selectedTime != nil {
-                    
-//                    reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(selectedTime!)]
-                    
-//                    reminderManager!.saveReminder(reminderItem)
-                    
-//                    return
-//                }
-//            }
         }
         
 //        // Refresh the main list in the main UI thread

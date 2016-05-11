@@ -21,6 +21,11 @@ class ReminderTimeTableViewController: UITableViewController {
     
     weak var reminder : EKReminder?
     
+    deinit{
+        remindMeEditViewController = nil
+        reminder = nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,8 +109,6 @@ class ReminderTimeTableViewController: UITableViewController {
     
     func selectSettingButtonFor(reminderTimeTableViewCell : ReminderTimeTableViewCell) {
         
-        //TODO: Use reminder to specify which one should be selected
-        
         // Loop through each alarm time and set the button to selected when it finds a match (left or right button)
         if let reminderItem : EKReminder = reminder, let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms) {
     
@@ -116,8 +119,6 @@ class ReminderTimeTableViewController: UITableViewController {
                     leftButton.selected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time, date2Components : itemReminderAlarmDateComponents)
                     
                     selectedSetting = reminderTimeTableViewCell.settings!.settingOne
-                    
-                    //setReminderAlarms(reminderTimeTableViewCell.settings!.settingOne)
                 }
             }
             
@@ -128,8 +129,6 @@ class ReminderTimeTableViewController: UITableViewController {
                     rightButton.selected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time, date2Components : itemReminderAlarmDateComponents)
                     
                     selectedSetting = reminderTimeTableViewCell.settings!.settingTwo
-                    
-                    //setReminderAlarms(reminderTimeTableViewCell.settings!.settingTwo)
                 }
             }
         }
