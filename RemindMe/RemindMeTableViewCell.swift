@@ -15,8 +15,6 @@ class RemindMeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var reminderTimeLable: UILabel!
     
-    @IBOutlet weak var addNewButton: UIButton!
-    
     weak var remindMeViewController : RemindMeViewController?
     
     var reminder: EKReminder? {
@@ -34,6 +32,7 @@ class RemindMeTableViewCell: UITableViewCell {
                 
                 var newReminderText = String(reminderText)
                 
+                // If the original text is greater than the truncated version, replace the final 3 characters with "..."
                 if originalReminderText.length > reminderText.length {
                     
                     reminderText = reminderText.substringWithRange(NSRange(location: 0, length: reminderText.length-3))
@@ -43,16 +42,16 @@ class RemindMeTableViewCell: UITableViewCell {
                 
                 reminderTextLabel.text = newReminderText
                 
+                // Set's the reminder time label
                 if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(itemReminder.alarms) {
                     
                     reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
                 }
-                
-                setupCellVisibilityFor(itemReminder)
             }
         }
     }
     
+    // Function to truncate the text for a label based on it's visible size.
     func truncateText(var text : NSString, forLabel : UILabel) {
         
         let size : CGSize = text.sizeWithAttributes([NSFontAttributeName : reminderTextLabel.font!])
@@ -66,33 +65,4 @@ class RemindMeTableViewCell: UITableViewCell {
             truncateText(text, forLabel: forLabel)
         }
     }
-    
-    @IBAction func addNewButtonTouchUpInside(sender: AnyObject) {
-        
-        if remindMeViewController != nil && reminder != nil {
-            
-            reminder!.title = ""
-            
-            remindMeViewController!.performSegueWithIdentifier("tableViewCellSegue", sender: reminder)
-        }
-    }
-    
-    func setupCellVisibilityFor(reminder : EKReminder){
-        
-        switch reminder.title{
-            
-        case Constants.ReminderItemTableViewCell.EmptyCell:
-            reminderTextLabel.text = ""
-            reminderTimeLable.text = ""
-            addNewButton.hidden = true
-        case Constants.ReminderItemTableViewCell.NewItemCell:
-            reminderTextLabel.text = ""
-            reminderTimeLable.text = ""
-            addNewButton.hidden = false
-        default:
-            addNewButton.hidden = true
-        }
-    }
-    
-    
 }
