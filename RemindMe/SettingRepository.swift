@@ -1,5 +1,5 @@
 //
-//  SettingManager.swift
+//  SettingREpository.swift
 //  RemindMe
 //
 //  Created by Stephen Haxby on 15/03/2016.
