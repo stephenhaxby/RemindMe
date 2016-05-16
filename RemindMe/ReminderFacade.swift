@@ -8,11 +8,7 @@
 
 import Foundation
 
-class ReminderFacade {
-    
-    var title : String = String()
-    
-    var date : NSDate = NSDate()
+class ReminderFacade : StorageFacadeProtocol {
     
     var reminderRepository : ReminderRepository {
         
@@ -51,14 +47,15 @@ class ReminderFacade {
         reminderRepository.removeReminder(reminder)
     }
     
-    func getReminders() -> [RemindMeItem] {
-        
-        reminderRepository.getReminders().map({
+    //Expects a function that has a parameter that's an array of RemindMeItem
+    func getReminders(returnReminders : [RemindMeItem] -> ()){
+    
+        returnReminders(reminderRepository.getReminders().map({
                 
                 (reminder : Reminder) -> RemindMeItem in
                 
                 return getReminderItemFrom(reminder)
-            })
+            }))
     }
     
     func commit() -> Bool {
