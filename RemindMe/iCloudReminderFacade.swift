@@ -11,19 +11,24 @@ import EventKit
 
 class iCloudReminderFacade : StorageFacadeProtocol {
     
-    var icloudReminderManager : iCloudReminderManager
+    var icloudReminderManager : iCloudReminderManager! = nil
     
-    var returnRemindersFunc : [RemindMeItem] -> ()
+    var returnRemindersFunc : [RemindMeItem] -> () =
     
     init (icloudReminderManager : iCloudReminderManager) {
     
         self.icloudReminderManager = icloudReminderManager
         
         // Set the name of the reminder list we are going to use
-        icloudReminderManager.remindersListName = Constants.RemindersListName
+        self.icloudReminderManager.remindersListName = Constants.RemindersListName
         
         // Request access to Reminders
-        icloudReminderManager.requestAccessToReminders(requestedAccessToReminders) //TODO:
+        self.icloudReminderManager.requestAccessToReminders(accessGranted)
+    }
+    
+    func accessGranted(granted : Bool) {
+        
+        
     }
     
     func createNewReminder() -> RemindMeItem {
