@@ -6,13 +6,6 @@
 //  Copyright © 2016 Stephen Haxby. All rights reserved.
 //
 
-
-EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms)
-
-return EKAlarm(absoluteDate: reminderDate)
-return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
-
-
 import Foundation
 
 class iCloudReminderFacade : StorageFacadeProtocol {
@@ -61,31 +54,20 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     func updateReminder(remindMeItem : RemindMeItem) {
     
-        //TODO:
-    
-        //Need to try and use calendarItemWithIdentifier:
-    
-        //icloudReminderManager.getReminders(getReminderList)
-    
-        //var reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)
+        var reminder : EKReminder = icloudReminderManager.getReminder(remindMeItem.id)
         
-        //reminder.title = remindMeItem.title
-        //reminder.date = remindMeItem.date
+        reminder.title = remindMeItem.title
+        reminder.alarms = [EKAlarm(absoluteDate: remindMeItem.date]
+    
+        icloudReminderManager.saveReminder(reminder)
     }
         
     func removeReminder(remindMeItem : RemindMeItem) {
         
-        //TODO:
+        var reminder : EKReminder = icloudReminderManager.getReminder(remindMeItem.id)
         
-        //Need to try and use calendarItemWithIdentifier:
-        
-        //var reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)
-        
-        //reminderRepository.removeReminder(reminder)
+        icloudReminderManager.removeReminder(reminder)
     }
-    
-    
-    
     
     //Expects a function that has a parameter that's an array of RemindMeItem
     func getReminders(returnReminders : [RemindMeItem] -> ()){
