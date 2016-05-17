@@ -21,14 +21,14 @@ class RemindMeEditViewController : UIViewController {
     
     weak var remindMeViewController : RemindMeViewController?
     
-    weak var reminderManager : iCloudReminderManager?
+    weak var storageFacade : StorageFacadeProtocol?
     
-    var reminder: EKReminder?
+    var reminder: RemindMeItem?
     
     deinit{
         
         remindMeViewController = nil
-        reminderManager = nil
+        storageFacade = nil
         reminderTimeTableViewController = nil
     }
     
@@ -82,7 +82,7 @@ class RemindMeEditViewController : UIViewController {
     // When the back button is pressed we need to save everything
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
-        guard reminderManager != nil else {
+        guard storageFacade != nil else {
             
             return
         }
@@ -93,9 +93,9 @@ class RemindMeEditViewController : UIViewController {
             
             if reminderTimeTableViewController != nil && reminderTimeTableViewController!.selectedSetting != nil {
             
-                reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)]
+                reminderItem.date = getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)
             
-                reminderManager!.saveReminder(reminderItem)
+                storageFacade!.updateReminder(reminderItem)
             }
         }
         
@@ -116,11 +116,11 @@ class RemindMeEditViewController : UIViewController {
         
         if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
             
-            return EKAlarm(absoluteDate: reminderDate)
+            return reminderDate
         }
         else {
             
-            return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
+            return NSDateManager.addDaysToDate(reminderDate, days: 1)
         }
     }
 }

@@ -14,5 +14,5 @@ class RemindMeItem {
     
     var title : String = String()
     
-    var date : NSDate = NSDate()
+    var date : NSDate?
 }

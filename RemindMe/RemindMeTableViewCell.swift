@@ -17,7 +17,7 @@ class RemindMeTableViewCell: UITableViewCell {
     
     weak var remindMeViewController : RemindMeViewController?
     
-    var reminder: EKReminder? {
+    var reminder: RemindMeItem? {
         didSet {
             
             if let itemReminder = reminder {
@@ -43,7 +43,7 @@ class RemindMeTableViewCell: UITableViewCell {
                 reminderTextLabel.text = newReminderText
                 
                 // Set's the reminder time label
-                if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(itemReminder.alarms) {
+                if let itemReminderAlarmDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(itemReminder.date) {
                     
                     reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
                 }

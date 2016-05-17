@@ -6,6 +6,13 @@
 //  Copyright © 2016 Stephen Haxby. All rights reserved.
 //
 
+
+EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms)
+
+return EKAlarm(absoluteDate: reminderDate)
+return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
+
+
 import Foundation
 
 class iCloudReminderFacade : StorageFacadeProtocol {
@@ -22,6 +29,12 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     init (icloudReminderManager : iCloudReminderManager) {
     
         self.icloudReminderManager = icloudReminderManager
+        
+        // Set the name of the reminder list we are going to use
+        icloudReminderManager.remindersListName = Constants.RemindersListName
+        
+        // Request access to Reminders
+        icloudReminderManager.requestAccessToReminders(requestedAccessToReminders)
     }
     
     func createNewReminder() -> RemindMeItem {
@@ -64,10 +77,15 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         
         //TODO:
         
+        //Need to try and use calendarItemWithIdentifier:
+        
         //var reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)
         
         //reminderRepository.removeReminder(reminder)
     }
+    
+    
+    
     
     //Expects a function that has a parameter that's an array of RemindMeItem
     func getReminders(returnReminders : [RemindMeItem] -> ()){
