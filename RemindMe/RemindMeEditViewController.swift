@@ -21,7 +21,7 @@ class RemindMeEditViewController : UIViewController {
     
     weak var remindMeViewController : RemindMeViewController?
     
-    weak var storageFacade : StorageFacadeProtocol?
+    var storageFacade : StorageFacadeProtocol?
     
     var reminder: RemindMeItem?
     
@@ -107,7 +107,7 @@ class RemindMeEditViewController : UIViewController {
     }
     
     // Return an alarm date/time for the selected date, making it either today or tomorrow depending on if the time has passed
-    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> EKAlarm {
+    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> NSDate {
         
         let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
         

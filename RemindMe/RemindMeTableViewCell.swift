@@ -43,7 +43,7 @@ class RemindMeTableViewCell: UITableViewCell {
                 reminderTextLabel.text = newReminderText
                 
                 // Set's the reminder time label
-                if let itemReminderAlarmDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(itemReminder.date) {
+                if let itemReminderAlarmDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(itemReminder.date!) {
                     
                     reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
                 }

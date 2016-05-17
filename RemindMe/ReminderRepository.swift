@@ -3,7 +3,7 @@
 //  RemindMe
 //
 //  Created by Stephen Haxby on 15/03/2016.
-//  Copyright © 2016 Stephen Haxby. All rights reserved.
+//  Copyright Â© 2016 Stephen Haxby. All rights reserved.
 //
 
 import Foundation
@@ -37,13 +37,13 @@ class ReminderRepository {
         let reminder : Reminder = createNewReminder()
         
         reminder.id = NSUUID().UUIDString
-        reminder.name = name
-        reminder.time = time
+        reminder.title = name
+        reminder.date = time
         
         return reminder
     }
     
-    func getReminderBy(id : String) -> Reminder {
+    func getReminderBy(id : String) -> Reminder? {
     
         let reminderFetch = NSFetchRequest(entityName: "Reminder")
     
@@ -55,7 +55,7 @@ class ReminderRepository {
             
             if reminders.count == 1 {
             
-                return reminders.first
+                return reminders.first!
             }
             else {
                 
@@ -65,6 +65,8 @@ class ReminderRepository {
         
             fatalError("Failed to fetch reminder: \(error)")
         }
+        
+        return nil
     }
     
     func getReminders() -> [Reminder] {

@@ -108,7 +108,7 @@ class iCloudReminderManager{
 
     func getReminder(id : String) -> EKReminder? {
     
-        return eventStore.calendarItemWithIdentifier(id) -> EKCalendarItem
+        return eventStore.calendarItemWithIdentifier(id) //TODO:
     }
     
     func addReminder(title : String) -> EKReminder? {

@@ -3,19 +3,14 @@
 //  RemindMe
 //
 //  Created by Stephen Haxby on 5/01/2016.
-//  Copyright © 2016 Stephen Haxby. All rights reserved.
+//  Copyright Â© 2016 Stephen Haxby. All rights reserved.
 //
 
 import Foundation
 
 class ReminderFacade : StorageFacadeProtocol {
     
-    var reminderRepository : ReminderRepository {
-        
-        get {
-            return reminderRepository!
-        }
-    }
+    var reminderRepository : ReminderRepository
     
     init (reminderRepository : ReminderRepository) {
     
@@ -29,20 +24,20 @@ class ReminderFacade : StorageFacadeProtocol {
     
     func createNewReminder(name : String, time : NSDate) -> RemindMeItem {
         
-        return getReminderItemFrom(reminderRepository.createNewReminder(name, time : NSDate))
+        return getReminderItemFrom(reminderRepository.createNewReminder(name, time : NSDate()))
     }
     
     func updateReminder(remindMeItem : RemindMeItem) {
     
-        var reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)
+        let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!
         
         reminder.title = remindMeItem.title
-        reminder.date = remindMeItem.date
+        reminder.date = remindMeItem.date!
     }
     
     func removeReminder(remindMeItem : RemindMeItem) {
         
-        var reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)
+        let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!
         
         reminderRepository.removeReminder(reminder)
     }
@@ -65,7 +60,7 @@ class ReminderFacade : StorageFacadeProtocol {
     
     func getReminderItemFrom(reminder : Reminder) -> RemindMeItem {
     
-        var remindMeItem : RemindMeItem = RemindMeItem()
+        let remindMeItem : RemindMeItem = RemindMeItem()
         
         remindMeItem.id = reminder.id
         remindMeItem.title = reminder.title

@@ -15,7 +15,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     var reminderList = [RemindMeItem]()
     
-    let storageFacade : StorageFacadeProtocol = StorageFacadeFactory().getStorageFacade("iCloudReminders")
+    let storageFacade : StorageFacadeProtocol = StorageFacadeFactory.getStorageFacade("iCloudReminders", appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
     
     @IBOutlet weak var settingsButton: UIButton!
     
@@ -196,7 +196,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                         
                         // Get the first matching item by calendarItemExternalIdentifier and add to our new list
                         if let matchingReminderItem : RemindMeItem = scheduledItems.filter({(reminderItem : RemindMeItem) in
-                            reminderItem.id == itemSequence.id}).first {
+                            reminderItem.id == itemSequence.calendarItemExternalIdentifier}).first {
                             
                             sortedScheduledItems.append(matchingReminderItem)
                         }
@@ -206,8 +206,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                     self.reminderList = sortedScheduledItems
                     
                     // Get all items that were not in our sorted item list and append them to the sorted list
-                    let unSortedScheduleItems : [RemindMeItem] = scheduledItems.filter({(reminder : RemindMeItem) in
-                        sortedScheduledItems.indexOf(reminder) == nil})
+                    let unSortedScheduleItems : [RemindMeItem] = scheduledItems.filter({(reminderItem : RemindMeItem) in
+                        sortedScheduledItems.indexOf({$0.id == reminderItem.id}) == nil})
                     
                     self.reminderList.appendContentsOf(unSortedScheduleItems)
                 }
@@ -328,13 +328,15 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         if(indexPath.row < reminderList.count){
             
             let listItem : RemindMeItem = reminderList[indexPath.row]
+
+            storageFacade.removeReminder(listItem)
             
-            guard storageFacade.removeReminder(listItem) else {
-                
-                displayError("Your reminder list item could not be removed...")
-                
-                return
-            }
+//            guard storageFacade.removeReminder(listItem) else {
+//                
+//                displayError("Your reminder list item could not be removed...")
+//                
+//                return
+//            }
         }
     }
     

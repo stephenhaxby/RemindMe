@@ -3,21 +3,17 @@
 //  RemindMe
 //
 //  Created by Stephen Haxby on 5/01/2016.
-//  Copyright © 2016 Stephen Haxby. All rights reserved.
+//  Copyright Â© 2016 Stephen Haxby. All rights reserved.
 //
 
 import Foundation
+import EventKit
 
 class iCloudReminderFacade : StorageFacadeProtocol {
     
-    var icloudReminderManager : iCloudReminderManager {
-        
-        get {
-            return icloudReminderManager!
-        }
-    }
+    var icloudReminderManager : iCloudReminderManager
     
-    var returnRemindersFunc : [RemindMeItem] -> () = nil
+    var returnRemindersFunc : [RemindMeItem] -> ()
     
     init (icloudReminderManager : iCloudReminderManager) {
     
@@ -27,7 +23,7 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         icloudReminderManager.remindersListName = Constants.RemindersListName
         
         // Request access to Reminders
-        icloudReminderManager.requestAccessToReminders(requestedAccessToReminders)
+        icloudReminderManager.requestAccessToReminders(requestedAccessToReminders) //TODO:
     }
     
     func createNewReminder() -> RemindMeItem {
@@ -37,13 +33,13 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     func createNewReminder(name : String, time : NSDate) -> RemindMeItem {
         
-        var reminder : EKReminder = icloudReminderManager.getNewReminder()!
+        let reminder : EKReminder = icloudReminderManager.getNewReminder()!
         
         reminder.title = name       
         
         var newAlarms : [EKAlarm] = [EKAlarm]()
         newAlarms.append(EKAlarm(absoluteDate: time))        
-        newReminder.alarms = newAlarms
+        reminder.alarms = newAlarms
         
         return getReminderItemFrom(reminder)
     }
@@ -54,17 +50,17 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     func updateReminder(remindMeItem : RemindMeItem) {
     
-        var reminder : EKReminder = icloudReminderManager.getReminder(remindMeItem.id)
+        let reminder : EKReminder = icloudReminderManager.getReminder(remindMeItem.id)!
         
         reminder.title = remindMeItem.title
-        reminder.alarms = [EKAlarm(absoluteDate: remindMeItem.date]
+        reminder.alarms = [EKAlarm(absoluteDate : remindMeItem.date!)]
     
         icloudReminderManager.saveReminder(reminder)
     }
         
     func removeReminder(remindMeItem : RemindMeItem) {
         
-        var reminder : EKReminder = icloudReminderManager.getReminder(remindMeItem.id)
+        let reminder : EKReminder = icloudReminderManager.getReminder(remindMeItem.id)!
         
         icloudReminderManager.removeReminder(reminder)
     }
@@ -79,15 +75,12 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     private func getiCloudReminders(iCloudShoppingList : [EKReminder]){
     
-        if returnRemindersFunc != nil {
-    
-            returnRemindersFunc(iCloudShoppingList.map({
-                
-                (reminder : Reminder) -> RemindMeItem in
-                
-                return getReminderItemFrom(reminder)
-            }))
-        }
+        returnRemindersFunc(iCloudShoppingList.map({
+            
+            (reminder : EKReminder) -> RemindMeItem in
+            
+            return getReminderItemFrom(reminder)
+        }))
     }
     
     func commit() -> Bool {
@@ -97,14 +90,14 @@ class iCloudReminderFacade : StorageFacadeProtocol {
 
     func getReminderItemFrom(reminder : EKReminder) -> RemindMeItem {
     
-        var remindMeItem : RemindMeItem = RemindMeItem()
+        let remindMeItem : RemindMeItem = RemindMeItem()
         
         remindMeItem.id = reminder.calendarItemIdentifier
         remindMeItem.title = reminder.title
 
-        if reminder.alarms != nil && reminder.alarms.length > 0 {
+        if reminder.alarms != nil && reminder.alarms!.count > 0 {
         
-            remindMeItem.date = reminder.alarms!.first.absoluteDate!
+            remindMeItem.date = reminder.alarms!.first!.absoluteDate!
         }
         
         return remindMeItem
