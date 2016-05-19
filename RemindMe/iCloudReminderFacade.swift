@@ -13,7 +13,7 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     var icloudReminderManager : iCloudReminderManager! = nil
     
-    var returnRemindersFunc : [RemindMeItem] -> () = internalGetReminderListCallBack
+    var returnRemindersFunc : ([RemindMeItem] -> ())?
     
     init (icloudReminderManager : iCloudReminderManager) {
     
@@ -24,10 +24,6 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         
         // Request access to Reminders
         self.icloudReminderManager.requestAccessToReminders(accessGranted)
-    }
-    
-    func internalGetReminderListCallBack(iCloudShoppingList : [RemindMeItem]){
-        
     }
     
     func accessGranted(granted : Bool) {
@@ -79,7 +75,7 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     private func getiCloudReminders(iCloudShoppingList : [EKReminder]){
     
-        returnRemindersFunc(iCloudShoppingList.map({
+        returnRemindersFunc!(iCloudShoppingList.map({
             
             (reminder : EKReminder) -> RemindMeItem in
             
