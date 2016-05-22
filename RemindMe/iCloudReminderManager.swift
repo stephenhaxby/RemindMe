@@ -105,10 +105,42 @@ class iCloudReminderManager{
             }
         }
     }
-
-    func getReminder(id : String) -> EKReminder? {
     
-        return eventStore.calendarItemWithIdentifier(id) as? EKReminder
+    TODO: Need to create an ID frm the title and date then use that to find reminders
+
+    func getReminder(title : String, date : NSDate, returnReminder : EKReminder? -> ()) -> EKReminder? {
+    
+        var remindersList = [EKReminder]()
+        
+        if(eventStoreAccessGranted && reminderList != nil){
+            
+            let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
+            let predicate = eventStore.predicateForRemindersInCalendars(singlecallendarArrayForPredicate)
+            
+            //Get all the reminders for the above search predicate
+            eventStore.fetchRemindersMatchingPredicate(predicate) { reminders in
+                
+                if let matchingReminders = reminders {
+                    
+                    //For each reminder in iCloud
+                    for reminder in matchingReminders {
+                        
+                        remindersList.append(reminder)
+                    }
+                }
+                
+                var foundReminder : EKReminder?
+                
+                if let index = remindersList.indexOf({ (reminder : EKReminder) in reminder.title == title && reminder.hasAlarms && NSDateManager.timeIsEqualToTime(date, date2: reminder.alarms![0].absoluteDate!)}) {
+
+                    foundReminder = remindersList[index]
+                }
+                
+                returnReminder(foundReminder)
+            }
+        }
+
+        return nil
     }
     
     func addReminder(title : String) -> EKReminder? {
