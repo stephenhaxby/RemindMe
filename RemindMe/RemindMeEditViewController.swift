@@ -97,7 +97,7 @@ class RemindMeEditViewController : UIViewController {
             
                 reminderItem.date = getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)
             
-                storageFacade!.updateReminder(reminderItem)
+                storageFacade!.createOrUpdateReminder(reminderItem)
             }
         }
         

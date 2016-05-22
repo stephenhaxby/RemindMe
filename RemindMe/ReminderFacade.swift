@@ -17,22 +17,17 @@ class ReminderFacade : StorageFacadeProtocol {
         self.reminderRepository = reminderRepository
     }
     
-    func createNewReminder() -> RemindMeItem {
+    func createOrUpdateReminder(remindMeItem : RemindMeItem) {
     
-        return getReminderItemFrom(reminderRepository.createNewReminder())
-    }
-    
-    func createNewReminder(name : String, time : NSDate) -> RemindMeItem {
-        
-        return getReminderItemFrom(reminderRepository.createNewReminder(name, time : NSDate()))
-    }
-    
-    func updateReminder(remindMeItem : RemindMeItem) {
-    
-        let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!
-        
-        reminder.title = remindMeItem.title
-        reminder.date = remindMeItem.date!
+        if let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id) {
+            
+            reminder.title = remindMeItem.title
+            reminder.date = remindMeItem.date!
+        }
+        else {
+            
+            reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
+        }
     }
     
     func removeReminder(remindMeItem : RemindMeItem) {

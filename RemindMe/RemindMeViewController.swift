@@ -51,7 +51,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
         
-        startRefreshControl()
+        loadRemindersListWithRefresh(true)
     }
     
     // When a refresh is actioned
@@ -113,7 +113,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         else if sender is TableRowFooterAddNew || sender is UIButton {
             
             // If we are creating a new item
-            remindMeEditViewController.reminder = storageFacade.createNewReminder()
+            remindMeEditViewController.reminder = RemindMeItem()
             
             remindMeEditViewController.isNewReminder = true
         }

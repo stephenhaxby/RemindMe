@@ -106,19 +106,19 @@ class iCloudReminderManager{
         }
     }
     
-    func getReminderId(reminder EKReminder) -> String {
+    func getReminderId(reminder : EKReminder) -> String {
     
-        return getReminderId(reminder.title, date: reminder.alarms![0].absoluteDate!
+        return getReminderId(reminder.title, date: reminder.alarms![0].absoluteDate!)
     }
     
-    func getReminderId(title : String, date : NSDate) {
+    func getReminderId(title : String, date : NSDate) -> String {
     
         let dateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
-        
-        return title + NSDateManager.dateStringFromComponents
+
+        return title + NSDateManager.dateStringFromComponents(dateComponents)
     }
 
-    func getReminder(title : String, date : NSDate, returnReminder : EKReminder? -> ()) -> EKReminder? {
+    func getReminder(id : String, returnReminder : EKReminder? -> ()) -> EKReminder? {
     
         var remindersList = [EKReminder]()
         
@@ -141,7 +141,7 @@ class iCloudReminderManager{
                 
                 var foundReminder : EKReminder?
                 
-                if let index = remindersList.indexOf({ (reminder : EKReminder) in reminder.title == title && reminder.hasAlarms && NSDateManager.timeIsEqualToTime(date, date2: reminder.alarms![0].absoluteDate!)}) {
+                if let index = remindersList.indexOf({ (reminder : EKReminder) in self.getReminderId(reminder) == id}) {
 
                     foundReminder = remindersList[index]
                 }
