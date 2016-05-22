@@ -106,7 +106,17 @@ class iCloudReminderManager{
         }
     }
     
-    TODO: Need to create an ID frm the title and date then use that to find reminders
+    func getReminderId(reminder EKReminder) -> String {
+    
+        return getReminderId(reminder.title, date: reminder.alarms![0].absoluteDate!
+    }
+    
+    func getReminderId(title : String, date : NSDate) {
+    
+        let dateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
+        
+        return title + NSDateManager.dateStringFromComponents
+    }
 
     func getReminder(title : String, date : NSDate, returnReminder : EKReminder? -> ()) -> EKReminder? {
     

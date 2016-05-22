@@ -23,6 +23,8 @@ class RemindMeEditViewController : UIViewController {
     
     var storageFacade : StorageFacadeProtocol?
     
+    var isNewReminder : Bool = false
+    
     var reminder: RemindMeItem?
     
     deinit{

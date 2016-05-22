@@ -114,6 +114,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             // If we are creating a new item
             remindMeEditViewController.reminder = storageFacade.createNewReminder()
+            
+            remindMeEditViewController.isNewReminder = true
         }
     }
     
