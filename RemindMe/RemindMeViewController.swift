@@ -15,7 +15,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     var reminderList = [RemindMeItem]()
     
-    let storageFacade : StorageFacadeProtocol = StorageFacadeFactory.getStorageFacade("iCloudReminders", appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
+    //iCloudReminders
+    let storageFacade : StorageFacadeProtocol = StorageFacadeFactory.getStorageFacade("local", appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
     
     @IBOutlet weak var settingsButton: UIButton!
     
@@ -73,7 +74,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         var reminderItemSequence : [ReminderItemSequence] = [ReminderItemSequence]()
         
         // Loop through each reminder and save it's order to a new list
-        for var i = 0; i < reminderList.count; i++ {
+        for i in 0 ..< reminderList.count {
             
             reminderItemSequence.append(ReminderItemSequence(calendarItemExternalIdentifier: reminderList[i].id, sequenceNumber: i))
         }

@@ -51,19 +51,21 @@ class ReminderRepository {
     
         do {
         
-            let reminders = try getManagedContext().executeFetchRequest(reminderFetch) as! [Reminder]
+            let reminders : [Reminder] = (try getManagedContext().executeFetchRequest(reminderFetch) as! [NSManagedObject]).map({
+                
+                (managedObject : NSManagedObject) -> Reminder in
+                
+                return Reminder(managedObject: managedObject)
+            })
             
             if reminders.count == 1 {
-            
+                
                 return reminders.first!
             }
-            else {
-                
-                //TODO: Some kind of error...
-            }
-        } catch {
+        }
+        catch {
         
-            fatalError("Failed to fetch reminder: \(error)")
+                fatalError("Failed to fetch reminder: \(error)")
         }
         
         return nil

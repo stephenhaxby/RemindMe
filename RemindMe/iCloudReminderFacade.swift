@@ -32,8 +32,6 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     func createOrUpdateReminder(remindMeItem : RemindMeItem) {
         
-        //let reminderId : String = icloudReminderManager.getReminderId(remindMeItem.title, date: remindMeItem.date!)
-        
         icloudReminderManager.getReminder(remindMeItem.id) {
             reminder in
             

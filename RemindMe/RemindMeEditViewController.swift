@@ -101,6 +101,8 @@ class RemindMeEditViewController : UIViewController {
             }
         }
         
+        
+        
 //        // Refresh the main list in the main UI thread
 //        if let mainViewController = remindMeViewController {
 //            

@@ -57,8 +57,7 @@ class SettingRepository {
                 (managedObject : NSManagedObject) -> Setting in
                 
                 return Setting(managedObject: managedObject)
-            })
-            
+            })            
         }
         catch let error as NSError {
             
