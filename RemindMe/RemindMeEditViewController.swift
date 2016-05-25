@@ -101,13 +101,13 @@ class RemindMeEditViewController : UIViewController {
             }
         }
         
+        //TODO : Have this run off settingss
         
-        
-//        // Refresh the main list in the main UI thread
-//        if let mainViewController = remindMeViewController {
-//            
-//            mainViewController.refreshInMainThread()
-//        }
+        // Refresh the main list in the main UI thread
+        if let mainViewController = remindMeViewController {
+            
+            mainViewController.refreshInMainThread()
+        }
     }
     
     // Return an alarm date/time for the selected date, making it either today or tomorrow depending on if the time has passed

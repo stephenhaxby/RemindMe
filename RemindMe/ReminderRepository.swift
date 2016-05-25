@@ -11,23 +11,18 @@ import CoreData
 
 class ReminderRepository {
     
-    var appDelegate : AppDelegate
+    var managedObjectContext : NSManagedObjectContext
     
-    init(appDelegate : AppDelegate){
+    init(managedObjectContext : NSManagedObjectContext){
         
-        self.appDelegate = appDelegate
-    }
-    
-    func getManagedContext() -> NSManagedObjectContext {
-        
-        return appDelegate.managedObjectContext
+        self.managedObjectContext = managedObjectContext
     }
     
     func createNewReminder() -> Reminder {
         
-        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext:getManagedContext())
+        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext:managedObjectContext)
         
-        let reminderManagedObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: getManagedContext())
+        let reminderManagedObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedObjectContext)
         
         return Reminder(managedObject: reminderManagedObject)
     }
@@ -51,7 +46,7 @@ class ReminderRepository {
     
         do {
         
-            let reminders : [Reminder] = (try getManagedContext().executeFetchRequest(reminderFetch) as! [NSManagedObject]).map({
+            let reminders : [Reminder] = (try managedObjectContext.executeFetchRequest(reminderFetch) as! [NSManagedObject]).map({
                 
                 (managedObject : NSManagedObject) -> Reminder in
                 
@@ -76,7 +71,7 @@ class ReminderRepository {
         do {
         
         return
-            (try getManagedContext().executeFetchRequest(NSFetchRequest(entityName: "Reminder")) as! [NSManagedObject]).map({
+            (try managedObjectContext.executeFetchRequest(NSFetchRequest(entityName: "Reminder")) as! [NSManagedObject]).map({
                 
                 (managedObject : NSManagedObject) -> Reminder in
                 
@@ -94,14 +89,14 @@ class ReminderRepository {
     
     func removeReminder(reminder : Reminder) {
         
-        getManagedContext().deleteObject(reminder.reminder)
+        managedObjectContext.deleteObject(reminder.reminder)
     }
     
     func commit() -> Bool {
         
         do {
             
-            try getManagedContext().save()
+            try managedObjectContext.save()
 
         } catch let error as NSError  {
             

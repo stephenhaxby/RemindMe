@@ -15,8 +15,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     var reminderList = [RemindMeItem]()
     
-    //iCloudReminders
-    let storageFacade : StorageFacadeProtocol = StorageFacadeFactory.getStorageFacade("local", appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
+    var storageFacade : StorageFacadeProtocol?
     
     @IBOutlet weak var settingsButton: UIButton!
     
@@ -177,7 +176,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     func loadRemindersList(){
         
-        storageFacade.getReminders(getReminderList)
+        storageFacade!.getReminders(getReminderList)
     }
     
     func getReminderList(iCloudShoppingList : [RemindMeItem]){
@@ -332,7 +331,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             let listItem : RemindMeItem = reminderList[indexPath.row]
 
-            storageFacade.removeReminder(listItem)
+            storageFacade!.removeReminder(listItem)
             
 //            guard storageFacade.removeReminder(listItem) else {
 //                
