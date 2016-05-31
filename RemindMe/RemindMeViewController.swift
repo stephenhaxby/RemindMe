@@ -70,21 +70,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Hide the Done button
         sender.hidden = true
 
-        var reminderItemSequence : [ReminderItemSequence] = [ReminderItemSequence]()
-        
-        // Loop through each reminder and save it's order to a new list
-        for i in 0 ..< reminderList.count {
-            
-            reminderItemSequence.append(ReminderItemSequence(calendarItemExternalIdentifier: reminderList[i].id, sequenceNumber: i))
-        }
-        
-        // Save our reminder sequence to disk
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL.path!)
-        
-        if !isSuccessfulSave {
-            
-            displayError("Unable to save Reminder Order!")
-        }
+        refreshSequence()
         
         loadRemindersList()
     }
@@ -116,6 +102,25 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             remindMeEditViewController.reminder = RemindMeItem()
             
             remindMeEditViewController.isNewReminder = true
+        }
+    }
+    
+    func refreshSequence() {
+        
+        var reminderItemSequence : [ReminderItemSequence] = [ReminderItemSequence]()
+        
+        // Loop through each reminder and save it's order to a new list
+        for i in 0 ..< reminderList.count {
+            
+            reminderItemSequence.append(ReminderItemSequence(calendarItemExternalIdentifier: reminderList[i].id, sequenceNumber: i))
+        }
+        
+        // Save our reminder sequence to disk
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL.path!)
+        
+        if !isSuccessfulSave {
+            
+            displayError("Unable to save Reminder Order!")
         }
     }
     
@@ -333,12 +338,9 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
 
             storageFacade!.removeReminder(listItem)
             
-//            guard storageFacade.removeReminder(listItem) else {
-//                
-//                displayError("Your reminder list item could not be removed...")
-//                
-//                return
-//            }
+            //TODO: Use settings for this
+            
+            refreshInMainThread()
         }
     }
     

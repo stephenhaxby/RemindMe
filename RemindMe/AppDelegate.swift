@@ -22,9 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         storageFacade = StorageFacadeFactory.getStorageFacade(storageMethod, managedObjectContext: managedObjectContext)
-        
+
         //Register the app for Badge update notifications
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Badge, categories: nil))
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
         
         if let navigationController = window?.rootViewController as? UINavigationController,
             let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {

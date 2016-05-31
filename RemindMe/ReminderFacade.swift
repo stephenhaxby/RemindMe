@@ -10,6 +10,8 @@ import Foundation
 
 class ReminderFacade : StorageFacadeProtocol {
     
+    let localNotificationManager : LocalNotificationManager = LocalNotificationManager()
+    
     var reminderRepository : ReminderRepository
     
     init (reminderRepository : ReminderRepository) {
@@ -27,6 +29,8 @@ class ReminderFacade : StorageFacadeProtocol {
         else {
             
             reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
+            
+            localNotificationManager.setReminderNotification(remindMeItem)
         }
     }
     
@@ -35,6 +39,8 @@ class ReminderFacade : StorageFacadeProtocol {
         let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!
         
         reminderRepository.removeReminder(reminder)
+        
+        localNotificationManager.clearReminderNotification(remindMeItem)
     }
     
     //Expects a function that has a parameter that's an array of RemindMeItem
