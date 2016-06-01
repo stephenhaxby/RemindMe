@@ -12,13 +12,25 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    let storageMethod : String = "local"
+    
     var window: UIWindow?
+    
+    var storageFacade : StorageFacadeProtocol?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        storageFacade = StorageFacadeFactory.getStorageFacade(storageMethod, managedObjectContext: managedObjectContext)
+
         //Register the app for Badge update notifications
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Badge, categories: nil))
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
+        
+        if let navigationController = window?.rootViewController as? UINavigationController,
+            let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {
+            
+            remindMeViewController.storageFacade = storageFacade
+        }
         
         return true
     }
@@ -31,6 +43,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        if storageMethod == "local" {
+            
+            saveContext()
+        }
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -83,6 +100,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return coordinator
     }()
+    
+    func getManagedObjectContext() -> NSManagedObjectContext {
+        
+        return managedObjectContext
+    }
     
     lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.

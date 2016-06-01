@@ -28,7 +28,7 @@ class RemindMeTableViewCell: UITableViewCell {
                 
                 var reminderText : NSString = NSString(string: reminderTextLabel.text!)
                 
-                truncateText(reminderText, forLabel: reminderTextLabel)
+                truncateText(&reminderText, forLabel: reminderTextLabel)
                 
                 var newReminderText = String(reminderText)
                 
@@ -52,7 +52,7 @@ class RemindMeTableViewCell: UITableViewCell {
     }
     
     // Function to truncate the text for a label based on it's visible size.
-    func truncateText(var text : NSString, forLabel : UILabel) {
+    func truncateText(inout text : NSString, forLabel : UILabel) {
         
         let size : CGSize = text.sizeWithAttributes([NSFontAttributeName : reminderTextLabel.font!])
         
@@ -62,7 +62,7 @@ class RemindMeTableViewCell: UITableViewCell {
             
             text = text.substringWithRange(NSRange(location: 0, length: text.length-1))
             
-            truncateText(text, forLabel: forLabel)
+            truncateText(&text, forLabel: forLabel)
         }
     }
 }

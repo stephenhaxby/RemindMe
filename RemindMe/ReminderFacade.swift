@@ -10,6 +10,8 @@ import Foundation
 
 class ReminderFacade : StorageFacadeProtocol {
        
+    let localNotificationManager : LocalNotificationManager = LocalNotificationManager()
+    
     var reminderRepository : ReminderRepository
     
     init (reminderRepository : ReminderRepository) {
@@ -17,24 +19,21 @@ class ReminderFacade : StorageFacadeProtocol {
         self.reminderRepository = reminderRepository
     }
     
-    func createNewReminder() -> RemindMeItem {
+    func createOrUpdateReminder(remindMeItem : RemindMeItem) {
     
-        return getReminderItemFrom(reminderRepository.createNewReminder())
+        if let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id) {
+    
+            reminder.title = remindMeItem.title
+            reminder.date = remindMeItem.date!
     }
+        else {
     
-    func createNewReminder(name : String, time : NSDate) -> RemindMeItem {
-        
-        return getReminderItemFrom(reminderRepository.createNewReminder(name, time : NSDate()))
-    }
+            reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
     
-    func updateReminder(remindMeItem : RemindMeItem) {
-    
-        let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!
-        
-        reminder.title = remindMeItem.title
-        reminder.date = remindMeItem.date!
+            localNotificationManager.setReminderNotification(remindMeItem)
         
         NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotificationName, object: nil)
+    }
     }
     
     func removeReminder(remindMeItem : RemindMeItem) {
@@ -42,6 +41,8 @@ class ReminderFacade : StorageFacadeProtocol {
         let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!
         
         reminderRepository.removeReminder(reminder)
+        
+        localNotificationManager.clearReminderNotification(remindMeItem)
     }
     
     //Expects a function that has a parameter that's an array of RemindMeItem

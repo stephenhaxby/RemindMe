@@ -10,11 +10,7 @@ import Foundation
 
 protocol StorageFacadeProtocol {
     
-    func createNewReminder() -> RemindMeItem
-    
-    func createNewReminder(name : String, time : NSDate) -> RemindMeItem
-    
-    func updateReminder(remindMeItem : RemindMeItem)
+    func createOrUpdateReminder(remindMeItem : RemindMeItem)
     
     func removeReminder(remindMeItem : RemindMeItem)
     

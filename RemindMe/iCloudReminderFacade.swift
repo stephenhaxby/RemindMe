@@ -39,48 +39,41 @@ class iCloudReminderFacade : StorageFacadeProtocol {
                 
     }
     
-    func createNewReminder() -> RemindMeItem {
-    
-        return getReminderItemFrom(icloudReminderManager.getNewReminder()!)
-    } 
-    
-    func createNewReminder(name : String, time : NSDate) -> RemindMeItem {
+    func createOrUpdateReminder(remindMeItem : RemindMeItem) {
         
-        let reminder : EKReminder = icloudReminderManager.getNewReminder()!
-        
-        reminder.title = name       
-        
-        var newAlarms : [EKAlarm] = [EKAlarm]()
-        newAlarms.append(EKAlarm(absoluteDate: time))        
-        reminder.alarms = newAlarms
-        
-        return getReminderItemFrom(reminder)
-    }
-
-    func updateReminder(remindMeItem : RemindMeItem) {
-        
-        icloudReminderManager.getReminder(remindMeItem.title, date: remindMeItem.date!) {
+        icloudReminderManager.getReminder(remindMeItem.id) {
             reminder in
             
             if let matchingReminder : EKReminder = reminder {
-            
+                
                 matchingReminder.title = remindMeItem.title
                 matchingReminder.alarms = [EKAlarm(absoluteDate : remindMeItem.date!)]
                 
-                self.icloudReminderManager.saveReminder(matchingReminder)
+                self.icloudReminderManager.saveReminder(matchingReminder, commit: false)
+            }
+            else {
+                
+                let reminder : EKReminder = self.icloudReminderManager.getNewReminder()!
+        
+                reminder.title = remindMeItem.title
+        
+                var newAlarms : [EKAlarm] = [EKAlarm]()
+                newAlarms.append(EKAlarm(absoluteDate: remindMeItem.date!))
+                reminder.alarms = newAlarms
+                
+                self.icloudReminderManager.saveReminder(reminder, commit: false)
             }
         }
     }
     
     func removeReminder(remindMeItem : RemindMeItem) {
         
-        icloudReminderManager.getReminder(remindMeItem.title, date: remindMeItem.date!) {
+        let reminderId : String = icloudReminderManager.getReminderId(remindMeItem.title, date: remindMeItem.date!)
+        
+        icloudReminderManager.getReminder(reminderId) {
             reminder in
             
             if let matchingReminder : EKReminder = reminder {
-                
-                matchingReminder.title = remindMeItem.title
-                matchingReminder.alarms = [EKAlarm(absoluteDate : remindMeItem.date!)]
                 
                 self.icloudReminderManager.removeReminder(matchingReminder)
             }
@@ -114,13 +107,14 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
         let remindMeItem : RemindMeItem = RemindMeItem()
         
-        remindMeItem.id = reminder.calendarItemIdentifier
         remindMeItem.title = reminder.title
 
         if reminder.alarms != nil && reminder.alarms!.count > 0 {
         
             remindMeItem.date = reminder.alarms!.first!.absoluteDate!
         }
+        
+        remindMeItem.id = icloudReminderManager.getReminderId(remindMeItem.title, date: remindMeItem.date!)
         
         return remindMeItem
     }
