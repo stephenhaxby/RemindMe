@@ -22,11 +22,7 @@ class RemindMeEditViewController : UIViewController {
     weak var remindMeViewController : RemindMeViewController?
     
     var storageFacade : StorageFacadeProtocol?
-    
-    var isNewReminder : Bool = false
-    
-    var reminder: RemindMeItem?
-    
+
     deinit{
         
         remindMeViewController = nil
@@ -58,14 +54,19 @@ class RemindMeEditViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        // Make the text box the first reponder for new reminders
-        if let reminderItem = reminder {
+        if reminder == nil {
         
-            if reminderItem.title == "" {
-
-                reminderTitleTextView.becomeFirstResponder()
-            }
+            reminderTitleTextView.becomeFirstResponder()
         }
+        
+//        // Make the text box the first reponder for new reminders
+//        if let reminderItem = reminder {
+//        
+//            if reminderItem.title == "" {
+//
+//                reminderTitleTextView.becomeFirstResponder()
+//            }
+//        }
     }
     
     // Sets up the relationships between controllers
@@ -89,7 +90,12 @@ class RemindMeEditViewController : UIViewController {
             return
         }
         
-        if let reminderItem = reminder {
+        if reminder == nil {
+        
+            reminder = storageFacade!.createNewReminder()
+        }
+        
+        //if let reminderItem = reminder {
          
             reminderItem.title = reminderTitleTextView.text
             
@@ -99,7 +105,9 @@ class RemindMeEditViewController : UIViewController {
             
                 storageFacade!.updateReminder(reminderItem)
             }
-        }
+        //}
+        
+//        //TODO: Use settings:
         
 //        // Refresh the main list in the main UI thread
 //        if let mainViewController = remindMeViewController {

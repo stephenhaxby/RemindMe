@@ -11,7 +11,7 @@ import EventKit
 
 class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate {
 
-    var eventStoreObserver : NSObjectProtocol?
+    var refreshListObserver : NSObjectProtocol?
     
     var reminderList = [RemindMeItem]()
     
@@ -27,7 +27,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         super.init(coder: aDecoder)
         
         // Sets the method to run when the Event Store is updated in the background
-        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
+        refreshListObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.RefreshNotificationName, object: nil, queue: nil){
             (notification) -> Void in
             
             self.loadRemindersListWithRefresh(true)
@@ -37,9 +37,9 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     deinit {
         
         // Dealocate the observer above
-        if let observer = eventStoreObserver{
+        if let observer = refreshListObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: EKEventStoreChangedNotification, object: nil)
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.RefreshNotificationName, object: nil)
         }
     }
     
@@ -110,13 +110,11 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 remindMeEditViewController.reminder = reminderListItem
             }
         }
-        else if sender is TableRowFooterAddNew || sender is UIButton {
+//        else if sender is TableRowFooterAddNew || sender is UIButton {
             
-            // If we are creating a new item
-            remindMeEditViewController.reminder = storageFacade.createNewReminder()
-            
-            remindMeEditViewController.isNewReminder = true
-        }
+//            // If we are creating a new item           
+//            remindMeEditViewController.isNewReminder = true
+//        }
     }
     
     // Refresh the list in the main UI thread

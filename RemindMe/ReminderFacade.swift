@@ -9,7 +9,7 @@
 import Foundation
 
 class ReminderFacade : StorageFacadeProtocol {
-    
+       
     var reminderRepository : ReminderRepository
     
     init (reminderRepository : ReminderRepository) {
@@ -33,6 +33,8 @@ class ReminderFacade : StorageFacadeProtocol {
         
         reminder.title = remindMeItem.title
         reminder.date = remindMeItem.date!
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotificationName, object: nil)
     }
     
     func removeReminder(remindMeItem : RemindMeItem) {

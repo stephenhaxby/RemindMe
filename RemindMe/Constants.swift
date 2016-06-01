@@ -36,4 +36,6 @@ class Constants{
     static let DefaultAfternoonTimeText : String = "Tonight"
     
     static let DefaultAfternoonTime : NSDate = NSDateManager.currentDateWithHour(18, minute: 0, second: 0)
+    
+    static let RefreshNotificationName : String = "Refresh"
 }
