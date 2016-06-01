@@ -100,7 +100,6 @@ class ReminderRepository {
 
         } catch let error as NSError  {
             
-            //TODO: A better error...
             print("Could not save \(error), \(error.userInfo)")
             
             return false

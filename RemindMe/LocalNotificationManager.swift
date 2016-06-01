@@ -49,12 +49,12 @@ class LocalNotificationManager {
             
             reminderNotification!.soundName = UILocalNotificationDefaultSoundName // play default sound
             reminderNotification!.userInfo = ["UUID": remindMeItem.id] // assign a unique identifier to the notification so that we can retrieve it later
-            //notification.category = "TODO_CATEGORY"
+            //notification.category = "RemindMeItem_Category"
             
             UIApplication.sharedApplication().scheduleLocalNotification(reminderNotification!)
         }
         
-        reminderNotification!.fireDate = remindMeItem.date! // todo item due date (when notification will be fired)
+        reminderNotification!.fireDate = remindMeItem.date! // item due date (when notification will be fired)
     }
 
 }

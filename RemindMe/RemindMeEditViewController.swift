@@ -100,7 +100,7 @@ class RemindMeEditViewController : UIViewController {
             }
         }
         
-        //TODO : Have this run off settingss
+        //TODO : Have this run off settings
         
         // Refresh the main list in the main UI thread
         if let mainViewController = remindMeViewController {
