@@ -56,7 +56,7 @@ class ReminderTimeTableViewController: UITableViewController {
         }
         
         // Lay out the table cells from left to right
-        for var i = 0; i < settingsList.count; i++ {
+        for var i in 0 ..< settingsList.count {
             
             let reminderTimeTableViewCellItem : ReminderTimeTableViewCellItem = ReminderTimeTableViewCellItem()
             reminderTimeTableViewCellItem.settingOne = settingsList[i]
@@ -65,7 +65,7 @@ class ReminderTimeTableViewController: UITableViewController {
                 
                 reminderTimeTableViewCellItem.settingTwo = settingsList[i+1]
                 
-                i++
+                i += 1
             }
             
             reminderTimeTableViewCellItems.append(reminderTimeTableViewCellItem)
@@ -82,7 +82,7 @@ class ReminderTimeTableViewController: UITableViewController {
         
         reminderTitleTextViewResignFirstResponder()
         
-        for var i = 0; i < tableView.visibleCells.count; i++ {
+        for i in 0 ..< tableView.visibleCells.count {
             
             if let reminderTimeTableViewCell : ReminderTimeTableViewCell = tableView.visibleCells[i] as? ReminderTimeTableViewCell {
                 

@@ -72,7 +72,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     // When the user navigates away form this page, save all the settings (another way of doing an unwind segue)
     override func viewWillDisappear(animated : Bool){
 
-        for var i = 0; i < settingsList.count; i++ {
+        for i in 0 ..< settingsList.count {
             
             settingsList[i].sequence = i
         }
@@ -92,7 +92,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         // Setup a long press gesture recognizer to call the cellLongPressed method
-        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
+        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(SettingsTableViewController.cellLongPressed(_:)))
         longPress.delegate = self
         longPress.minimumPressDuration = 1
         longPress.numberOfTouchesRequired = 1
