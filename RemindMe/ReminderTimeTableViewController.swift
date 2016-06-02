@@ -65,6 +65,8 @@ class ReminderTimeTableViewController: UITableViewController {
                 
                 reminderTimeTableViewCellItem.settingTwo = settingsList[i+1]
                 
+                //TODO: Need to make with work with a continue statement
+                
                 i += 1
             }
             
