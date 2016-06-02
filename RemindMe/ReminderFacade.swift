@@ -25,15 +25,15 @@ class ReminderFacade : StorageFacadeProtocol {
     
             reminder.title = remindMeItem.title
             reminder.date = remindMeItem.date!
-    }
-        else {
-    
-            reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
-    
-            localNotificationManager.setReminderNotification(remindMeItem)
+        }
+            else {
+        
+                reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
+        
+                localNotificationManager.setReminderNotification(remindMeItem)
+        }
         
         NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotificationName, object: nil)
-    }
     }
     
     func removeReminder(remindMeItem : RemindMeItem) {
@@ -43,6 +43,8 @@ class ReminderFacade : StorageFacadeProtocol {
         reminderRepository.removeReminder(reminder)
         
         localNotificationManager.clearReminderNotification(remindMeItem)
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotificationName, object: nil)
     }
     
     //Expects a function that has a parameter that's an array of RemindMeItem

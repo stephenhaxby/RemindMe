@@ -22,6 +22,8 @@ class RemindMeEditViewController : UIViewController {
     
     var storageFacade : StorageFacadeProtocol?
 
+    var reminder : RemindMeItem?
+    
     deinit{
         
         remindMeViewController = nil
@@ -57,20 +59,11 @@ class RemindMeEditViewController : UIViewController {
         
             reminderTitleTextView.becomeFirstResponder()
         }
-        
-//        // Make the text box the first reponder for new reminders
-//        if let reminderItem = reminder {
-//        
-//            if reminderItem.title == "" {
-//
-//                reminderTitleTextView.becomeFirstResponder()
-//            }
-//        }
     }
     
     // Sets up the relationships between controllers
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+
         if let destinationViewController : ReminderTimeTableViewController = segue.destinationViewController as? ReminderTimeTableViewController {
             
             reminderTimeTableViewController = destinationViewController
@@ -88,32 +81,19 @@ class RemindMeEditViewController : UIViewController {
             
             return
         }
-        
+
         if reminder == nil {
-        
-            reminder = storageFacade!.createNewReminder()
+            
+            reminder = RemindMeItem()
         }
         
-        //if let reminderItem = reminder {
-         
-            reminderItem.title = reminderTitleTextView.text
-            
-            if reminderTimeTableViewController != nil && reminderTimeTableViewController!.selectedSetting != nil {
-            
-                reminderItem.date = getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)
-            
-                storageFacade!.createOrUpdateReminder(reminderItem)
-            }
-        //}
+        reminder!.title = reminderTitleTextView.text
         
-//        //TODO: Use settings:
-        
-        //TODO : Have this run off settings
-        
-        // Refresh the main list in the main UI thread
-        if let mainViewController = remindMeViewController {
+        if reminderTimeTableViewController != nil && reminderTimeTableViewController!.selectedSetting != nil {
             
-            mainViewController.refreshInMainThread()
+            reminder!.date = getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)
+            
+            storageFacade!.createOrUpdateReminder(reminder!)
         }
     }
     

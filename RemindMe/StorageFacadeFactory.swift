@@ -11,17 +11,14 @@ import Foundation
 
 class StorageFacadeFactory {
     
-    static func getStorageFacade(storageMethod : String, managedObjectContext : NSManagedObjectContext?) -> StorageFacadeProtocol {
+    static func getStorageFacade(storageType : Constants.StorageType, managedObjectContext : NSManagedObjectContext?) -> StorageFacadeProtocol {
         
-        switch storageMethod {
-        case "iCloudReminders":
-            return iCloudReminderFacade(icloudReminderManager : iCloudReminderManager())
-//        case "iCloudData":
-//            return nil
-        case "local":
-            return ReminderFacade(reminderRepository: ReminderRepository(managedObjectContext : managedObjectContext!))
-        default:
-            return ReminderFacade(reminderRepository: ReminderRepository(managedObjectContext : managedObjectContext!))
+        switch storageType {
+            
+            case Constants.StorageType.iCloudReminders:
+                return iCloudReminderFacade(icloudReminderManager : iCloudReminderManager())
+            case Constants.StorageType.local:
+                return ReminderFacade(reminderRepository: ReminderRepository(managedObjectContext : managedObjectContext!))
         }
    }
 }

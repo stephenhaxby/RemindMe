@@ -38,4 +38,9 @@ class Constants{
     static let DefaultAfternoonTime : NSDate = NSDateManager.currentDateWithHour(18, minute: 0, second: 0)
     
     static let RefreshNotificationName : String = "Refresh"
+    
+    enum StorageType {
+        case local
+        case iCloudReminders
+    }
 }

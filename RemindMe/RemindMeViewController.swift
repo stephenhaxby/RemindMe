@@ -96,11 +96,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 remindMeEditViewController.reminder = reminderListItem
             }
         }
-//        else if sender is TableRowFooterAddNew || sender is UIButton {
-            
-//            // If we are creating a new item           
-//            remindMeEditViewController.isNewReminder = true
-//        }
     }
     
     func refreshSequence() {
@@ -214,7 +209,12 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                     let unSortedScheduleItems : [RemindMeItem] = scheduledItems.filter({(reminderItem : RemindMeItem) in
                         sortedScheduledItems.indexOf({$0.id == reminderItem.id}) == nil})
                     
-                    self.reminderList.appendContentsOf(unSortedScheduleItems)
+                    if unSortedScheduleItems.count > 0 {
+                    
+                        self.reminderList.appendContentsOf(unSortedScheduleItems)
+                        
+                        self.refreshSequence()
+                    }                    
                 }
                 else{
                     
@@ -272,7 +272,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
         
         // Setup a Long Press Gesture for each cell, calling the cellLongPressed method
-        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
+        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(RemindMeViewController.cellLongPressed(_:)))
         longPress.delegate = self
         longPress.minimumPressDuration = 1
         longPress.numberOfTouchesRequired = 1
@@ -280,7 +280,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         cell.addGestureRecognizer(longPress)
 
         // Sets the reminder list item for the cell
-        var reminderListItem : RemindMeItem = reminderList[indexPath.row]
+        let reminderListItem : RemindMeItem = reminderList[indexPath.row]
         cell.reminder = reminderListItem
         
         return cell
@@ -335,10 +335,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             let listItem : RemindMeItem = reminderList[indexPath.row]
 
             storageFacade!.removeReminder(listItem)
-            
-            //TODO: Use settings for this
-            
-            refreshInMainThread()
         }
     }
     
