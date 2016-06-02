@@ -9,7 +9,7 @@
 import Foundation
 
 class ReminderFacade : StorageFacadeProtocol {
-    
+       
     let localNotificationManager : LocalNotificationManager = LocalNotificationManager()
     
     var reminderRepository : ReminderRepository
@@ -22,16 +22,18 @@ class ReminderFacade : StorageFacadeProtocol {
     func createOrUpdateReminder(remindMeItem : RemindMeItem) {
     
         if let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id) {
-            
+    
             reminder.title = remindMeItem.title
             reminder.date = remindMeItem.date!
-        }
+    }
         else {
-            
+    
             reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
-            
+    
             localNotificationManager.setReminderNotification(remindMeItem)
-        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotificationName, object: nil)
+    }
     }
     
     func removeReminder(remindMeItem : RemindMeItem) {

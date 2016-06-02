@@ -11,11 +11,20 @@ import EventKit
 
 class iCloudReminderFacade : StorageFacadeProtocol {
     
+    var eventStoreObserver : NSObjectProtocol?
+    
     var icloudReminderManager : iCloudReminderManager! = nil
     
     var returnRemindersFunc : ([RemindMeItem] -> ())?
     
     init (icloudReminderManager : iCloudReminderManager) {
+    
+        // Sets the method to run when the Event Store is updated in the background
+        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotificationName, object: nil)
+        }
     
         self.icloudReminderManager = icloudReminderManager
         
