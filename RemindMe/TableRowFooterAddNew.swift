@@ -22,7 +22,7 @@ class TableRowFooterAddNew : UITableViewCell {
             containerView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
         }
         
-        let selectPress : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "viewSelected:")
+        let selectPress : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TableRowFooterAddNew.viewSelected(_:)))
         selectPress.delegate = self
         //selectPress.minimumPressDuration = 1
         selectPress.numberOfTouchesRequired = 1

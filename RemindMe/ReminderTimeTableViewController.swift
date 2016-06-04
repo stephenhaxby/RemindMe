@@ -55,22 +55,22 @@ class ReminderTimeTableViewController: UITableViewController {
             })
         }
         
+        var index : Int = 0
+        
         // Lay out the table cells from left to right
-        for var i in 0 ..< settingsList.count {
+        while index < settingsList.count {
             
             let reminderTimeTableViewCellItem : ReminderTimeTableViewCellItem = ReminderTimeTableViewCellItem()
-            reminderTimeTableViewCellItem.settingOne = settingsList[i]
+            reminderTimeTableViewCellItem.settingOne = settingsList[index]
             
-            if i+1 < settingsList.count {
+            if index+1 < settingsList.count {
                 
-                reminderTimeTableViewCellItem.settingTwo = settingsList[i+1]
-                
-                //TODO: Need to make with work with a continue statement
-                
-                i += 1
+                reminderTimeTableViewCellItem.settingTwo = settingsList[index+1]
             }
             
             reminderTimeTableViewCellItems.append(reminderTimeTableViewCellItem)
+            
+            index += 2
         }
         
         if let reminderTimeListTable = self.tableView {
