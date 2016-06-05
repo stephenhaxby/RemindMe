@@ -71,7 +71,27 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     // When the user navigates away form this page, save all the settings (another way of doing an unwind segue)
     override func viewWillDisappear(animated : Bool){
-
+        
+        //Need to resign first responder on any text fields before doing anything, otherwise the setting will be updated
+        //in it's setter after it's been deleted and committed
+        for i in 0 ..< settingsTableView.visibleCells.count {
+            
+            if let cell : SettingsTableViewCell = settingsTableView.visibleCells[i] as? SettingsTableViewCell {
+                
+                if cell.nameTextField!.isFirstResponder() {
+                    
+                    cell.nameTextField.resignFirstResponder()
+                }
+            }
+        }
+        
+        if settingsList[settingsList.count-1].name == "" {
+            
+            settingRepository.removeSetting(settingsList[settingsList.count-1])
+            
+            settingsList.removeAtIndex(settingsList.count-1)
+        }
+        
         for i in 0 ..< settingsList.count {
             
             settingsList[i].sequence = i

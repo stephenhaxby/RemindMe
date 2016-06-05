@@ -100,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				0E2C30D01CEB2AAE00DD87A4 /* ReminderRepository.swift */,
+				0E2E3DCC1C981F1000D64CA2 /* SettingRepository.swift */,
 			);
 			name = Repositories;
 			sourceTree = "<group>";
@@ -138,7 +139,6 @@
 				0E4F75AE1C3BC0B4003AFF2C /* Setting.swift */,
 				0E514DE71C8ED12100028AF8 /* ReminderItemSequence.swift */,
 				0E2E3DA61C98099100D64CA2 /* Setting.xcdatamodeld */,
-				0E2E3DCC1C981F1000D64CA2 /* SettingRepository.swift */,
 			);
 			path = RemindMe;
 			sourceTree = "<group>";
