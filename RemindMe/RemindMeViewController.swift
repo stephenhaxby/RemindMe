@@ -12,6 +12,7 @@ import EventKit
 class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate {
 
     var refreshListObserver : NSObjectProtocol?
+    var refreshListScrollToBottomObserver : NSObjectProtocol?
     
     var reminderList = [RemindMeItem]()
     
@@ -27,10 +28,16 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         super.init(coder: aDecoder)
         
         // Sets the method to run when the Event Store is updated in the background
-        refreshListObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.RefreshNotificationName, object: nil, queue: nil){
+        refreshListObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.RefreshNotification, object: nil, queue: nil){
             (notification) -> Void in
             
-            self.loadRemindersListWithRefresh(true)
+            self.loadRemindersListWithRefresh(true, scrollToBottom: false)
+        }
+        
+        refreshListScrollToBottomObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.RefreshNotificationScrollToBottom, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.loadRemindersListWithRefresh(true, scrollToBottom: true)
         }
     }
     
@@ -39,7 +46,12 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Dealocate the observer above
         if let observer = refreshListObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.RefreshNotificationName, object: nil)
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.RefreshNotification, object: nil)
+        }
+        
+        if let observer = refreshListScrollToBottomObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.RefreshNotificationScrollToBottom, object: nil)
         }
     }
     
@@ -51,7 +63,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
         
-        loadRemindersListWithRefresh(true)
+        loadRemindersListWithRefresh(true, scrollToBottom: false)
     }
     
     // When a refresh is actioned
@@ -123,7 +135,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         //As we a in another thread, post back to the main thread so we can update the UI
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
-            self.loadRemindersListWithRefresh(true)
+            self.loadRemindersListWithRefresh(true, scrollToBottom: false)
         }
     }
     
@@ -158,7 +170,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         self.presentViewController(errorAlert, animated: true, completion: nil)
     }
     
-    func loadRemindersListWithRefresh(refresh : Bool) {
+    func loadRemindersListWithRefresh(refresh : Bool, scrollToBottom : Bool) {
         
         if refresh {
             
@@ -169,6 +181,15 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         else {
             
             loadRemindersList()
+        }
+        
+        if scrollToBottom {
+            
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                
+                let indexPath = NSIndexPath(forRow: self.reminderList.count-1, inSection: 0)
+                self.remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            }
         }
     }
     

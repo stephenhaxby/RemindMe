@@ -23,7 +23,7 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
             (notification) -> Void in
             
-            NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotificationName, object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotification, object: nil)
         }
     
         self.icloudReminderManager = icloudReminderManager

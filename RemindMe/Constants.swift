@@ -37,7 +37,9 @@ class Constants{
     
     static let DefaultAfternoonTime : NSDate = NSDateManager.currentDateWithHour(18, minute: 0, second: 0)
     
-    static let RefreshNotificationName : String = "Refresh"
+    static let RefreshNotification : String = "Refresh"
+    
+    static let RefreshNotificationScrollToBottom : String = "RefreshScrollToBottom"
     
     enum StorageType {
         case local
