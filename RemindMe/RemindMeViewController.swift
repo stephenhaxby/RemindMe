@@ -241,6 +241,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                     
                     // If no sequence could be loaded from disk
                     self.reminderList = scheduledItems
+                    
+                    self.refreshSequence()
                 }
                 
                 // Update the app's badge icon

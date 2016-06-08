@@ -31,10 +31,12 @@ class ReminderFacade : StorageFacadeProtocol {
         else {
             
             isNewReminder = true
-        
-            reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
     
-            localNotificationManager.setReminderNotification(remindMeItem)
+            let reminder : Reminder = reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
+            
+            let newRemindMeItem : RemindMeItem = getReminderItemFrom(reminder)
+            
+            localNotificationManager.setReminderNotification(newRemindMeItem)
         }
         
         NSNotificationCenter.defaultCenter().postNotificationName(isNewReminder ? Constants.RefreshNotificationScrollToBottom : Constants.RefreshNotification, object: nil)
