@@ -56,7 +56,7 @@ class LocalNotificationManager {
             UIApplication.sharedApplication().scheduleLocalNotification(reminderNotification!)
         }
         
-        reminderNotification!.fireDate = remindMeItem.date! // item due date (when notification will be fired)
+        reminderNotification!.fireDate = remindMeItem.date // item due date (when notification will be fired)
     }
 
 }

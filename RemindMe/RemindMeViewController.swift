@@ -13,6 +13,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
 
     var refreshListObserver : NSObjectProtocol?
     var refreshListScrollToBottomObserver : NSObjectProtocol?
+    var settingsObserver : NSObjectProtocol?
     
     var reminderList = [RemindMeItem]()
     
@@ -38,6 +39,13 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             (notification) -> Void in
             
             self.loadRemindersListWithRefresh(true, scrollToBottom: true)
+        }
+        
+        //Observer for when our settings change
+        settingsObserver = NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.storageOptionChanged()
         }
     }
     
@@ -108,6 +116,12 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 remindMeEditViewController.reminder = reminderListItem
             }
         }
+    }
+    
+    func storageOptionChanged() {
+        
+        (UIApplication.sharedApplication().delegate as! AppDelegate).setStorageType()
+        loadRemindersListWithRefresh(true, scrollToBottom: false)
     }
     
     func refreshSequence() {
@@ -252,19 +266,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 reminderListTable.reloadData()
             }
         }
-    }
-    
-    // Once access is granted to the reminders list
-    func requestedAccessToReminders(status : Bool){
-        
-        if !status {
-            
-            displayError("Please allow Remind Me to access 'Reminders'...")
-        }
-        
-        loadRemindersList()
-        
-        endRefreshControl()
     }
     
     // This method gets called for our Gesture Recognizer

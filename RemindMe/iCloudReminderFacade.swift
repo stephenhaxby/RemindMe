@@ -49,7 +49,8 @@ class iCloudReminderFacade : StorageFacadeProtocol {
                 matchingReminder.title = remindMeItem.title
                 matchingReminder.alarms = [EKAlarm(absoluteDate : remindMeItem.date!)]
                 
-                self.icloudReminderManager.saveReminder(matchingReminder, commit: false)
+                //We have to commit here because if we don't the alarms are NOT persisted... Nothing I can do about it
+                self.icloudReminderManager.saveReminder(matchingReminder, commit: true)
             }
             else {
                 
@@ -61,7 +62,8 @@ class iCloudReminderFacade : StorageFacadeProtocol {
                 newAlarms.append(EKAlarm(absoluteDate: remindMeItem.date!))
                 reminder.alarms = newAlarms
                 
-                self.icloudReminderManager.saveReminder(reminder, commit: false)
+                //We have to commit here because if we don't the alarms are NOT persisted... Nothing I can do about it
+                self.icloudReminderManager.saveReminder(reminder, commit: true)
             }
         }
     }

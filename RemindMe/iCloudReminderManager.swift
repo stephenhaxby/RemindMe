@@ -84,7 +84,9 @@ class iCloudReminderManager{
         
         var remindersList = [EKReminder]()
         
-        if(eventStoreAccessGranted && reminderList != nil){
+        //TODO: reminderList is nil
+        
+        if(eventStoreAccessGranted && getReminderList() != nil){
             
             let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
             let predicate = eventStore.predicateForRemindersInCalendars(singlecallendarArrayForPredicate)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1D5ED41D0B6259005EDF08 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0E1D5ED31D0B6259005EDF08 /* Settings.bundle */; };
 		0E1DE2991C22B8950041D864 /* EKAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */; };
 		0E27BF4F1C16E5BC0053D90D /* RemindMeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */; };
 		0E2C30CB1CEB2A1800DD87A4 /* iCloudReminderFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C30C91CEB2A1800DD87A4 /* iCloudReminderFacade.swift */; };
@@ -35,11 +36,13 @@
 		0E932BEF1C7C55290010CE0F /* TableRowHeaderSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E932BEE1C7C55290010CE0F /* TableRowHeaderSpacer.swift */; };
 		0E932BF11C7C55A10010CE0F /* TableRowFooterAddNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */; };
 		0E9404101CFE189900980DAD /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E94040F1CFE189900980DAD /* LocalNotificationManager.swift */; };
+		0E9E0B8B1D0A054E00FC1902 /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9E0B8A1D0A054E00FC1902 /* SettingsUserDefaults.swift */; };
 		0ED2E8AE1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */; };
 		0EE685861C0C656100E3317D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE685851C0C656100E3317D /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E1D5ED31D0B6259005EDF08 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EKAlarmManager.swift; sourceTree = "<group>"; };
 		0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMeEditViewController.swift; sourceTree = "<group>"; };
 		0E2C30C91CEB2A1800DD87A4 /* iCloudReminderFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderFacade.swift; sourceTree = "<group>"; };
@@ -70,6 +73,7 @@
 		0E932BEE1C7C55290010CE0F /* TableRowHeaderSpacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowHeaderSpacer.swift; sourceTree = "<group>"; };
 		0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowFooterAddNew.swift; sourceTree = "<group>"; };
 		0E94040F1CFE189900980DAD /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
+		0E9E0B8A1D0A054E00FC1902 /* SettingsUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserDefaults.swift; sourceTree = "<group>"; };
 		0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowSettingsFooterAddNew.swift; sourceTree = "<group>"; };
 		0EE685851C0C656100E3317D /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +143,7 @@
 				0E4F75AE1C3BC0B4003AFF2C /* Setting.swift */,
 				0E514DE71C8ED12100028AF8 /* ReminderItemSequence.swift */,
 				0E2E3DA61C98099100D64CA2 /* Setting.xcdatamodeld */,
+				0E1D5ED31D0B6259005EDF08 /* Settings.bundle */,
 			);
 			path = RemindMe;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 		0EFDC8661CB7921E00FCF038 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				0E9E0B8A1D0A054E00FC1902 /* SettingsUserDefaults.swift */,
 				0E8B72B81C153D69000C71D7 /* NSDateManager.swift */,
 				0E40FE3D1C07114100ACB6F6 /* iCloudReminderManager.swift */,
 				0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */,
@@ -239,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E40FE331C0702EC00ACB6F6 /* Assets.xcassets in Resources */,
+				0E1D5ED41D0B6259005EDF08 /* Settings.bundle in Resources */,
 				0E40FE311C0702EC00ACB6F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +263,7 @@
 				0E2E3DCD1C981F1000D64CA2 /* SettingRepository.swift in Sources */,
 				0E8B72B91C153D69000C71D7 /* NSDateManager.swift in Sources */,
 				0E514DE81C8ED12100028AF8 /* ReminderItemSequence.swift in Sources */,
+				0E9E0B8B1D0A054E00FC1902 /* SettingsUserDefaults.swift in Sources */,
 				0E2C30CE1CEB2A3600DD87A4 /* StorageFacadeProtocol.swift in Sources */,
 				0E932BF11C7C55A10010CE0F /* TableRowFooterAddNew.swift in Sources */,
 				0E2C30D51CEB2B7000DD87A4 /* StorageFacadeFactory.swift in Sources */,

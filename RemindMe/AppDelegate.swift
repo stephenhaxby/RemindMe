@@ -12,25 +12,33 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    let storageType : Constants.StorageType = Constants.StorageType.local
+    var storageType : Constants.StorageType = Constants.StorageType.local
     
     var window: UIWindow?
     
     var storageFacade : StorageFacadeProtocol?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+    
+    func setStorageType() {
+        
+        storageType = (SettingsUserDefaults.useICloudReminders) ? Constants.StorageType.iCloudReminders : Constants.StorageType.local
         
         storageFacade = StorageFacadeFactory.getStorageFacade(storageType, managedObjectContext: managedObjectContext)
-
-        //Register the app for Badge update notifications
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
         
         if let navigationController = window?.rootViewController as? UINavigationController,
             let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {
             
             remindMeViewController.storageFacade = storageFacade
         }
+
+    }
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // Override point for customization after application launch.
+        
+        //Register the app for Badge update notifications
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
+        
+        setStorageType()
         
         return true
     }

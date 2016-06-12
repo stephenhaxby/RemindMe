@@ -16,10 +16,6 @@ class ReminderTimeTableViewCell: UITableViewCell {
     
     weak var reminderTimeTableViewController : ReminderTimeTableViewController?
     
-    deinit{
-        reminderTimeTableViewController = nil
-    }
-    
     var settings: ReminderTimeTableViewCellItem? {
         didSet {
             
@@ -45,7 +41,7 @@ class ReminderTimeTableViewCell: UITableViewCell {
     
     @IBAction func buttonTouchUpInside(sender: AnyObject) {
 
-        if reminderTimeTableViewController != nil {
+        if reminderTimeTableViewController != nil && settings != nil {
             
             //When a button is pressed we need to deselect any that are visible
             //Any selected buttons off screen should be taken care of when the user scrolls
@@ -56,11 +52,11 @@ class ReminderTimeTableViewCell: UITableViewCell {
                 //Set the parent view controllers reminder setting 
                 if button == leftButton {
                     
-                    reminderTimeTableViewController!.selectedSetting = (settings?.settingOne)!
+                    reminderTimeTableViewController!.selectedSetting = settings!.settingOne!
                 }
                 else if button == rightButton {
                     
-                    reminderTimeTableViewController!.selectedSetting = (settings?.settingTwo)!
+                    reminderTimeTableViewController!.selectedSetting = settings!.settingTwo!
                 }
                 
                 button.selected = true
