@@ -68,7 +68,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Do any additional setup after loading the view, typically from a nib.
         
         // Set the text and font of the Settings button (unicode)
-        settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
+        settingsButton.setTitle("\u{1F550}", forState: UIControlState.Normal)
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
         
         loadRemindersListWithRefresh(true, scrollToBottom: false)

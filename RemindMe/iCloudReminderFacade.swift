@@ -41,7 +41,7 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     func createOrUpdateReminder(remindMeItem : RemindMeItem) {
         
-        icloudReminderManager.getReminder(remindMeItem.id) {
+        icloudReminderManager.getReminder(remindMeItem.id, reminderIdentifier: getReminderId) {
             reminder in
             
             if let matchingReminder : EKReminder = reminder {
@@ -70,9 +70,9 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     func removeReminder(remindMeItem : RemindMeItem) {
         
-        let reminderId : String = icloudReminderManager.getReminderId(remindMeItem.title, date: remindMeItem.date!)
+        let reminderId : String = getReminderId(remindMeItem.title, date: remindMeItem.date!)
         
-        icloudReminderManager.getReminder(reminderId) {
+        icloudReminderManager.getReminder(reminderId, reminderIdentifier: getReminderId) {
             reminder in
             
             if let matchingReminder : EKReminder = reminder {
@@ -92,7 +92,10 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     private func getiCloudReminders(iCloudShoppingList : [EKReminder]){
     
-        returnRemindersFunc!(iCloudShoppingList.map({
+        //Only return reminders that have an alarm
+        let reminderList : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.alarms != nil})
+        
+        returnRemindersFunc!(reminderList.map({
             
             (reminder : EKReminder) -> RemindMeItem in
             
@@ -111,14 +114,31 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         
         remindMeItem.title = reminder.title
 
-        if reminder.alarms != nil && reminder.alarms!.count > 0 {
+        if reminder.alarms != nil && reminder.alarms!.count > 0 && reminder.alarms![0].absoluteDate != nil {
         
             remindMeItem.date = reminder.alarms!.first!.absoluteDate!
         }
         
-        remindMeItem.id = icloudReminderManager.getReminderId(remindMeItem.title, date: remindMeItem.date!)
+        remindMeItem.id = getReminderId(remindMeItem.title, date: remindMeItem.date!)
         
         return remindMeItem
+    }
+    
+    func getReminderId(reminder : EKReminder) -> String? {
+        
+        if reminder.alarms != nil && reminder.alarms!.count > 0 && reminder.alarms![0].absoluteDate != nil {
+            
+            return getReminderId(reminder.title, date: reminder.alarms![0].absoluteDate!)
+        }
+        
+        return nil
+    }
+    
+    func getReminderId(title : String, date : NSDate) -> String {
+        
+        let dateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
+        
+        return title + NSDateManager.dateStringFromComponents(dateComponents)
     }
 }
 

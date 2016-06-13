@@ -108,19 +108,7 @@ class iCloudReminderManager{
         }
     }
     
-    func getReminderId(reminder : EKReminder) -> String {
-    
-        return getReminderId(reminder.title, date: reminder.alarms![0].absoluteDate!)
-    }
-    
-    func getReminderId(title : String, date : NSDate) -> String {
-    
-        let dateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
-
-        return title + NSDateManager.dateStringFromComponents(dateComponents)
-    }
-
-    func getReminder(id : String, returnReminder : EKReminder? -> ()) -> EKReminder? {
+    func getReminder(id : String, reminderIdentifier : EKReminder -> (String?), returnReminder : EKReminder? -> ()) {
     
         var remindersList = [EKReminder]()
         
@@ -129,7 +117,7 @@ class iCloudReminderManager{
             let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
             let predicate = eventStore.predicateForRemindersInCalendars(singlecallendarArrayForPredicate)
             
-            //Get all the reminders for the above search predicate
+            //Stupidly named method... All it does is get reminders for the calendars passed into it
             eventStore.fetchRemindersMatchingPredicate(predicate) { reminders in
                 
                 if let matchingReminders = reminders {
@@ -143,7 +131,7 @@ class iCloudReminderManager{
                 
                 var foundReminder : EKReminder?
                 
-                if let index = remindersList.indexOf({ (reminder : EKReminder) in self.getReminderId(reminder) == id}) {
+                if let index = remindersList.indexOf({ (reminder : EKReminder) in reminderIdentifier(reminder) == id}) {
 
                     foundReminder = remindersList[index]
                 }
@@ -151,8 +139,6 @@ class iCloudReminderManager{
                 returnReminder(foundReminder)
             }
         }
-
-        return nil
     }
     
     func addReminder(title : String) -> EKReminder? {
