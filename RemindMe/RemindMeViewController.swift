@@ -74,6 +74,26 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         loadRemindersListWithRefresh(true, scrollToBottom: false)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add a background view to the table view
+        //tableView.backgroundColor = .lightGrayColor()
+        
+        //Add a blur effect
+        //let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        //let blurView = UIVisualEffectView(effect: blurEffect)
+        //blurView.frame = imageView.bounds
+        //imageView.addSubview(blurView)
+        
+        let backgroundImage = UIImage(named: "old-white-background")
+        let imageView = UIImageView(image: backgroundImage)
+        imageView.contentMode = .ScaleAspectFill //.ScaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.center = view.center
+        self.tableView.backgroundView = imageView
+    }
+    
     // When a refresh is actioned
     @IBAction func refreshControlValueChanged(sender: UIRefreshControl) {
         
@@ -362,12 +382,20 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         }
     }
     
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        //cell.backgroundColor = .clearColor()
+        //cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        cell.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
+    }
+    
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
         
         // Set the background color of the header cell
-        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        //headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        headerRow.backgroundColor = .clearColor()
         
         return headerRow
     }
@@ -386,7 +414,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         footerRow.remindMeViewController = self
         
         // Set the background color of the footer cell
-        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        //footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        footerRow.backgroundColor = .clearColor()
         
         return footerRow
     }

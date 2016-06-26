@@ -30,6 +30,17 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         loadUserSettings()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let backgroundImage = UIImage(named: "old-white-background")
+        let imageView = UIImageView(image: backgroundImage)
+        imageView.contentMode = .ScaleAspectFill //.ScaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.center = view.center
+        self.tableView.backgroundView = imageView
+    }
+    
     // Load up the settings from Core Data
     func loadUserSettings() {
         
@@ -135,6 +146,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
                 newSettingIndexPath = nil
             }
         }
+        
+        cell.backgroundColor = .clearColor() //UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
     }
     
     //This method is setting which cells can be edited
@@ -188,7 +201,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         //        cell.layer.borderColor = UIColor.grayColor().CGColor
         
         // Set the background color of the Header cell
-        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        //headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        headerRow.backgroundColor = .clearColor()
         
         return headerRow
     }
@@ -207,7 +221,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         footerRow.settingsTableViewController = self
         
         // Set the background color of the footer cell
-        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        //footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        footerRow.backgroundColor = .clearColor()
         
         return footerRow
     }

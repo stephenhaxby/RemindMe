@@ -27,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let navigationController = window?.rootViewController as? UINavigationController,
             let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {
             
+//            navigationController.navigationBar.translucent = true
+//            navigationController.view.backgroundColor = UIColor.clearColor()
+            
             remindMeViewController.storageFacade = storageFacade
         }
 

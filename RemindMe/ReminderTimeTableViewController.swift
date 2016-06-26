@@ -79,6 +79,12 @@ class ReminderTimeTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        tableView.backgroundColor = .clearColor()
+    }
+    
     // Function to clear all the setting buttons
     func deselectSettingTimeButtons() {
         
@@ -158,6 +164,30 @@ class ReminderTimeTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         return false
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        //cell.backgroundColor = .clearColor()
+        //cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        cell.backgroundColor = .clearColor()
+    }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        let footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowHeaderSpacer
+        
+        // Set the background color of the footer cell
+        //footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        footerRow.backgroundColor = .clearColor()
+        
+        return footerRow
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        // Set's the height for the footer cell
+        return CGFloat(64)
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {

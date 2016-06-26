@@ -17,8 +17,6 @@ class LocalNotificationManager {
         
         for notification in UIApplication.sharedApplication().scheduledLocalNotifications! as [UILocalNotification] {
             
-            //TODO: On a new item, remindMeItem.id is blank!!!
-            
             if (notification.userInfo!["UUID"] as! String == remindMeItem.id) {
                 
                 reminderNotification = notification

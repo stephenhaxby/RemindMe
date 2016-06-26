@@ -55,6 +55,17 @@ class RemindMeEditViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
+        let background = UIImage(named: "old-white-background")
+        
+        var imageView : UIImageView!
+        imageView = UIImageView(frame: view.bounds)
+        imageView.contentMode =  UIViewContentMode.ScaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = background
+        imageView.center = view.center
+        view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
+        
         if reminder == nil {
         
             reminderTitleTextView.becomeFirstResponder()

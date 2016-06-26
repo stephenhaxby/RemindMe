@@ -30,6 +30,12 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        nameTextField.backgroundColor = .clearColor()
+    }
+    
     // Resign first responder on the text field if the time value changes
     @IBAction func timeValueChanged(sender: AnyObject) {
         

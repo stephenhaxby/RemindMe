@@ -27,6 +27,8 @@ class ReminderFacade : StorageFacadeProtocol {
     
             reminder.title = remindMeItem.title
             reminder.date = remindMeItem.date!
+            
+            localNotificationManager.setReminderNotification(remindMeItem)
         }
         else {
             

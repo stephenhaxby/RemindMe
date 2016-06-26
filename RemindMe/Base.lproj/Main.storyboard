@@ -174,7 +174,7 @@
                                     <segue destination="VWI-su-f3E" kind="unwind" unwindAction="unwindForSegue:towardsViewController:" id="r01-mm-wMT"/>
                                 </connections>
                             </button>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRN-tb-41R">
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRN-tb-41R">
                                 <rect key="frame" x="10" y="173" width="300" height="325"/>
                                 <connections>
                                     <segue destination="qDu-WY-K5e" kind="embed" id="UPC-nF-i6G"/>
@@ -255,6 +255,14 @@
                                     <outlet property="rightButton" destination="xY4-pg-qRC" id="ZQh-Q5-4qq"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FooterCell" id="O7Q-vB-hvV" customClass="TableRowHeaderSpacer" customModule="RemindMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O7Q-vB-hvV" id="cgC-TY-ffJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="qDu-WY-K5e" id="FDr-gA-1Vg"/>
@@ -291,7 +299,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="174"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9aH-5G-bDj">
+                                        <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9aH-5G-bDj">
                                             <rect key="frame" x="8" y="8" width="240" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="RWE-gI-qba"/>

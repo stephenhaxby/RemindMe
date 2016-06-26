@@ -16,10 +16,12 @@ class TableRowSettingsFooterAddNew : UITableViewCell {
     weak var settingsTableViewController: SettingsTableViewController!
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         
         if let containerView = footerAddNewView {
             
-            containerView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+            //containerView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+            containerView.backgroundColor = .clearColor()
         }
         
         let selectPress : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TableRowSettingsFooterAddNew.viewSelected(_:)))
