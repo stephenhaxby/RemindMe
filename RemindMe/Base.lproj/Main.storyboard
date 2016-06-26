@@ -418,7 +418,7 @@
         <!--Navigation Controller-->
         <scene sceneID="4Dy-sl-ksF">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="84j-94-rQU" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="84j-94-rQU" customClass="NavigationController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PTU-gw-UBR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

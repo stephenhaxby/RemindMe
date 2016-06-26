@@ -194,11 +194,11 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
         
-        //        headerRow.layer.borderWidth = 0.5
-        //        headerRow.layer.borderColor = UIColor.orangeColor().CGColor
+        //headerRow.layer.borderWidth = 0.5
+        //headerRow.layer.borderColor = UIColor.orangeColor().CGColor
         
-        //        cell.layer.borderWidth = 2.0
-        //        cell.layer.borderColor = UIColor.grayColor().CGColor
+        //cell.layer.borderWidth = 2.0
+        //cell.layer.borderColor = UIColor.grayColor().CGColor
         
         // Set the background color of the Header cell
         //headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)

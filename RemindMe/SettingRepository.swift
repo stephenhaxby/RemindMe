@@ -37,6 +37,14 @@ class SettingRepository {
         return setting
     }
     
+    func createNewSetting(name : String, time : NSDate, sequence : Int) -> Setting {
+        
+        let setting : Setting = createNewSetting(name, time: time)
+        setting.sequence = sequence
+        
+        return setting
+    }
+    
     func removeSetting(setting : Setting) {
         
         context.deleteObject(setting.setting)

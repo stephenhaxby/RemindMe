@@ -41,9 +41,9 @@ class ReminderTimeTableViewController: UITableViewController {
         // Create default values for morning and afternoon if none exist...
         if settingsList.count == 0 {
             
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime))
+            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime, sequence: 0))
             
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime))
+            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime, sequence: 1))
         }
         
         // Sort the settings before displaying them
