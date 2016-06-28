@@ -175,10 +175,9 @@ class ReminderTimeTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        let footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowHeaderSpacer
+        let footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowSpacer
         
         // Set the background color of the footer cell
-        //footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
         footerRow.backgroundColor = .clearColor()
         
         return footerRow

@@ -92,6 +92,12 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         imageView.clipsToBounds = true
         imageView.center = view.center
         self.tableView.backgroundView = imageView
+        
+        //The background view sit's above the refresh control so we need to put it back a notch...
+        self.tableView.backgroundView!.layer.zPosition -= 1;
+        
+//        let backgroundImage : UIImage = UIImage(named: "old-white-background")!
+//        self.tableView.backgroundColor = UIColor(patternImage: backgroundImage)
     }
     
     // When a refresh is actioned
@@ -389,23 +395,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         cell.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
-        
-        // Set the background color of the header cell
-        //headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-        headerRow.backgroundColor = .clearColor()
-        
-        return headerRow
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        // Set's the height of the Header
-        return CGFloat(12)
-    }
-    
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let  footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowFooterAddNew
@@ -414,8 +403,9 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         footerRow.remindMeViewController = self
         
         // Set the background color of the footer cell
-        //footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-        footerRow.backgroundColor = .clearColor()
+        footerRow.backgroundColor = tableView.visibleCells.count == reminderList.count
+            ? .clearColor()
+            : UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
         
         return footerRow
     }

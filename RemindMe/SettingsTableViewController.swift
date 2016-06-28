@@ -189,29 +189,6 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         settingsList.insert(itemToMove, atIndex: destinationIndexPath.row)
     }
-
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
-        
-        //headerRow.layer.borderWidth = 0.5
-        //headerRow.layer.borderColor = UIColor.orangeColor().CGColor
-        
-        //cell.layer.borderWidth = 2.0
-        //cell.layer.borderColor = UIColor.grayColor().CGColor
-        
-        // Set the background color of the Header cell
-        //headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-        headerRow.backgroundColor = .clearColor()
-        
-        return headerRow
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        // Set the height for the Header cell
-        return CGFloat(12)
-    }
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
@@ -221,8 +198,9 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         footerRow.settingsTableViewController = self
         
         // Set the background color of the footer cell
-        //footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-        footerRow.backgroundColor = .clearColor()
+        footerRow.backgroundColor = tableView.visibleCells.count == settingsList.count
+            ? .clearColor()
+            : UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
         
         return footerRow
     }

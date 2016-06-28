@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TableRowHeaderSpacer : UITableViewCell {
+class TableRowSpacer : UITableViewCell {
     
     
 }

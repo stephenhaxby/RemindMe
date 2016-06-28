@@ -34,7 +34,7 @@
 		0E5839321C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5839311C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift */; };
 		0E5839341C43B10300FA3138 /* ReminderTimeTableViewCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5839331C43B10300FA3138 /* ReminderTimeTableViewCellItem.swift */; };
 		0E8B72B91C153D69000C71D7 /* NSDateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8B72B81C153D69000C71D7 /* NSDateManager.swift */; };
-		0E932BEF1C7C55290010CE0F /* TableRowHeaderSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E932BEE1C7C55290010CE0F /* TableRowHeaderSpacer.swift */; };
+		0E932BEF1C7C55290010CE0F /* TableRowSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E932BEE1C7C55290010CE0F /* TableRowSpacer.swift */; };
 		0E932BF11C7C55A10010CE0F /* TableRowFooterAddNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */; };
 		0E9404101CFE189900980DAD /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E94040F1CFE189900980DAD /* LocalNotificationManager.swift */; };
 		0E9E0B8B1D0A054E00FC1902 /* SettingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9E0B8A1D0A054E00FC1902 /* SettingsUserDefaults.swift */; };
@@ -72,7 +72,7 @@
 		0E5839311C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTimeTableViewCell.swift; sourceTree = "<group>"; };
 		0E5839331C43B10300FA3138 /* ReminderTimeTableViewCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTimeTableViewCellItem.swift; sourceTree = "<group>"; };
 		0E8B72B81C153D69000C71D7 /* NSDateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateManager.swift; sourceTree = "<group>"; };
-		0E932BEE1C7C55290010CE0F /* TableRowHeaderSpacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowHeaderSpacer.swift; sourceTree = "<group>"; };
+		0E932BEE1C7C55290010CE0F /* TableRowSpacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowSpacer.swift; sourceTree = "<group>"; };
 		0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowFooterAddNew.swift; sourceTree = "<group>"; };
 		0E94040F1CFE189900980DAD /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		0E9E0B8A1D0A054E00FC1902 /* SettingsUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUserDefaults.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 				0E4F75AC1C3BBF28003AFF2C /* SettingsTableViewCell.swift */,
 				0E5839311C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift */,
 				0E5839331C43B10300FA3138 /* ReminderTimeTableViewCellItem.swift */,
-				0E932BEE1C7C55290010CE0F /* TableRowHeaderSpacer.swift */,
+				0E932BEE1C7C55290010CE0F /* TableRowSpacer.swift */,
 				0E932BF01C7C55A10010CE0F /* TableRowFooterAddNew.swift */,
 				0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */,
 			);
@@ -287,7 +287,7 @@
 				0E5839321C43AC8D00FA3138 /* ReminderTimeTableViewCell.swift in Sources */,
 				0E4F75AD1C3BBF28003AFF2C /* SettingsTableViewCell.swift in Sources */,
 				0E4F75AB1C3BBDA9003AFF2C /* SettingsTableViewController.swift in Sources */,
-				0E932BEF1C7C55290010CE0F /* TableRowHeaderSpacer.swift in Sources */,
+				0E932BEF1C7C55290010CE0F /* TableRowSpacer.swift in Sources */,
 				0E40FE2C1C0702EC00ACB6F6 /* AppDelegate.swift in Sources */,
 				0E565C721C0DAA7700057488 /* RemindMeTableViewCell.swift in Sources */,
 			);
