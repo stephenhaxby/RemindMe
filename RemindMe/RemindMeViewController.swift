@@ -72,6 +72,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
         
         loadRemindersListWithRefresh(true, scrollToBottom: false)
+        setDoneButtonTitleText()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -95,9 +96,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         //The background view sit's above the refresh control so we need to put it back a notch...
         self.tableView.backgroundView!.layer.zPosition -= 1;
-        
-//        let backgroundImage : UIImage = UIImage(named: "old-white-background")!
-//        self.tableView.backgroundColor = UIColor(patternImage: backgroundImage)
     }
     
     // When a refresh is actioned
@@ -111,14 +109,18 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     // Disable table editing once the Done button is pressed
     @IBAction func doneButtonTouchUpInside(sender: UIButton) {
         
-        self.editing = false
+        let isEditing : Bool = self.editing
         
-        // Hide the Done button
-        sender.hidden = true
-
-        refreshSequence()
+        self.editing = !self.editing
         
-        loadRemindersList()
+        setDoneButtonTitleText()
+        
+        if !isEditing {
+            
+            refreshSequence()
+            
+            loadRemindersList()
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -302,8 +304,15 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
 
             self.editing = true
             
-            doneButton.hidden = false
+            setDoneButtonTitleText()
         }
+    }
+    
+    func setDoneButtonTitleText() {
+        
+        let titleText : String = self.editing ? "Done" : "Edit"
+        
+        doneButton.setTitle(titleText, forState: UIControlState.Normal)
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -390,8 +399,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        //cell.backgroundColor = .clearColor()
-        //cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
         cell.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
     }
     

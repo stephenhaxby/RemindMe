@@ -28,6 +28,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         tableView.separatorColor = UIColor.orangeColor();
         
         loadUserSettings()
+        
+        setDoneButtonTitleText()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -75,9 +77,9 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     @IBAction func doneButtonTouchUpInside(sender: UIButton) {
         
-        self.editing = false
+        self.editing = !self.editing
         
-        sender.hidden = true
+        setDoneButtonTitleText()
     }
     
     // When the user navigates away form this page, save all the settings (another way of doing an unwind segue)
@@ -246,7 +248,14 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
             
             self.editing = true
             
-            doneButton.hidden = false
+            setDoneButtonTitleText()
         }
+    }
+    
+    func setDoneButtonTitleText() {
+        
+        let titleText : String = self.editing ? "Done" : "Edit"
+        
+        doneButton.setTitle(titleText, forState: UIControlState.Normal)
     }
 }
