@@ -115,7 +115,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         setDoneButtonTitleText()
         
-        if !isEditing {
+        if isEditing {
             
             refreshSequence()
             
@@ -410,9 +410,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         footerRow.remindMeViewController = self
         
         // Set the background color of the footer cell
-        footerRow.backgroundColor = tableView.visibleCells.count == reminderList.count
-            ? .clearColor()
-            : UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
+        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
         
         return footerRow
     }
