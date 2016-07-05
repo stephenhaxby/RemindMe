@@ -19,7 +19,7 @@ class ReminderTimeTableViewController: UITableViewController {
     
     weak var remindMeEditViewController : RemindMeEditViewController?
     
-    weak var reminder : EKReminder?
+    weak var reminder : RemindMeItem?
     
     deinit{
         remindMeEditViewController = nil
@@ -41,9 +41,9 @@ class ReminderTimeTableViewController: UITableViewController {
         // Create default values for morning and afternoon if none exist...
         if settingsList.count == 0 {
             
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime))
+            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime, sequence: 0))
             
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime))
+            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime, sequence: 1))
         }
         
         // Sort the settings before displaying them
@@ -55,20 +55,22 @@ class ReminderTimeTableViewController: UITableViewController {
             })
         }
         
+        var index : Int = 0
+        
         // Lay out the table cells from left to right
-        for var i = 0; i < settingsList.count; i++ {
+        while index < settingsList.count {
             
             let reminderTimeTableViewCellItem : ReminderTimeTableViewCellItem = ReminderTimeTableViewCellItem()
-            reminderTimeTableViewCellItem.settingOne = settingsList[i]
+            reminderTimeTableViewCellItem.settingOne = settingsList[index]
             
-            if i+1 < settingsList.count {
+            if index+1 < settingsList.count {
                 
-                reminderTimeTableViewCellItem.settingTwo = settingsList[i+1]
-                
-                i++
+                reminderTimeTableViewCellItem.settingTwo = settingsList[index+1]
             }
             
             reminderTimeTableViewCellItems.append(reminderTimeTableViewCellItem)
+            
+            index += 2
         }
         
         if let reminderTimeListTable = self.tableView {
@@ -77,12 +79,18 @@ class ReminderTimeTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        tableView.backgroundColor = .clearColor()
+    }
+    
     // Function to clear all the setting buttons
     func deselectSettingTimeButtons() {
         
         reminderTitleTextViewResignFirstResponder()
         
-        for var i = 0; i < tableView.visibleCells.count; i++ {
+        for i in 0 ..< tableView.visibleCells.count {
             
             if let reminderTimeTableViewCell : ReminderTimeTableViewCell = tableView.visibleCells[i] as? ReminderTimeTableViewCell {
                 
@@ -110,7 +118,9 @@ class ReminderTimeTableViewController: UITableViewController {
     func selectSettingButtonFor(reminderTimeTableViewCell : ReminderTimeTableViewCell) {
         
         // Loop through each alarm time and set the button to selected when it finds a match (left or right button)
-        if let reminderItem : EKReminder = reminder, let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(reminderItem.alarms) {
+        if let reminderItem : RemindMeItem = reminder,
+        let reminderDate : NSDate = reminderItem.date,
+            let itemReminderAlarmDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(reminderDate) {
     
             if let leftButton = reminderTimeTableViewCell.leftButton {
                 
@@ -154,6 +164,29 @@ class ReminderTimeTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         return false
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        //cell.backgroundColor = .clearColor()
+        //cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        cell.backgroundColor = .clearColor()
+    }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        let footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowSpacer
+        
+        // Set the background color of the footer cell
+        footerRow.backgroundColor = .clearColor()
+        
+        return footerRow
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        // Set's the height for the footer cell
+        return CGFloat(64)
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {

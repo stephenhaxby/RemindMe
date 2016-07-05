@@ -11,11 +11,13 @@ import EventKit
 
 class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate {
 
-    var eventStoreObserver : NSObjectProtocol?
+    var refreshListObserver : NSObjectProtocol?
+    var refreshListScrollToBottomObserver : NSObjectProtocol?
+    var settingsObserver : NSObjectProtocol?
     
-    var reminderList = [EKReminder]()
+    var reminderList = [RemindMeItem]()
     
-    let reminderManager : iCloudReminderManager = iCloudReminderManager()
+    var storageFacade : StorageFacadeProtocol?
     
     @IBOutlet weak var settingsButton: UIButton!
     
@@ -27,19 +29,37 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         super.init(coder: aDecoder)
         
         // Sets the method to run when the Event Store is updated in the background
-        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
+        refreshListObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.RefreshNotification, object: nil, queue: nil){
             (notification) -> Void in
             
-            self.loadRemindersListWithRefresh(true)
+            self.loadRemindersListWithRefresh(true, scrollToBottom: false)
+        }
+        
+        refreshListScrollToBottomObserver = NSNotificationCenter.defaultCenter().addObserverForName(Constants.RefreshNotificationScrollToBottom, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.loadRemindersListWithRefresh(true, scrollToBottom: true)
+        }
+        
+        //Observer for when our settings change
+        settingsObserver = NSNotificationCenter.defaultCenter().addObserverForName(NSUserDefaultsDidChangeNotification, object: nil, queue: nil){
+            (notification) -> Void in
+            
+            self.storageOptionChanged()
         }
     }
     
     deinit {
         
         // Dealocate the observer above
-        if let observer = eventStoreObserver{
+        if let observer = refreshListObserver{
             
-            NSNotificationCenter.defaultCenter().removeObserver(observer, name: EKEventStoreChangedNotification, object: nil)
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.RefreshNotification, object: nil)
+        }
+        
+        if let observer = refreshListScrollToBottomObserver{
+            
+            NSNotificationCenter.defaultCenter().removeObserver(observer, name: Constants.RefreshNotificationScrollToBottom, object: nil)
         }
     }
     
@@ -48,16 +68,34 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Do any additional setup after loading the view, typically from a nib.
         
         // Set the text and font of the Settings button (unicode)
-        settingsButton.setTitle("\u{2699}", forState: UIControlState.Normal)
+        settingsButton.setTitle("\u{1F550}", forState: UIControlState.Normal)
         settingsButton.titleLabel?.font = UIFont.boldSystemFontOfSize(26)
         
-        startRefreshControl()
+        loadRemindersListWithRefresh(true, scrollToBottom: false)
+        setDoneButtonTitleText()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
-        // Set the name of the reminder list we are going to use
-        reminderManager.remindersListName = Constants.RemindersListName
+        // Add a background view to the table view
+        //tableView.backgroundColor = .lightGrayColor()
         
-        // Request access to Reminders
-        reminderManager.requestAccessToReminders(requestedAccessToReminders)
+        //Add a blur effect
+        //let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        //let blurView = UIVisualEffectView(effect: blurEffect)
+        //blurView.frame = imageView.bounds
+        //imageView.addSubview(blurView)
+        
+        let backgroundImage = UIImage(named: "old-white-background")
+        let imageView = UIImageView(image: backgroundImage)
+        imageView.contentMode = .ScaleAspectFill //.ScaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.center = view.center
+        self.tableView.backgroundView = imageView
+        
+        //The background view sit's above the refresh control so we need to put it back a notch...
+        self.tableView.backgroundView!.layer.zPosition -= 1;
     }
     
     // When a refresh is actioned
@@ -71,28 +109,18 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     // Disable table editing once the Done button is pressed
     @IBAction func doneButtonTouchUpInside(sender: UIButton) {
         
-        self.editing = false
+        let isEditing : Bool = self.editing
         
-        // Hide the Done button
-        sender.hidden = true
-
-        var reminderItemSequence : [ReminderItemSequence] = [ReminderItemSequence]()
+        self.editing = !self.editing
         
-        // Loop through each reminder and save it's order to a new list
-        for var i = 0; i < reminderList.count; i++ {
+        setDoneButtonTitleText()
+        
+        if isEditing {
             
-            reminderItemSequence.append(ReminderItemSequence(calendarItemExternalIdentifier: reminderList[i].calendarItemExternalIdentifier, sequenceNumber: i))
-        }
-        
-        // Save our reminder sequence to disk
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL.path!)
-        
-        if !isSuccessfulSave {
+            refreshSequence()
             
-            displayError("Unable to save Reminder Order!")
+            loadRemindersList()
         }
-        
-        loadRemindersList()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -106,20 +134,40 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Setup the destination view controllers data
         let remindMeEditViewController : RemindMeEditViewController = segue.destinationViewController as! RemindMeEditViewController
         remindMeEditViewController.remindMeViewController = self
-        remindMeEditViewController.reminderManager = reminderManager
+        remindMeEditViewController.storageFacade = storageFacade
         
         // If we are editing an existing item
-        if let reminderListItem : EKReminder = sender as? EKReminder {
+        if let reminderListItem : RemindMeItem = sender as? RemindMeItem {
             
             if segue.identifier == "tableViewCellSegue" {
 
                 remindMeEditViewController.reminder = reminderListItem
             }
         }
-        else if sender is TableRowFooterAddNew || sender is UIButton {
+    }
+    
+    func storageOptionChanged() {
+        
+        (UIApplication.sharedApplication().delegate as! AppDelegate).setStorageType()
+        loadRemindersListWithRefresh(true, scrollToBottom: false)
+    }
+    
+    func refreshSequence() {
+        
+        var reminderItemSequence : [ReminderItemSequence] = [ReminderItemSequence]()
+        
+        // Loop through each reminder and save it's order to a new list
+        for i in 0 ..< reminderList.count {
             
-            // If we are creating a new item
-            remindMeEditViewController.reminder = reminderManager.getNewReminder()
+            reminderItemSequence.append(ReminderItemSequence(calendarItemExternalIdentifier: reminderList[i].id, sequenceNumber: i))
+        }
+        
+        // Save our reminder sequence to disk
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL.path!)
+        
+        if !isSuccessfulSave {
+            
+            displayError("Unable to save Reminder Order!")
         }
     }
     
@@ -129,7 +177,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         //As we a in another thread, post back to the main thread so we can update the UI
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
-            self.loadRemindersListWithRefresh(true)
+            self.loadRemindersListWithRefresh(true, scrollToBottom: false)
         }
     }
     
@@ -164,7 +212,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         self.presentViewController(errorAlert, animated: true, completion: nil)
     }
     
-    func loadRemindersListWithRefresh(refresh : Bool) {
+    func loadRemindersListWithRefresh(refresh : Bool, scrollToBottom : Bool) {
         
         if refresh {
             
@@ -176,33 +224,42 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             loadRemindersList()
         }
+        
+        if scrollToBottom {
+            
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                
+                let indexPath = NSIndexPath(forRow: self.reminderList.count-1, inSection: 0)
+                self.remindersTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            }
+        }
     }
     
     func loadRemindersList(){
         
-        reminderManager.getReminders(getReminderList)
+        storageFacade!.getReminders(getReminderList)
     }
     
-    func getReminderList(iCloudShoppingList : [EKReminder]){
+    func getReminderList(iCloudShoppingList : [RemindMeItem]){
 
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
             if let reminderListTable = self.tableView{
                 
                 // Filter out reminder items that don't have an alarm set
-                let scheduledItems : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.alarms != nil})
+                let scheduledItems : [RemindMeItem] = iCloudShoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})
                 
                 // Load up the reminder item sequence from disk
                 if let reminderItemSequence : [ReminderItemSequence] = NSKeyedUnarchiver.unarchiveObjectWithFile(ReminderItemSequence.ArchiveURL.path!) as? [ReminderItemSequence] {
                     
-                    var sortedScheduledItems : [EKReminder] = [EKReminder]()
+                    var sortedScheduledItems : [RemindMeItem] = [RemindMeItem]()
                     
                     // For each item sequence that was saved
                     for itemSequence in reminderItemSequence {
                         
                         // Get the first matching item by calendarItemExternalIdentifier and add to our new list
-                        if let matchingReminderItem : EKReminder = scheduledItems.filter({(reminderItem : EKReminder) in
-                            reminderItem.calendarItemExternalIdentifier == itemSequence.calendarItemExternalIdentifier}).first {
+                        if let matchingReminderItem : RemindMeItem = scheduledItems.filter({(reminderItem : RemindMeItem) in
+                            reminderItem.id == itemSequence.calendarItemExternalIdentifier}).first {
                             
                             sortedScheduledItems.append(matchingReminderItem)
                         }
@@ -212,15 +269,22 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                     self.reminderList = sortedScheduledItems
                     
                     // Get all items that were not in our sorted item list and append them to the sorted list
-                    let unSortedScheduleItems : [EKReminder] = scheduledItems.filter({(reminder : EKReminder) in
-                        sortedScheduledItems.indexOf(reminder) == nil})
+                    let unSortedScheduleItems : [RemindMeItem] = scheduledItems.filter({(reminderItem : RemindMeItem) in
+                        sortedScheduledItems.indexOf({$0.id == reminderItem.id}) == nil})
                     
-                    self.reminderList.appendContentsOf(unSortedScheduleItems)
+                    if unSortedScheduleItems.count > 0 {
+                    
+                        self.reminderList.appendContentsOf(unSortedScheduleItems)
+                        
+                        self.refreshSequence()
+                    }                    
                 }
                 else{
                     
                     // If no sequence could be loaded from disk
                     self.reminderList = scheduledItems
+                    
+                    self.refreshSequence()
                 }
                 
                 // Update the app's badge icon
@@ -232,19 +296,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         }
     }
     
-    // Once access is granted to the reminders list
-    func requestedAccessToReminders(status : Bool){
-        
-        if !status {
-            
-            displayError("Please allow Remind Me to access 'Reminders'...")
-        }
-        
-        loadRemindersList()
-        
-        endRefreshControl()
-    }
-    
     // This method gets called for our Gesture Recognizer
     func cellLongPressed(gestureRecognizer:UIGestureRecognizer) {
         
@@ -253,8 +304,15 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
 
             self.editing = true
             
-            doneButton.hidden = false
+            setDoneButtonTitleText()
         }
+    }
+    
+    func setDoneButtonTitleText() {
+        
+        let titleText : String = self.editing ? "Done" : "Edit"
+        
+        doneButton.setTitle(titleText, forState: UIControlState.Normal)
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -273,7 +331,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderCell")! as! RemindMeTableViewCell
         
         // Setup a Long Press Gesture for each cell, calling the cellLongPressed method
-        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
+        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(RemindMeViewController.cellLongPressed(_:)))
         longPress.delegate = self
         longPress.minimumPressDuration = 1
         longPress.numberOfTouchesRequired = 1
@@ -281,7 +339,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         cell.addGestureRecognizer(longPress)
 
         // Sets the reminder list item for the cell
-        var reminderListItem : EKReminder = reminderList[indexPath.row]
+        let reminderListItem : RemindMeItem = reminderList[indexPath.row]
         cell.reminder = reminderListItem
         
         return cell
@@ -314,7 +372,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     // This method is for when an item is selected
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        var reminderListItem : EKReminder?
+        var reminderListItem : RemindMeItem?
 
         reminderListItem  = reminderList[indexPath.row]
         
@@ -333,31 +391,15 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         if(indexPath.row < reminderList.count){
             
-            let listItem : EKReminder = reminderList[indexPath.row]
-            
-            guard reminderManager.removeReminder(listItem) else {
-                
-                displayError("Your reminder list item could not be removed...")
-                
-                return
-            }
+            let listItem : RemindMeItem = reminderList[indexPath.row]
+
+            storageFacade!.removeReminder(listItem)
         }
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
-        
-        // Set the background color of the header cell
-        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-        
-        return headerRow
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        // Set's the height of the Header
-        return CGFloat(12)
+        cell.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
     }
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -368,7 +410,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         footerRow.remindMeViewController = self
         
         // Set the background color of the footer cell
-        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
         
         return footerRow
     }

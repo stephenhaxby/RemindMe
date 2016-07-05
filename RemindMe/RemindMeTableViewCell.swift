@@ -17,7 +17,7 @@ class RemindMeTableViewCell: UITableViewCell {
     
     weak var remindMeViewController : RemindMeViewController?
     
-    var reminder: EKReminder? {
+    var reminder: RemindMeItem? {
         didSet {
             
             if let itemReminder = reminder {
@@ -28,7 +28,7 @@ class RemindMeTableViewCell: UITableViewCell {
                 
                 var reminderText : NSString = NSString(string: reminderTextLabel.text!)
                 
-                truncateText(reminderText, forLabel: reminderTextLabel)
+                truncateText(&reminderText, forLabel: reminderTextLabel)
                 
                 var newReminderText = String(reminderText)
                 
@@ -43,7 +43,7 @@ class RemindMeTableViewCell: UITableViewCell {
                 reminderTextLabel.text = newReminderText
                 
                 // Set's the reminder time label
-                if let itemReminderAlarmDateComponents : NSDateComponents = EKAlarmManager.getFirstAbsoluteDateComponentsFromAlarms(itemReminder.alarms) {
+                if let itemReminderAlarmDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(itemReminder.date!) {
                     
                     reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
                 }
@@ -52,7 +52,7 @@ class RemindMeTableViewCell: UITableViewCell {
     }
     
     // Function to truncate the text for a label based on it's visible size.
-    func truncateText(var text : NSString, forLabel : UILabel) {
+    func truncateText(inout text : NSString, forLabel : UILabel) {
         
         let size : CGSize = text.sizeWithAttributes([NSFontAttributeName : reminderTextLabel.font!])
         
@@ -62,7 +62,7 @@ class RemindMeTableViewCell: UITableViewCell {
             
             text = text.substringWithRange(NSRange(location: 0, length: text.length-1))
             
-            truncateText(text, forLabel: forLabel)
+            truncateText(&text, forLabel: forLabel)
         }
     }
 }

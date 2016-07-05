@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import EventKit
 
 class RemindMeEditViewController : UIViewController {
     
@@ -21,14 +20,14 @@ class RemindMeEditViewController : UIViewController {
     
     weak var remindMeViewController : RemindMeViewController?
     
-    weak var reminderManager : iCloudReminderManager?
-    
-    var reminder: EKReminder?
+    var storageFacade : StorageFacadeProtocol?
+
+    var reminder : RemindMeItem?
     
     deinit{
         
         remindMeViewController = nil
-        reminderManager = nil
+        storageFacade = nil
         reminderTimeTableViewController = nil
     }
     
@@ -56,19 +55,26 @@ class RemindMeEditViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        // Make the text box the first reponder for new reminders
-        if let reminderItem = reminder {
+        let background = UIImage(named: "old-white-background")
         
-            if reminderItem.title == "" {
-
-                reminderTitleTextView.becomeFirstResponder()
-            }
+        var imageView : UIImageView!
+        imageView = UIImageView(frame: view.bounds)
+        imageView.contentMode =  UIViewContentMode.ScaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = background
+        imageView.center = view.center
+        view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
+        
+        if reminder == nil {
+        
+            reminderTitleTextView.becomeFirstResponder()
         }
     }
     
     // Sets up the relationships between controllers
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+
         if let destinationViewController : ReminderTimeTableViewController = segue.destinationViewController as? ReminderTimeTableViewController {
             
             reminderTimeTableViewController = destinationViewController
@@ -82,32 +88,28 @@ class RemindMeEditViewController : UIViewController {
     // When the back button is pressed we need to save everything
     @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
-        guard reminderManager != nil else {
+        guard storageFacade != nil else {
             
             return
         }
-        
-        if let reminderItem = reminder {
-         
-            reminderItem.title = reminderTitleTextView.text
+
+        if reminder == nil {
             
-            if reminderTimeTableViewController != nil && reminderTimeTableViewController!.selectedSetting != nil {
-            
-                reminderItem.alarms = [getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)]
-            
-                reminderManager!.saveReminder(reminderItem)
-            }
+            reminder = RemindMeItem()
         }
         
-//        // Refresh the main list in the main UI thread
-//        if let mainViewController = remindMeViewController {
-//            
-//            mainViewController.refreshInMainThread()
-//        }
+        reminder!.title = reminderTitleTextView.text
+        
+        if reminderTimeTableViewController != nil && reminderTimeTableViewController!.selectedSetting != nil {
+            
+            reminder!.date = getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)
+            
+            storageFacade!.createOrUpdateReminder(reminder!)
+        }
     }
     
     // Return an alarm date/time for the selected date, making it either today or tomorrow depending on if the time has passed
-    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> EKAlarm {
+    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> NSDate {
         
         let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
         
@@ -116,11 +118,11 @@ class RemindMeEditViewController : UIViewController {
         
         if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
             
-            return EKAlarm(absoluteDate: reminderDate)
+            return reminderDate
         }
         else {
             
-            return EKAlarm(absoluteDate: NSDateManager.addDaysToDate(reminderDate, days: 1))
+            return NSDateManager.addDaysToDate(reminderDate, days: 1)
         }
     }
 }

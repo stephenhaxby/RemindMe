@@ -84,7 +84,9 @@ class iCloudReminderManager{
         
         var remindersList = [EKReminder]()
         
-        if(eventStoreAccessGranted && reminderList != nil){
+        //TODO: reminderList is nil
+        
+        if(eventStoreAccessGranted && getReminderList() != nil){
             
             let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
             let predicate = eventStore.predicateForRemindersInCalendars(singlecallendarArrayForPredicate)
@@ -105,7 +107,40 @@ class iCloudReminderManager{
             }
         }
     }
+    
+    func getReminder(id : String, reminderIdentifier : EKReminder -> (String?), returnReminder : EKReminder? -> ()) {
+    
+        var remindersList = [EKReminder]()
+        
+        if(eventStoreAccessGranted && reminderList != nil){
+            
+            let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
+            let predicate = eventStore.predicateForRemindersInCalendars(singlecallendarArrayForPredicate)
+            
+            //Stupidly named method... All it does is get reminders for the calendars passed into it
+            eventStore.fetchRemindersMatchingPredicate(predicate) { reminders in
+                
+                if let matchingReminders = reminders {
+                    
+                    //For each reminder in iCloud
+                    for reminder in matchingReminders {
+                        
+                        remindersList.append(reminder)
+                    }
+                }
+                
+                var foundReminder : EKReminder?
+                
+                if let index = remindersList.indexOf({ (reminder : EKReminder) in reminderIdentifier(reminder) == id}) {
 
+                    foundReminder = remindersList[index]
+                }
+                
+                returnReminder(foundReminder)
+            }
+        }
+    }
+    
     func addReminder(title : String) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()

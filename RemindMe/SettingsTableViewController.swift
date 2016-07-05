@@ -28,6 +28,19 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         tableView.separatorColor = UIColor.orangeColor();
         
         loadUserSettings()
+        
+        setDoneButtonTitleText()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let backgroundImage = UIImage(named: "old-white-background")
+        let imageView = UIImageView(image: backgroundImage)
+        imageView.contentMode = .ScaleAspectFill //.ScaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.center = view.center
+        self.tableView.backgroundView = imageView
     }
     
     // Load up the settings from Core Data
@@ -64,15 +77,35 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     @IBAction func doneButtonTouchUpInside(sender: UIButton) {
         
-        self.editing = false
+        self.editing = !self.editing
         
-        sender.hidden = true
+        setDoneButtonTitleText()
     }
     
     // When the user navigates away form this page, save all the settings (another way of doing an unwind segue)
     override func viewWillDisappear(animated : Bool){
-
-        for var i = 0; i < settingsList.count; i++ {
+        
+        //Need to resign first responder on any text fields before doing anything, otherwise the setting will be updated
+        //in it's setter after it's been deleted and committed
+        for i in 0 ..< settingsTableView.visibleCells.count {
+            
+            if let cell : SettingsTableViewCell = settingsTableView.visibleCells[i] as? SettingsTableViewCell {
+                
+                if cell.nameTextField!.isFirstResponder() {
+                    
+                    cell.nameTextField.resignFirstResponder()
+                }
+            }
+        }
+        
+        if settingsList[settingsList.count-1].name == "" {
+            
+            settingRepository.removeSetting(settingsList[settingsList.count-1])
+            
+            settingsList.removeAtIndex(settingsList.count-1)
+        }
+        
+        for i in 0 ..< settingsList.count {
             
             settingsList[i].sequence = i
         }
@@ -92,7 +125,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         // Setup a long press gesture recognizer to call the cellLongPressed method
-        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "cellLongPressed:")
+        let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(SettingsTableViewController.cellLongPressed(_:)))
         longPress.delegate = self
         longPress.minimumPressDuration = 1
         longPress.numberOfTouchesRequired = 1
@@ -115,6 +148,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
                 newSettingIndexPath = nil
             }
         }
+        
+        cell.backgroundColor = .clearColor() //UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
     }
     
     //This method is setting which cells can be edited
@@ -156,28 +191,6 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         settingsList.insert(itemToMove, atIndex: destinationIndexPath.row)
     }
-
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerRow = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! TableRowHeaderSpacer
-        
-        //        headerRow.layer.borderWidth = 0.5
-        //        headerRow.layer.borderColor = UIColor.orangeColor().CGColor
-        
-        //        cell.layer.borderWidth = 2.0
-        //        cell.layer.borderColor = UIColor.grayColor().CGColor
-        
-        // Set the background color of the Header cell
-        headerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-        
-        return headerRow
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        // Set the height for the Header cell
-        return CGFloat(12)
-    }
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
@@ -187,7 +200,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         footerRow.settingsTableViewController = self
         
         // Set the background color of the footer cell
-        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
+        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
         
         return footerRow
     }
@@ -233,7 +246,14 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
             
             self.editing = true
             
-            doneButton.hidden = false
+            setDoneButtonTitleText()
         }
+    }
+    
+    func setDoneButtonTitleText() {
+        
+        let titleText : String = self.editing ? "Done" : "Edit"
+        
+        doneButton.setTitle(titleText, forState: UIControlState.Normal)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  SettingManager.swift
+//  SettingREpository.swift
 //  RemindMe
 //
 //  Created by Stephen Haxby on 15/03/2016.
@@ -11,23 +11,18 @@ import CoreData
 
 class SettingRepository {
     
-    var appDelegate : AppDelegate
+    let context : NSManagedObjectContext
     
     init(appDelegate : AppDelegate){
         
-        self.appDelegate = appDelegate
+        self.context = appDelegate.managedObjectContext
     }
-    
-    func getManagedContext() -> NSManagedObjectContext {
-        
-        return appDelegate.managedObjectContext
-    }
-    
+
     func createNewSetting() -> Setting {
         
-        let entity = NSEntityDescription.entityForName("Setting", inManagedObjectContext:getManagedContext())
+        let entity = NSEntityDescription.entityForName("Setting", inManagedObjectContext:context)
         
-        let settingManagedObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: getManagedContext())
+        let settingManagedObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: context)
         
         return Setting(managedObject: settingManagedObject)
     }
@@ -42,9 +37,17 @@ class SettingRepository {
         return setting
     }
     
+    func createNewSetting(name : String, time : NSDate, sequence : Int) -> Setting {
+        
+        let setting : Setting = createNewSetting(name, time: time)
+        setting.sequence = sequence
+        
+        return setting
+    }
+    
     func removeSetting(setting : Setting) {
         
-        getManagedContext().deleteObject(setting.setting)
+        context.deleteObject(setting.setting)
     }
     
     func getSettings() -> [Setting] {
@@ -52,13 +55,12 @@ class SettingRepository {
         do {
         
         return
-            (try getManagedContext().executeFetchRequest(NSFetchRequest(entityName: "Setting")) as! [NSManagedObject]).map({
+            (try context.executeFetchRequest(NSFetchRequest(entityName: "Setting")) as! [NSManagedObject]).map({
                 
                 (managedObject : NSManagedObject) -> Setting in
                 
                 return Setting(managedObject: managedObject)
-            })
-            
+            })            
         }
         catch let error as NSError {
             
@@ -72,12 +74,11 @@ class SettingRepository {
         
         do {
             
-            try getManagedContext().save()
+            try context.save()
 
         } catch let error as NSError  {
             
-            //TODO: A better error...
-            print("Could not save \(error), \(error.userInfo)")
+              print("Could not save \(error), \(error.userInfo)")
             
             return false
         }
