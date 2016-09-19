@@ -20,33 +20,33 @@ class ReminderRepository {
     
     func createNewReminder() -> Reminder {
         
-        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext:managedObjectContext)
+        let entity = NSEntityDescription.entity(forEntityName: "Reminder", in:managedObjectContext)
         
-        let reminderManagedObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedObjectContext)
+        let reminderManagedObject = NSManagedObject(entity: entity!, insertInto: managedObjectContext)
         
         return Reminder(managedObject: reminderManagedObject)
     }
     
-    func createNewReminder(name : String, time : NSDate) -> Reminder {
+    func createNewReminder(_ name : String, time : Date) -> Reminder {
         
         let reminder : Reminder = createNewReminder()
         
-        reminder.id = NSUUID().UUIDString
+        reminder.id = UUID().uuidString
         reminder.title = name
         reminder.date = time
         
         return reminder
     }
     
-    func getReminderBy(id : String) -> Reminder? {
+    func getReminderBy(_ id : String) -> Reminder? {
     
-        let reminderFetch = NSFetchRequest(entityName: "Reminder")
+        let reminderFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Reminder")
     
         reminderFetch.predicate = NSPredicate(format: "id == %@", id)
     
         do {
         
-            let reminders : [Reminder] = (try managedObjectContext.executeFetchRequest(reminderFetch) as! [NSManagedObject]).map({
+            let reminders : [Reminder] = (try managedObjectContext.fetch(reminderFetch) as! [NSManagedObject]).map({
                 
                 (managedObject : NSManagedObject) -> Reminder in
                 
@@ -71,7 +71,7 @@ class ReminderRepository {
         do {
         
         return
-            (try managedObjectContext.executeFetchRequest(NSFetchRequest(entityName: "Reminder")) as! [NSManagedObject]).map({
+            (try managedObjectContext.fetch(NSFetchRequest(entityName: "Reminder")) ).map({
                 
                 (managedObject : NSManagedObject) -> Reminder in
                 
@@ -87,9 +87,9 @@ class ReminderRepository {
         return [Reminder]()
     }
     
-    func removeReminder(reminder : Reminder) {
+    func removeReminder(_ reminder : Reminder) {
         
-        managedObjectContext.deleteObject(reminder.reminder)
+        managedObjectContext.delete(reminder.reminder)
     }
     
     func commit() -> Bool {

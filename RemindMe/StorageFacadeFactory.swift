@@ -11,7 +11,7 @@ import Foundation
 
 class StorageFacadeFactory {
     
-    static func getStorageFacade(storageType : Constants.StorageType, managedObjectContext : NSManagedObjectContext?) -> StorageFacadeProtocol {
+    static func getStorageFacade(_ storageType : Constants.StorageType, managedObjectContext : NSManagedObjectContext?) -> StorageFacadeProtocol {
         
         switch storageType {
             

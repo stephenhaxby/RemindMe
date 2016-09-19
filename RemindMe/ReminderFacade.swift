@@ -19,7 +19,7 @@ class ReminderFacade : StorageFacadeProtocol {
         self.reminderRepository = reminderRepository
     }
     
-    func createOrUpdateReminder(remindMeItem : RemindMeItem) {
+    func createOrUpdateReminder(_ remindMeItem : RemindMeItem) {
     
         var isNewReminder : Bool = false
         
@@ -41,10 +41,10 @@ class ReminderFacade : StorageFacadeProtocol {
             localNotificationManager.setReminderNotification(newRemindMeItem)
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName(isNewReminder ? Constants.RefreshNotificationScrollToBottom : Constants.RefreshNotification, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: isNewReminder ? Constants.RefreshNotificationScrollToBottom : Constants.RefreshNotification), object: nil)
     }
     
-    func removeReminder(remindMeItem : RemindMeItem) {
+    func removeReminder(_ remindMeItem : RemindMeItem) {
         
         let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!
         
@@ -52,11 +52,11 @@ class ReminderFacade : StorageFacadeProtocol {
         
         localNotificationManager.clearReminderNotification(remindMeItem)
         
-        NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotification, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.RefreshNotification), object: nil)
     }
     
     //Expects a function that has a parameter that's an array of RemindMeItem
-    func getReminders(returnReminders : [RemindMeItem] -> ()){
+    func getReminders(_ returnReminders : @escaping ([RemindMeItem]) -> ()){
     
         returnReminders(reminderRepository.getReminders().map({
                 
@@ -71,7 +71,7 @@ class ReminderFacade : StorageFacadeProtocol {
         return reminderRepository.commit()
     }
     
-    func getReminderItemFrom(reminder : Reminder) -> RemindMeItem {
+    func getReminderItemFrom(_ reminder : Reminder) -> RemindMeItem {
     
         let remindMeItem : RemindMeItem = RemindMeItem()
         

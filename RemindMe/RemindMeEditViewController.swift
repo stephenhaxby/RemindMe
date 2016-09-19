@@ -35,7 +35,7 @@ class RemindMeEditViewController : UIViewController {
         super.viewDidLoad()
                 
         //This makes the textview look like a normal text box (as by default it wont!)
-        reminderTitleTextView.layer.borderColor = UIColor(red:0.76, green:0.76, blue:0.76, alpha:1.0).CGColor
+        reminderTitleTextView.layer.borderColor = UIColor(red:0.76, green:0.76, blue:0.76, alpha:1.0).cgColor
         reminderTitleTextView.layer.borderWidth = 1.0
         reminderTitleTextView.layer.cornerRadius = 5
         
@@ -43,7 +43,7 @@ class RemindMeEditViewController : UIViewController {
         //red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" />
         
         //Create a save button that looks like a button...
-        saveButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).CGColor
+        saveButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
         saveButton.layer.borderWidth = 1.0
         saveButton.layer.cornerRadius = 5
         
@@ -53,18 +53,18 @@ class RemindMeEditViewController : UIViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         let background = UIImage(named: "old-white-background")
         
         var imageView : UIImageView!
         imageView = UIImageView(frame: view.bounds)
-        imageView.contentMode =  UIViewContentMode.ScaleAspectFill
+        imageView.contentMode =  UIViewContentMode.scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = background
         imageView.center = view.center
         view.addSubview(imageView)
-        self.view.sendSubviewToBack(imageView)
+        self.view.sendSubview(toBack: imageView)
         
         if reminder == nil {
         
@@ -73,9 +73,9 @@ class RemindMeEditViewController : UIViewController {
     }
     
     // Sets up the relationships between controllers
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let destinationViewController : ReminderTimeTableViewController = segue.destinationViewController as? ReminderTimeTableViewController {
+        if let destinationViewController : ReminderTimeTableViewController = segue.destination as? ReminderTimeTableViewController {
             
             reminderTimeTableViewController = destinationViewController
             
@@ -86,7 +86,7 @@ class RemindMeEditViewController : UIViewController {
     }
     
     // When the back button is pressed we need to save everything
-    @IBAction override func unwindForSegue(unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
+    @IBAction override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
         guard storageFacade != nil else {
             
@@ -102,19 +102,19 @@ class RemindMeEditViewController : UIViewController {
         
         if reminderTimeTableViewController != nil && reminderTimeTableViewController!.selectedSetting != nil {
             
-            reminder!.date = getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time)
+            reminder!.date = getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time as Date) as (Date)
             
             storageFacade!.createOrUpdateReminder(reminder!)
         }
     }
     
     // Return an alarm date/time for the selected date, making it either today or tomorrow depending on if the time has passed
-    private func getSelectedAlarmDateComponentsFromDate(date : NSDate) -> NSDate {
+    fileprivate func getSelectedAlarmDateComponentsFromDate(_ date : Date) -> Date {
         
-        let morningDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
+        let morningDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(date)
         
-        let currentDateTime = NSDate()
-        let reminderDate = NSDateManager.currentDateWithHour(morningDateComponents.hour, minute: morningDateComponents.minute, second: morningDateComponents.second)
+        let currentDateTime = Date()
+        let reminderDate = NSDateManager.currentDateWithHour(morningDateComponents.hour!, minute: morningDateComponents.minute!, second: morningDateComponents.second!)
         
         if NSDateManager.dateIsAfterDate(currentDateTime, date2: reminderDate) {
             

@@ -11,11 +11,11 @@ import UIKit
 
 class LocalNotificationManager {
     
-    func getReminderNotification(remindMeItem : RemindMeItem) -> UILocalNotification? {
+    func getReminderNotification(_ remindMeItem : RemindMeItem) -> UILocalNotification? {
         
         var reminderNotification : UILocalNotification?
         
-        for notification in UIApplication.sharedApplication().scheduledLocalNotifications! as [UILocalNotification] {
+        for notification in UIApplication.shared.scheduledLocalNotifications! as [UILocalNotification] {
             
             if (notification.userInfo!["UUID"] as! String == remindMeItem.id) {
                 
@@ -28,15 +28,15 @@ class LocalNotificationManager {
         return reminderNotification
     }
     
-    func clearReminderNotification(remindMeItem : RemindMeItem) {
+    func clearReminderNotification(_ remindMeItem : RemindMeItem) {
         
         if let reminderNotification : UILocalNotification = getReminderNotification(remindMeItem) {
             
-            UIApplication.sharedApplication().cancelLocalNotification(reminderNotification)
+            UIApplication.shared.cancelLocalNotification(reminderNotification)
         }
     }
     
-    func setReminderNotification(remindMeItem : RemindMeItem) {
+    func setReminderNotification(_ remindMeItem : RemindMeItem) {
         
         var reminderNotification : UILocalNotification? = getReminderNotification(remindMeItem)
         
@@ -51,10 +51,10 @@ class LocalNotificationManager {
             reminderNotification!.userInfo = ["UUID": remindMeItem.id] // assign a unique identifier to the notification so that we can retrieve it later
             //notification.category = "RemindMeItem_Category"
             
-            UIApplication.sharedApplication().scheduleLocalNotification(reminderNotification!)
+            UIApplication.shared.scheduleLocalNotification(reminderNotification!)
         }
         
-        reminderNotification!.fireDate = remindMeItem.date // item due date (when notification will be fired)
+        reminderNotification!.fireDate = remindMeItem.date as Date? // item due date (when notification will be fired)
     }
 
 }

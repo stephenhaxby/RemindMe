@@ -20,7 +20,7 @@ class TableRowFooterAddNew : UITableViewCell {
         if let containerView = footerAddNewView {
             
             //containerView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-            containerView.backgroundColor = .clearColor()
+            containerView.backgroundColor = UIColor.clear
         }
         
         let selectPress : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TableRowFooterAddNew.viewSelected(_:)))
@@ -31,13 +31,13 @@ class TableRowFooterAddNew : UITableViewCell {
         self.addGestureRecognizer(selectPress)
     }
     
-    func viewSelected(gestureRecognizer:UIGestureRecognizer) {
+    func viewSelected(_ gestureRecognizer:UIGestureRecognizer) {
      
-        if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
+        if (gestureRecognizer.state == UIGestureRecognizerState.ended) {
          
             if let tableViewController = remindMeViewController {
                 
-                tableViewController.performSegueWithIdentifier("tableViewCellSegue", sender: self)
+                tableViewController.performSegue(withIdentifier: "tableViewCellSegue", sender: self)
             }
         }
     }

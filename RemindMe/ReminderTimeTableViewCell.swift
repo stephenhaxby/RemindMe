@@ -21,25 +21,25 @@ class ReminderTimeTableViewCell: UITableViewCell {
             
             if settings != nil {
                 
-                leftButton.hidden = true
-                rightButton.hidden = true
+                leftButton.isHidden = true
+                rightButton.isHidden = true
                 
                 if let settingOne : Setting = settings!.settingOne {
                     
-                    leftButton.setTitle(settingOne.name, forState: UIControlState.Normal)
-                    leftButton.hidden = false
+                    leftButton.setTitle(settingOne.name, for: UIControlState())
+                    leftButton.isHidden = false
                 }
                 
                 if let settingTwo : Setting = settings!.settingTwo {
                     
-                    rightButton.setTitle(settingTwo.name, forState: UIControlState.Normal)
-                    rightButton.hidden = false
+                    rightButton.setTitle(settingTwo.name, for: UIControlState())
+                    rightButton.isHidden = false
                 }
             }
         }
     }
     
-    @IBAction func buttonTouchUpInside(sender: AnyObject) {
+    @IBAction func buttonTouchUpInside(_ sender: AnyObject) {
 
         if reminderTimeTableViewController != nil && settings != nil {
             
@@ -59,7 +59,7 @@ class ReminderTimeTableViewCell: UITableViewCell {
                     reminderTimeTableViewController!.selectedSetting = settings!.settingTwo!
                 }
                 
-                button.selected = true
+                button.isSelected = true
             }
         }
     }

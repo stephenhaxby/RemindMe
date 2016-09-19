@@ -11,7 +11,7 @@ import EventKitUI
 
 class EKAlarmManager {
 
-    static func getFirstAlarmFromAlarms(alarms : [EKAlarm]?) -> EKAlarm? {
+    static func getFirstAlarmFromAlarms(_ alarms : [EKAlarm]?) -> EKAlarm? {
         
         if let alarms : [EKAlarm] = alarms {
             
@@ -24,11 +24,11 @@ class EKAlarmManager {
         return nil
     }
     
-    static func getAbsoluteDateFromAlarm(alarm : EKAlarm?) -> NSDate? {
+    static func getAbsoluteDateFromAlarm(_ alarm : EKAlarm?) -> Date? {
         
         if let alarm : EKAlarm = alarm {
             
-            if let date : NSDate = alarm.absoluteDate {
+            if let date : Date = alarm.absoluteDate {
                 
                 return date
             }
@@ -37,7 +37,7 @@ class EKAlarmManager {
         return nil
     }
     
-    static func getFirstAbsoluteDateComponentsFromAlarms(alarms : [EKAlarm]?) -> NSDateComponents? {
+    static func getFirstAbsoluteDateComponentsFromAlarms(_ alarms : [EKAlarm]?) -> DateComponents? {
         
         if let alarm : EKAlarm = getFirstAlarmFromAlarms(alarms) {
                 
@@ -47,9 +47,9 @@ class EKAlarmManager {
         return nil
     }
     
-    static func getAbsoluteDateComponentsFromAlarm(alarm : EKAlarm?) -> NSDateComponents? {
+    static func getAbsoluteDateComponentsFromAlarm(_ alarm : EKAlarm?) -> DateComponents? {
         
-        if let date : NSDate = getAbsoluteDateFromAlarm(alarm) {
+        if let date : Date = getAbsoluteDateFromAlarm(alarm) {
             
             return NSDateManager.getDateComponentsFromDate(date)
         }

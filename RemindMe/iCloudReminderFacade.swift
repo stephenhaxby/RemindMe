@@ -15,15 +15,15 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     
     var icloudReminderManager : iCloudReminderManager! = nil
     
-    var returnRemindersFunc : ([RemindMeItem] -> ())?
+    var returnRemindersFunc : (([RemindMeItem]) -> ())?
     
     init (icloudReminderManager : iCloudReminderManager) {
     
         // Sets the method to run when the Event Store is updated in the background
-        eventStoreObserver = NSNotificationCenter.defaultCenter().addObserverForName(EKEventStoreChangedNotification, object: nil, queue: nil){
+        eventStoreObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.EKEventStoreChanged, object: nil, queue: nil){
             (notification) -> Void in
             
-            NSNotificationCenter.defaultCenter().postNotificationName(Constants.RefreshNotification, object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.RefreshNotification), object: nil)
         }
     
         self.icloudReminderManager = icloudReminderManager
@@ -35,11 +35,11 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         self.icloudReminderManager.requestAccessToReminders(accessGranted)
     }
     
-    func accessGranted(granted : Bool) {
+    func accessGranted(_ granted : Bool) {
                 
     }
     
-    func createOrUpdateReminder(remindMeItem : RemindMeItem) {
+    func createOrUpdateReminder(_ remindMeItem : RemindMeItem) {
         
         icloudReminderManager.getReminder(remindMeItem.id, reminderIdentifier: getReminderId) {
             reminder in
@@ -68,9 +68,9 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         }
     }
     
-    func removeReminder(remindMeItem : RemindMeItem) {
+    func removeReminder(_ remindMeItem : RemindMeItem) {
         
-        let reminderId : String = getReminderId(remindMeItem.title, date: remindMeItem.date!)
+        let reminderId : String = getReminderId(remindMeItem.title, date: remindMeItem.date! as Date)
         
         icloudReminderManager.getReminder(reminderId, reminderIdentifier: getReminderId) {
             reminder in
@@ -83,14 +83,14 @@ class iCloudReminderFacade : StorageFacadeProtocol {
     }
     
     //Expects a function that has a parameter that's an array of RemindMeItem
-    func getReminders(returnReminders : [RemindMeItem] -> ()){
+    func getReminders(_ returnReminders : @escaping ([RemindMeItem]) -> ()){
     
         returnRemindersFunc = returnReminders
         
         icloudReminderManager.getReminders(getiCloudReminders)
     }
     
-    private func getiCloudReminders(iCloudShoppingList : [EKReminder]){
+    fileprivate func getiCloudReminders(_ iCloudShoppingList : [EKReminder]){
     
         //Only return reminders that have an alarm
         let reminderList : [EKReminder] = iCloudShoppingList.filter({(reminder : EKReminder) in reminder.alarms != nil})
@@ -108,7 +108,7 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         return icloudReminderManager.commit()
     }
 
-    func getReminderItemFrom(reminder : EKReminder) -> RemindMeItem {
+    func getReminderItemFrom(_ reminder : EKReminder) -> RemindMeItem {
     
         let remindMeItem : RemindMeItem = RemindMeItem()
         
@@ -119,12 +119,12 @@ class iCloudReminderFacade : StorageFacadeProtocol {
             remindMeItem.date = reminder.alarms!.first!.absoluteDate!
         }
         
-        remindMeItem.id = getReminderId(remindMeItem.title, date: remindMeItem.date!)
+        remindMeItem.id = getReminderId(remindMeItem.title, date: remindMeItem.date! as Date)
         
         return remindMeItem
     }
     
-    func getReminderId(reminder : EKReminder) -> String? {
+    func getReminderId(_ reminder : EKReminder) -> String? {
         
         if reminder.alarms != nil && reminder.alarms!.count > 0 && reminder.alarms![0].absoluteDate != nil {
             
@@ -134,9 +134,9 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         return nil
     }
     
-    func getReminderId(title : String, date : NSDate) -> String {
+    func getReminderId(_ title : String, date : Date) -> String {
         
-        let dateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(date)
+        let dateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(date)
         
         return title + NSDateManager.dateStringFromComponents(dateComponents)
     }

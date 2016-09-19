@@ -12,6 +12,6 @@ class SettingsUserDefaults{
     
     static var useICloudReminders: Bool {
         
-        return NSUserDefaults.standardUserDefaults().boolForKey("useICloudReminders")
+        return UserDefaults.standard.bool(forKey: "useICloudReminders")
     }
 }

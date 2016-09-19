@@ -10,12 +10,12 @@ import Foundation
 
 protocol StorageFacadeProtocol {
     
-    func createOrUpdateReminder(remindMeItem : RemindMeItem)
+    func createOrUpdateReminder(_ remindMeItem : RemindMeItem)
     
-    func removeReminder(remindMeItem : RemindMeItem)
+    func removeReminder(_ remindMeItem : RemindMeItem)
     
     //Expects a function that has a parameter that's an array of RemindMeItem
-    func getReminders(returnReminders : [RemindMeItem] -> ())
+    func getReminders(_ returnReminders : @escaping ([RemindMeItem]) -> ())
     
     func commit() -> Bool
 }

@@ -17,12 +17,12 @@ class iCloudReminderManager{
     
     //Requests access to reminders. Takes in a function to find if access has been granted or not.
     //We can then perform some action like stop a refresh control...
-    func requestAccessToReminders(accessStatus : Bool -> ()){
+    func requestAccessToReminders(_ accessStatus : @escaping (Bool) -> ()){
         
         if(!eventStoreAccessGranted){
             
             //Request access to the users Reminders
-            eventStore.requestAccessToEntityType(EKEntityType.Reminder, completion: {
+            eventStore.requestAccess(to: EKEntityType.reminder, completion: {
                 granted, error in
                 
                 //Save the 'granted' value - if we were granted access
@@ -43,7 +43,7 @@ class iCloudReminderManager{
             if(reminderList == nil){
   
                 //Get the Reminders
-                let calendars = eventStore.calendarsForEntityType(EKEntityType.Reminder) 
+                let calendars = eventStore.calendars(for: EKEntityType.reminder) 
                 
                 var reminderListCalendars = calendars.filter({(calendar : EKCalendar) in calendar.title == self.remindersListName})
                 
@@ -57,7 +57,7 @@ class iCloudReminderManager{
                 }
                 else {
                     
-                    reminderList = EKCalendar(forEntityType: EKEntityType.Reminder, eventStore: eventStore)
+                    reminderList = EKCalendar(for: EKEntityType.reminder, eventStore: eventStore)
                     
                     //Save the new calendar
                     reminderList!.title = remindersListName;
@@ -80,7 +80,7 @@ class iCloudReminderManager{
         return nil
     }
     
-    func getReminders(returnReminders : [EKReminder] -> ()){
+    func getReminders(_ returnReminders : @escaping ([EKReminder]) -> ()){
         
         var remindersList = [EKReminder]()
         
@@ -89,10 +89,10 @@ class iCloudReminderManager{
         if(eventStoreAccessGranted && getReminderList() != nil){
             
             let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
-            let predicate = eventStore.predicateForRemindersInCalendars(singlecallendarArrayForPredicate)
+            let predicate = eventStore.predicateForReminders(in: singlecallendarArrayForPredicate)
             
             //Get all the reminders for the above search predicate
-            eventStore.fetchRemindersMatchingPredicate(predicate) { reminders in
+            eventStore.fetchReminders(matching: predicate) { reminders in
                 
                 if let matchingReminders = reminders {
                     
@@ -108,17 +108,17 @@ class iCloudReminderManager{
         }
     }
     
-    func getReminder(id : String, reminderIdentifier : EKReminder -> (String?), returnReminder : EKReminder? -> ()) {
+    func getReminder(_ id : String, reminderIdentifier : @escaping (EKReminder) -> (String?), returnReminder : @escaping (EKReminder?) -> ()) {
     
         var remindersList = [EKReminder]()
         
         if(eventStoreAccessGranted && reminderList != nil){
             
             let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]
-            let predicate = eventStore.predicateForRemindersInCalendars(singlecallendarArrayForPredicate)
+            let predicate = eventStore.predicateForReminders(in: singlecallendarArrayForPredicate)
             
             //Stupidly named method... All it does is get reminders for the calendars passed into it
-            eventStore.fetchRemindersMatchingPredicate(predicate) { reminders in
+            eventStore.fetchReminders(matching: predicate) { reminders in
                 
                 if let matchingReminders = reminders {
                     
@@ -131,7 +131,7 @@ class iCloudReminderManager{
                 
                 var foundReminder : EKReminder?
                 
-                if let index = remindersList.indexOf({ (reminder : EKReminder) in reminderIdentifier(reminder) == id}) {
+                if let index = remindersList.index(where: { (reminder : EKReminder) in reminderIdentifier(reminder) == id}) {
 
                     foundReminder = remindersList[index]
                 }
@@ -141,7 +141,7 @@ class iCloudReminderManager{
         }
     }
     
-    func addReminder(title : String) -> EKReminder? {
+    func addReminder(_ title : String) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()
         
@@ -156,7 +156,7 @@ class iCloudReminderManager{
         
         do {
             
-            try eventStore.saveReminder(reminder, commit: true)
+            try eventStore.save(reminder, commit: true)
             
         } catch {
 
@@ -166,16 +166,16 @@ class iCloudReminderManager{
         return reminder
     }
     
-    func saveReminder(reminder : EKReminder) -> Bool {
+    func saveReminder(_ reminder : EKReminder) -> Bool {
         
         return saveReminder(reminder, commit: true)
     }
     
-    func saveReminder(reminder : EKReminder, commit : Bool) -> Bool {
+    func saveReminder(_ reminder : EKReminder, commit : Bool) -> Bool {
      
         do {
             
-            try eventStore.saveReminder(reminder, commit: commit)
+            try eventStore.save(reminder, commit: commit)
             
         } catch let error as NSError {
             
@@ -189,16 +189,16 @@ class iCloudReminderManager{
         return true
     }
     
-    func removeReminder(reminder : EKReminder) -> Bool {
+    func removeReminder(_ reminder : EKReminder) -> Bool {
         
         return removeReminder(reminder, commit: true)
     }
     
-    func removeReminder(reminder : EKReminder, commit : Bool) -> Bool {
+    func removeReminder(_ reminder : EKReminder, commit : Bool) -> Bool {
         
         do {
             
-            try eventStore.removeReminder(reminder, commit: commit)
+            try eventStore.remove(reminder, commit: commit)
             
             return true
             
@@ -235,7 +235,7 @@ class iCloudReminderManager{
         return nil
     }
     
-    func cloneReminder(reminder : EKReminder) -> EKReminder? {
+    func cloneReminder(_ reminder : EKReminder) -> EKReminder? {
         
         let calendar : EKCalendar? = getReminderList()
         

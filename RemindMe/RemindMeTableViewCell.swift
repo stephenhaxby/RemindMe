@@ -35,15 +35,15 @@ class RemindMeTableViewCell: UITableViewCell {
                 // If the original text is greater than the truncated version, replace the final 3 characters with "..."
                 if originalReminderText.length > reminderText.length {
                     
-                    reminderText = reminderText.substringWithRange(NSRange(location: 0, length: reminderText.length-3))
+                    reminderText = reminderText.substring(with: NSRange(location: 0, length: reminderText.length-3)) as NSString
                     
-                    newReminderText.appendContentsOf("...")
+                    newReminderText.append("...")
                 }
                 
                 reminderTextLabel.text = newReminderText
                 
                 // Set's the reminder time label
-                if let itemReminderAlarmDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(itemReminder.date!) {
+                if let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(itemReminder.date!) {
                     
                     reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
                 }
@@ -52,15 +52,15 @@ class RemindMeTableViewCell: UITableViewCell {
     }
     
     // Function to truncate the text for a label based on it's visible size.
-    func truncateText(inout text : NSString, forLabel : UILabel) {
+    func truncateText(_ text : inout NSString, forLabel : UILabel) {
         
-        let size : CGSize = text.sizeWithAttributes([NSFontAttributeName : reminderTextLabel.font!])
+        let size : CGSize = text.size(attributes: [NSFontAttributeName : reminderTextLabel.font!])
         
         let labelWidth = forLabel.bounds.size.width
         
         if size.width > labelWidth {
             
-            text = text.substringWithRange(NSRange(location: 0, length: text.length-1))
+            text = text.substring(with: NSRange(location: 0, length: text.length-1)) as NSString
             
             truncateText(&text, forLabel: forLabel)
         }

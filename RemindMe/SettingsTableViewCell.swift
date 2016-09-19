@@ -23,7 +23,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
 
                 nameTextField.text = setting!.name
                 
-                timeDatePicker.date = setting!.time
+                timeDatePicker.date = setting!.time as Date
                 
                 nameTextField.delegate = self
             }
@@ -33,11 +33,11 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        nameTextField.backgroundColor = .clearColor()
+        nameTextField.backgroundColor = UIColor.clear
     }
     
     // Resign first responder on the text field if the time value changes
-    @IBAction func timeValueChanged(sender: AnyObject) {
+    @IBAction func timeValueChanged(_ sender: AnyObject) {
         
         nameTextField.resignFirstResponder()
         
@@ -45,7 +45,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
         
     // Delegate method to resign first reponder on the text field when the user hits return
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
         
@@ -53,7 +53,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     // Delegate method to set the setting name
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         
         setting!.name = textField.text!
     }

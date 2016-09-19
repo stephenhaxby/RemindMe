@@ -17,7 +17,7 @@ class Reminder {
     
         get {
             
-            return reminder.valueForKey("id") as! String
+            return reminder.value(forKey: "id") as! String
         }
         set (value) {
             
@@ -28,7 +28,7 @@ class Reminder {
     var title : String {
         get {
             
-            return reminder.valueForKey("title") as! String
+            return reminder.value(forKey: "title") as! String
         }
         set (value) {
             
@@ -36,11 +36,11 @@ class Reminder {
         }
     }
     
-    var date : NSDate {
+    var date : Date {
         
         get {
             
-            return reminder.valueForKey("date") as! NSDate
+            return reminder.value(forKey: "date") as! Date
         }
         set (value) {
             

@@ -13,21 +13,21 @@ class NavigationController : UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .orangeColor()
+        self.view.backgroundColor = UIColor.orange
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         //TODO: Create an image of like one pixel that's white.
         
-        navigationBar.setBackgroundImage(UIImage(named: "WhiteDot"), forBarMetrics:UIBarMetrics.Default)
+        navigationBar.setBackgroundImage(UIImage(named: "WhiteDot"), for:UIBarMetrics.default)
         //navigationBar.translucent = true
         //navigationBar.shadowImage = UIImage()
         //setNavigationBarHidden(false, animated:true)
         
         //navigationBar.barTintColor = .redColor()
         
-        navigationBar.tintColor = .orangeColor()
+        navigationBar.tintColor = UIColor.orange
     }
 }
