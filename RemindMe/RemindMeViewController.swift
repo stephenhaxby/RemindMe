@@ -163,7 +163,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         }
         
         // Save our reminder sequence to disk
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL.path!)
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL!.path!)
         
         if !isSuccessfulSave {
             
@@ -250,7 +250,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 let scheduledItems : [RemindMeItem] = iCloudShoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})
                 
                 // Load up the reminder item sequence from disk
-                if let reminderItemSequence : [ReminderItemSequence] = NSKeyedUnarchiver.unarchiveObjectWithFile(ReminderItemSequence.ArchiveURL.path!) as? [ReminderItemSequence] {
+                if let reminderItemSequence : [ReminderItemSequence] = NSKeyedUnarchiver.unarchiveObjectWithFile(ReminderItemSequence.ArchiveURL!.path!) as? [ReminderItemSequence] {
                     
                     var sortedScheduledItems : [RemindMeItem] = [RemindMeItem]()
                     
