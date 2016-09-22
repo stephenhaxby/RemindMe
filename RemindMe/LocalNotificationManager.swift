@@ -7,22 +7,46 @@
 //
 
 import Foundation
-import UIKit
+import UserNotifications
 
 class LocalNotificationManager {
     
-    func getReminderNotification(_ remindMeItem : RemindMeItem) -> UILocalNotification? {
+    func getPendingReminderNotificationRequest(_ remindMeItem : RemindMeItem) -> UNNotificationRequest? {
         
-        var reminderNotification : UILocalNotification?
+        var notifications : [UNNotificationRequest] = [UNNotificationRequest]()
         
-        for notification in UIApplication.shared.scheduledLocalNotifications! as [UILocalNotification] {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             
-            if (notification.userInfo!["UUID"] as! String == remindMeItem.id) {
+            notifications.append(contentsOf: requests)
+        }
+        
+        return getNotificationRequest(identifier: remindMeItem.id, notifications: notifications)
+    }
+    
+    func getDeliveredReminderNotificationRequest(_ remindMeItem : RemindMeItem) -> UNNotificationRequest? {
+        
+        var notifications : [UNNotificationRequest] = [UNNotificationRequest]()
+        
+        UNUserNotificationCenter.current().getDeliveredNotifications { requests in
+            
+            for notification in requests {
                 
-                reminderNotification = notification
-                
-                break
+                notifications.append(notification.request)
             }
+        }
+        
+        return getNotificationRequest(identifier: remindMeItem.id, notifications: notifications)
+    }
+    
+    func getNotificationRequest(identifier : String, notifications : [UNNotificationRequest]) -> UNNotificationRequest? {
+        
+        var reminderNotification : UNNotificationRequest?
+        
+        let notificationIndex : Int? = notifications.index(where: {(notification : UNNotificationRequest) in notification.identifier == identifier})
+        
+        if notificationIndex != nil {
+            
+            reminderNotification = notifications[notificationIndex!]
         }
         
         return reminderNotification
@@ -30,31 +54,48 @@ class LocalNotificationManager {
     
     func clearReminderNotification(_ remindMeItem : RemindMeItem) {
         
-        if let reminderNotification : UILocalNotification = getReminderNotification(remindMeItem) {
+        if let pendingReminderNotification : UNNotificationRequest = getPendingReminderNotificationRequest(remindMeItem) {
             
-            UIApplication.shared.cancelLocalNotification(reminderNotification)
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [pendingReminderNotification.identifier])
+            
+            return
+        }
+        
+        if let deliveredReminderNotification : UNNotificationRequest = getDeliveredReminderNotificationRequest(remindMeItem) {
+            
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [deliveredReminderNotification.identifier])
         }
     }
     
     func setReminderNotification(_ remindMeItem : RemindMeItem) {
         
-        var reminderNotification : UILocalNotification? = getReminderNotification(remindMeItem)
-        
-        if reminderNotification == nil {
+        if let calendarNotification : UNNotificationRequest = getPendingReminderNotificationRequest(remindMeItem) {
             
-            // create a corresponding local notification
-            reminderNotification = UILocalNotification()
-            reminderNotification!.alertBody = remindMeItem.title // text that will be displayed in the notification
-            reminderNotification!.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+            UNUserNotificationCenter.current().removePendingNotificationRequests(
+                withIdentifiers: [calendarNotification.identifier])
+        }
+        else if let calendarNotification : UNNotificationRequest = getDeliveredReminderNotificationRequest(remindMeItem) {
             
-            reminderNotification!.soundName = UILocalNotificationDefaultSoundName // play default sound
-            reminderNotification!.userInfo = ["UUID": remindMeItem.id] // assign a unique identifier to the notification so that we can retrieve it later
-            //notification.category = "RemindMeItem_Category"
-            
-            UIApplication.shared.scheduleLocalNotification(reminderNotification!)
+            UNUserNotificationCenter.current().removeDeliveredNotifications(
+                withIdentifiers: [calendarNotification.identifier])
         }
         
-        reminderNotification!.fireDate = remindMeItem.date as Date? // item due date (when notification will be fired)
+        let notification = UNMutableNotificationContent()
+        
+        notification.categoryIdentifier = Constants.NotificationCategory
+        
+        notification.title = remindMeItem.title
+        notification.body = "Put something here..."
+        
+        let request = UNNotificationRequest(
+            identifier: remindMeItem.id,
+            content: notification,
+            trigger: UNCalendarNotificationTrigger(
+                dateMatching: NSDateManager.getDateComponentsFromDate(remindMeItem.date!),
+                repeats: false)
+        )
+        
+        UNUserNotificationCenter.current().add(request)
     }
 
 }

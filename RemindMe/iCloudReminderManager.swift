@@ -83,9 +83,7 @@ class iCloudReminderManager{
     func getReminders(_ returnReminders : @escaping ([EKReminder]) -> ()){
         
         var remindersList = [EKReminder]()
-        
-        //TODO: reminderList is nil
-        
+
         if(eventStoreAccessGranted && getReminderList() != nil){
             
             let singlecallendarArrayForPredicate : [EKCalendar] = [reminderList!]

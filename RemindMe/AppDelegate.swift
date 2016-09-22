@@ -8,9 +8,10 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var storageType : Constants.StorageType = Constants.StorageType.local
     
@@ -29,14 +30,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             remindMeViewController.storageFacade = storageFacade
         }
-
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         //Register the app for Badge update notifications
-        application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
+        //application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
+        let currentNotificationCenter = UNUserNotificationCenter.current()
+        
+        currentNotificationCenter.delegate = self
+        
+        currentNotificationCenter.requestAuthorization(options: [.alert, .badge, .sound]) {
+            (granted, error) in
+            // Enable or disable features based on authorization.
+            
+            if granted {
+                
+                //Create Edit action for notification center
+                let notificationActionOpen : UNNotificationAction = UNNotificationAction(identifier: Constants.NotificationActionEdit, title: "Edit", options: [UNNotificationActionOptions.foreground])
+                
+                //Create Remove action for notification center
+                let notificationActionRemove : UNNotificationAction = UNNotificationAction(identifier: Constants.NotificationActionRemove, title: "Remove", options: [UNNotificationActionOptions.destructive])
+                
+                let notificationCategory = UNNotificationCategory(identifier: Constants.NotificationCategory, actions: [notificationActionOpen, notificationActionRemove], intentIdentifiers: [], options: UNNotificationCategoryOptions.customDismissAction)
+                
+                currentNotificationCenter.setNotificationCategories([notificationCategory])
+            }
+        }
         
         setStorageType()
 
@@ -136,6 +157,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 abort()
             }
         }
+    }
+    
+    // MARK: - Notification Center
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        if response.actionIdentifier == Constants.NotificationActionEdit {
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationActionEdit), object: response.notification.request.identifier)
+        }
+        
+        if response.actionIdentifier == Constants.NotificationActionRemove {
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationActionRemove), object: response.notification.request.identifier)
+        }
+        
+        completionHandler()
     }
 }
 

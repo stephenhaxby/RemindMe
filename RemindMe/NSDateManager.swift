@@ -112,8 +112,8 @@ class NSDateManager {
         let calendar = Calendar.current
         
         var currentDateComponents : DateComponents = DateComponents()
+        currentDateComponents.calendar = calendar
         
-        (currentDateComponents as NSDateComponents).calendar = calendar
         currentDateComponents.year = (calendar as NSCalendar).component(NSCalendar.Unit.year, from: date)
         currentDateComponents.month = (calendar as NSCalendar).component(NSCalendar.Unit.month, from: date)
         currentDateComponents.day = (calendar as NSCalendar).component(NSCalendar.Unit.day, from: date)
@@ -127,10 +127,10 @@ class NSDateManager {
         let dateCompareResult = currentDate!.compare(dateComponentsDate!)
         
         let displayHour = (dateComponents.hour! > 12) ? dateComponents.hour!-12 : dateComponents.hour
-        let displayMinute = (dateComponents.minute! < 10) ? "0\(dateComponents.minute)" : String(describing: dateComponents.minute)
+        let displayMinute = (dateComponents.minute! < 10) ? "0\(dateComponents.minute!)" : String(describing: dateComponents.minute!)
         let displayAMPM = (dateComponents.hour! > 12) ? "PM" : "AM"
         
-        let timeString : String = "\(displayHour):\(displayMinute) \(displayAMPM)"
+        let timeString : String = "\(displayHour!):\(displayMinute) \(displayAMPM)"
         
         var dateString : String
         
@@ -149,7 +149,7 @@ class NSDateManager {
             }
             else {
                 
-                dateString = "\(dateComponents.day)/\(dateComponents.month)/\(dateComponents.year), \(timeString)"
+                dateString = "\(dateComponents.day!)/\(dateComponents.month!)/\(dateComponents.year!), \(timeString)"
             }
             break
         case ComparisonResult.orderedAscending:
@@ -187,7 +187,7 @@ class NSDateManager {
         let calendar = Calendar.current
         var dateComponents : DateComponents = DateComponents()
         
-        (dateComponents as NSDateComponents).calendar = calendar
+        dateComponents.calendar = calendar
         dateComponents.year = (calendar as NSCalendar).component(NSCalendar.Unit.year, from: date)
         dateComponents.month = (calendar as NSCalendar).component(NSCalendar.Unit.month, from: date)
         dateComponents.day = (calendar as NSCalendar).component(NSCalendar.Unit.day, from: date)

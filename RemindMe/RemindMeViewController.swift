@@ -14,6 +14,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     var refreshListObserver : NSObjectProtocol?
     var refreshListScrollToBottomObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
+    var notificationEditObserver : NSObjectProtocol?
+    var notificationRemoveObserver : NSObjectProtocol?
     
     var reminderList = [RemindMeItem]()
     
@@ -46,6 +48,26 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             (notification) -> Void in
             
             self.storageOptionChanged()
+        }
+        
+        notificationEditObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.NotificationActionEdit), object: nil, queue: nil){
+            (notification) -> Void in
+
+            let remindMeItemIndex : Int? = self.reminderList.index(where: {(remindMeItem : RemindMeItem) in remindMeItem.id == notification.object as? String})
+            
+            if remindMeItemIndex != nil {
+                
+                self.performSegue(withIdentifier: "tableViewCellSegue", sender: self.reminderList[remindMeItemIndex!])
+            }
+        }
+        
+        notificationRemoveObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.NotificationActionRemove), object: nil, queue: nil){
+            (notification) -> Void in
+
+            if let scheduledItem : RemindMeItem = self.reminderList.filter({(reminder : RemindMeItem) in reminder.id == notification.object as? String}).first {
+                
+                self.storageFacade!.removeReminder(scheduledItem)
+            }
         }
     }
     

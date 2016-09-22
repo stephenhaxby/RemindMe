@@ -45,4 +45,10 @@ class Constants{
         case local
         case iCloudReminders
     }
+    
+    static let NotificationCategory : String = "NotificationCategory"
+    
+    static let NotificationActionRemove : String = "NotificationActionRemove"
+    
+    static let NotificationActionEdit : String = "NotificationActionEdit"
 }

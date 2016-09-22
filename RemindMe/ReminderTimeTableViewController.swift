@@ -119,9 +119,10 @@ class ReminderTimeTableViewController: UITableViewController {
         
         // Loop through each alarm time and set the button to selected when it finds a match (left or right button)
         if let reminderItem : RemindMeItem = reminder,
-        let reminderDate : Date = reminderItem.date as Date?,
-            let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminderDate) {
+        let reminderDate : Date = reminderItem.date as Date? {
     
+            let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminderDate)
+            
             if let leftButton = reminderTimeTableViewCell.leftButton {
                 
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
