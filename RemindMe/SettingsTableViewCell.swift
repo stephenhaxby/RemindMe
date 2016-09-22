@@ -43,7 +43,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         setting!.time = timeDatePicker.date
     }
-        
+    
     // Delegate method to resign first reponder on the text field when the user hits return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         

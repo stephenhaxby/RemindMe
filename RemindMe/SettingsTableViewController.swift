@@ -134,6 +134,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         cell.setting = settingsList[(indexPath as NSIndexPath).row]
         
+        cell.settingsTableViewController = self
+        
         return cell
     }
     
@@ -149,7 +151,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
             }
         }
         
-        cell.backgroundColor = UIColor.clear //UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
+        //cell.backgroundColor = UIColor.clear //UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
     }
     
     //This method is setting which cells can be edited

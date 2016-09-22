@@ -21,7 +21,7 @@ class NavigationController : UINavigationController {
         
         //TODO: Create an image of like one pixel that's white.
         
-        navigationBar.setBackgroundImage(UIImage(named: "WhiteDot"), for:UIBarMetrics.default)
+        //navigationBar.setBackgroundImage(UIImage(named: "WhiteDot"), for:UIBarMetrics.default)
         //navigationBar.translucent = true
         //navigationBar.shadowImage = UIImage()
         //setNavigationBarHidden(false, animated:true)

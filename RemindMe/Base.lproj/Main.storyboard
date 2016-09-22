@@ -12,12 +12,12 @@
             <objects>
                 <tableViewController id="WqA-Jf-lpg" customClass="RemindMeViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" id="Z8Q-mK-G0x">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="64" id="5fG-2j-Nom" customClass="RemindMeTableViewCell" customModule="RemindMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="64"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5fG-2j-Nom" id="xoN-SC-e4V">
                                     <frame key="frameInset" width="375" height="63"/>
@@ -48,7 +48,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FooterCell" rowHeight="64" id="Ra5-1y-TQU" customClass="TableRowFooterAddNew" customModule="RemindMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="375" height="64"/>
+                                <rect key="frame" x="0.0" y="156" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ra5-1y-TQU" id="UKs-nk-V56">
                                     <frame key="frameInset" width="375" height="63"/>
@@ -142,7 +142,7 @@
                         <viewControllerLayoutGuide type="bottom" id="5LR-ah-ZBm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pWQ-c8-V5M">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-7V-Yux">
@@ -265,16 +265,16 @@
         <scene sceneID="TQK-fy-SYz">
             <objects>
                 <tableViewController id="fml-qY-3KS" customClass="SettingsTableViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="220" sectionHeaderHeight="64" sectionFooterHeight="64" id="Krb-iS-m7j">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="190" sectionHeaderHeight="64" sectionFooterHeight="64" id="Krb-iS-m7j">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" rowHeight="220" id="nbo-Q7-uQI" customClass="SettingsTableViewCell" customModule="RemindMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="375" height="220"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" rowHeight="190" id="nbo-Q7-uQI" customClass="SettingsTableViewCell" customModule="RemindMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="128" width="375" height="190"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="nbo-Q7-uQI" id="38j-7x-Obv">
-                                    <frame key="frameInset" width="375" height="219"/>
+                                    <frame key="frameInset" width="375" height="189"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9aH-5G-bDj">
@@ -287,7 +287,7 @@
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="G9F-dt-esR">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="120" id="5Un-gL-sFx"/>
-                                                <constraint firstAttribute="height" constant="120" id="Lne-AX-QJE"/>
+                                                <constraint firstAttribute="height" constant="80" id="Lne-AX-QJE"/>
                                                 <constraint firstAttribute="width" constant="200" id="X5d-f1-F7f"/>
                                             </constraints>
                                             <date key="date" timeIntervalSinceReferenceDate="470571938.10570598">
@@ -316,9 +316,9 @@
                                     <constraints>
                                         <constraint firstItem="G9F-dt-esR" firstAttribute="top" secondItem="FeZ-yR-ylg" secondAttribute="bottom" constant="8" symbolic="YES" id="Brq-jA-cvv"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="G9F-dt-esR" secondAttribute="leading" id="Cn2-pM-Jy6"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="G9F-dt-esR" secondAttribute="bottom" id="M1U-NJ-CJU"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="9aH-5G-bDj" secondAttribute="trailing" constant="344" id="UE9-Ui-Ld6"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="G9F-dt-esR" secondAttribute="trailing" id="cUJ-Ql-XRD"/>
+                                        <constraint firstItem="FeZ-yR-ylg" firstAttribute="top" secondItem="9aH-5G-bDj" secondAttribute="bottom" constant="11" id="hGi-Ob-flF"/>
                                         <constraint firstItem="G9F-dt-esR" firstAttribute="centerX" secondItem="38j-7x-Obv" secondAttribute="centerX" id="mm3-Pw-MDO"/>
                                         <constraint firstItem="9aH-5G-bDj" firstAttribute="leading" secondItem="38j-7x-Obv" secondAttribute="leadingMargin" id="ofI-Vo-aaK"/>
                                         <constraint firstItem="9aH-5G-bDj" firstAttribute="top" secondItem="38j-7x-Obv" secondAttribute="topMargin" constant="1" id="te9-oh-mTJ"/>
@@ -338,7 +338,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FooterCell" rowHeight="64" id="hSa-jE-Irm" customClass="TableRowSettingsFooterAddNew" customModule="RemindMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="284" width="375" height="64"/>
+                                <rect key="frame" x="0.0" y="318" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hSa-jE-Irm" id="UUp-9t-FS3">
                                     <frame key="frameInset" width="375" height="63"/>
@@ -365,8 +365,10 @@
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="XJP-O3-kK2" firstAttribute="top" secondItem="UUp-9t-FS3" secondAttribute="topMargin" id="0Jp-KR-hvy"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="XJP-O3-kK2" secondAttribute="leading" id="BvB-m0-m2c"/>
                                         <constraint firstAttribute="topMargin" secondItem="XJP-O3-kK2" secondAttribute="top" id="D8r-2k-muC"/>
+                                        <constraint firstItem="XJP-O3-kK2" firstAttribute="centerY" secondItem="UUp-9t-FS3" secondAttribute="centerY" id="L4m-zX-qrV"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="XJP-O3-kK2" secondAttribute="trailing" id="fZb-C5-wrc"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="XJP-O3-kK2" secondAttribute="bottom" id="pY2-t0-jVF"/>
                                     </constraints>
@@ -402,7 +404,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Xu-Mg-gc8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2369" y="951"/>
+            <point key="canvasLocation" x="2368.8000000000002" y="950.37481259370327"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4Dy-sl-ksF">
@@ -410,7 +412,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="84j-94-rQU" customClass="NavigationController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <navigationBar key="navigationBar" opaque="NO" contentMode="scaleToFill" translucent="NO" id="PTU-gw-UBR">
+                    <navigationBar key="navigationBar" opaque="NO" contentMode="scaleToFill" misplaced="YES" id="PTU-gw-UBR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
