@@ -167,7 +167,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         settingsList.remove(at: (indexPath as NSIndexPath).row)
         
-        reloadSettingsListTable()
+        settingsTableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
     }
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
@@ -219,11 +219,12 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         let setting : Setting = settingRepository.createNewSetting("", time: Date())
         
         settingsList.append(setting)
+
+        let indexPath = IndexPath(row: settingsList.count-1, section: 0)
         
-        reloadSettingsListTable()
+        settingsTableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         
         // Scroll to the last item in the list
-        let indexPath = IndexPath(row: settingsList.count-1, section: 0)
         settingsTableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
         
         newSettingIndexPath = indexPath

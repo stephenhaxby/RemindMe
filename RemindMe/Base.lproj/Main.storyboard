@@ -208,7 +208,7 @@
                                 <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T6N-Fe-SWo" id="arE-eE-t4o">
-                                    <frame key="frameInset" width="355" height="43"/>
+                                    <frame key="frameInset" width="355" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzW-9Q-3yt">
@@ -246,7 +246,7 @@
                                 <rect key="frame" x="0.0" y="72" width="355" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O7Q-vB-hvV" id="cgC-TY-ffJ">
-                                    <frame key="frameInset" width="355" height="43"/>
+                                    <frame key="frameInset" width="355" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -341,7 +341,7 @@
                                 <rect key="frame" x="0.0" y="318" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hSa-jE-Irm" id="UUp-9t-FS3">
-                                    <frame key="frameInset" width="375" height="63"/>
+                                    <frame key="frameInset" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJP-O3-kK2" userLabel="Footer Add New View">
