@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -208,19 +210,9 @@
                                 <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T6N-Fe-SWo" id="arE-eE-t4o">
-                                    <frame key="frameInset" width="355" height="43.5"/>
+                                    <frame key="frameInset" width="355" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzW-9Q-3yt">
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="155" id="Fq7-W6-zxF"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                            <state key="normal" title="Button"/>
-                                            <connections>
-                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="d7t-2e-itl"/>
-                                            </connections>
-                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY4-pg-qRC">
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <state key="normal" title="Button"/>
@@ -228,13 +220,32 @@
                                                 <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="1ZL-HM-9lP"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UU3-rT-AC1">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="4" id="vhS-g4-Bul"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzW-9Q-3yt">
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="buttonTouchUpInside:" destination="T6N-Fe-SWo" eventType="touchUpInside" id="d7t-2e-itl"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="xY4-pg-qRC" secondAttribute="trailing" id="A0x-7V-Yd2"/>
-                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="top" secondItem="arE-eE-t4o" secondAttribute="topMargin" constant="-7" id="JQF-H0-gQV"/>
-                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="top" secondItem="arE-eE-t4o" secondAttribute="topMargin" constant="-7" id="Jw9-Wa-KQ2"/>
-                                        <constraint firstAttribute="leadingMargin" secondItem="wzW-9Q-3yt" secondAttribute="leading" id="Lba-fk-ak1"/>
-                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="leading" secondItem="wzW-9Q-3yt" secondAttribute="trailing" constant="29" id="brK-Lq-fWq"/>
+                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="leading" secondItem="arE-eE-t4o" secondAttribute="leadingMargin" id="7Qk-nE-L2t"/>
+                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="centerY" secondItem="arE-eE-t4o" secondAttribute="centerY" id="Bk0-vd-ze9"/>
+                                        <constraint firstItem="UU3-rT-AC1" firstAttribute="centerX" secondItem="arE-eE-t4o" secondAttribute="centerX" id="Ds3-cU-Hnm"/>
+                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="baseline" secondItem="UU3-rT-AC1" secondAttribute="firstBaseline" id="RtT-dp-kFR"/>
+                                        <constraint firstItem="UU3-rT-AC1" firstAttribute="leading" secondItem="wzW-9Q-3yt" secondAttribute="trailing" constant="8" symbolic="YES" id="WA0-Ze-CqR"/>
+                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="trailing" secondItem="arE-eE-t4o" secondAttribute="trailingMargin" id="hZG-zE-UkY"/>
+                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="leading" secondItem="UU3-rT-AC1" secondAttribute="trailing" constant="8" symbolic="YES" id="l47-4G-huS"/>
+                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="baseline" secondItem="UU3-rT-AC1" secondAttribute="baseline" id="myN-KE-9Fx"/>
+                                        <constraint firstItem="UU3-rT-AC1" firstAttribute="baseline" secondItem="xY4-pg-qRC" secondAttribute="baseline" id="npc-0b-dSz"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -246,7 +257,7 @@
                                 <rect key="frame" x="0.0" y="72" width="355" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O7Q-vB-hvV" id="cgC-TY-ffJ">
-                                    <frame key="frameInset" width="355" height="43.5"/>
+                                    <frame key="frameInset" width="355" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -341,7 +352,7 @@
                                 <rect key="frame" x="0.0" y="318" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hSa-jE-Irm" id="UUp-9t-FS3">
-                                    <frame key="frameInset" width="375" height="64"/>
+                                    <frame key="frameInset" width="375" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJP-O3-kK2" userLabel="Footer Add New View">
