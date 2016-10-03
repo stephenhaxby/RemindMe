@@ -287,7 +287,7 @@
                                 <rect key="frame" x="0.0" y="128" width="375" height="190"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="nbo-Q7-uQI" id="38j-7x-Obv">
-                                    <frame key="frameInset" width="375" height="190"/>
+                                    <frame key="frameInset" width="375" height="189"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9aH-5G-bDj">
@@ -297,7 +297,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                         </textField>
-                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="G9F-dt-esR">
+                                        <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="G9F-dt-esR">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="120" id="5Un-gL-sFx"/>
                                                 <constraint firstAttribute="height" constant="80" id="Lne-AX-QJE"/>
@@ -323,13 +323,24 @@
                                                 <segment title="Time"/>
                                                 <segment title="Location"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="reminderTypeValueChangedWithSender:" destination="nbo-Q7-uQI" eventType="valueChanged" id="SUF-L0-kEs"/>
+                                            </connections>
                                         </segmentedControl>
+                                        <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsCompass="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W96-mF-Q9x">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="J96-fg-cvG"/>
+                                                <constraint firstAttribute="width" constant="200" id="ieg-qK-fc0"/>
+                                            </constraints>
+                                        </mapView>
                                     </subviews>
                                     <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
+                                        <constraint firstItem="W96-mF-Q9x" firstAttribute="top" secondItem="FeZ-yR-ylg" secondAttribute="bottom" constant="8" symbolic="YES" id="A8C-bM-YtF"/>
                                         <constraint firstItem="G9F-dt-esR" firstAttribute="top" secondItem="FeZ-yR-ylg" secondAttribute="bottom" constant="8" symbolic="YES" id="Brq-jA-cvv"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="G9F-dt-esR" secondAttribute="leading" id="Cn2-pM-Jy6"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="9aH-5G-bDj" secondAttribute="trailing" constant="344" id="UE9-Ui-Ld6"/>
+                                        <constraint firstItem="W96-mF-Q9x" firstAttribute="centerX" secondItem="38j-7x-Obv" secondAttribute="centerX" id="XR6-cO-wlh"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="G9F-dt-esR" secondAttribute="trailing" id="cUJ-Ql-XRD"/>
                                         <constraint firstItem="FeZ-yR-ylg" firstAttribute="top" secondItem="9aH-5G-bDj" secondAttribute="bottom" constant="11" id="hGi-Ob-flF"/>
                                         <constraint firstItem="G9F-dt-esR" firstAttribute="centerX" secondItem="38j-7x-Obv" secondAttribute="centerX" id="mm3-Pw-MDO"/>
@@ -346,6 +357,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="mapView" destination="W96-mF-Q9x" id="LyK-2x-6sn"/>
                                     <outlet property="nameTextField" destination="9aH-5G-bDj" id="z09-RY-5ux"/>
                                     <outlet property="timeDatePicker" destination="G9F-dt-esR" id="guw-fk-L5v"/>
                                 </connections>
@@ -378,12 +390,10 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="XJP-O3-kK2" firstAttribute="top" secondItem="UUp-9t-FS3" secondAttribute="topMargin" id="0Jp-KR-hvy"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="XJP-O3-kK2" secondAttribute="leading" id="BvB-m0-m2c"/>
                                         <constraint firstAttribute="topMargin" secondItem="XJP-O3-kK2" secondAttribute="top" id="D8r-2k-muC"/>
                                         <constraint firstItem="XJP-O3-kK2" firstAttribute="centerY" secondItem="UUp-9t-FS3" secondAttribute="centerY" id="L4m-zX-qrV"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="XJP-O3-kK2" secondAttribute="trailing" id="fZb-C5-wrc"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="XJP-O3-kK2" secondAttribute="bottom" id="pY2-t0-jVF"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -418,6 +428,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Xu-Mg-gc8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2368.8000000000002" y="950.37481259370327"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="BKh-Mm-rBE">
+            <objects>
+                <viewController id="B60-TG-926" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vi8-y4-fXG"/>
+                        <viewControllerLayoutGuide type="bottom" id="tkb-0d-F8x"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PDd-xN-GD5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8uz-ZJ-Q4G">
+                                <frame key="frameInset" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vqb-EC-23y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3188" y="950.37481259370327"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4Dy-sl-ksF">

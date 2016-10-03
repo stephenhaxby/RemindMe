@@ -33,6 +33,8 @@ class SettingRepository {
         
         setting.name = name
         setting.time = time
+        setting.Latitude = nil
+        setting.Longitude = nil
         
         return setting
     }

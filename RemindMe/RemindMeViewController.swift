@@ -90,7 +90,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Do any additional setup after loading the view, typically from a nib.
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 42
+        tableView.estimatedRowHeight = 70
         
         // Set the text and font of the Settings button (unicode)
         settingsButton.setTitle("\u{1F550}", for: UIControlState())

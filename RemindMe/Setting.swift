@@ -24,15 +24,37 @@ class Setting {
         }
     }
     
-    var time : Date {
+    var Latitude : Double? {
         
         get {
             
-            return setting.value(forKey: "time") as! Date
+            if let latitude = (setting.value(forKey: "latitude") as? NSNumber) {
+                
+                return latitude.doubleValue
+            }
+            
+            return nil
         }
         set (value) {
             
-            setting.setValue(value, forKeyPath: "time")
+            setting.setValue(value, forKeyPath: "latitude")
+        }
+    }
+    
+    var Longitude : Double? {
+        
+        get {
+            
+            if let longitude = (setting.value(forKey: "longitude") as? NSNumber) {
+                
+                return longitude.doubleValue
+            }
+            
+            return nil
+        }
+        set (value) {
+            
+            setting.setValue(value, forKeyPath: "longitude")
         }
     }
     
@@ -45,6 +67,18 @@ class Setting {
         set (value) {
             
             setting.setValue(NSNumber(value: value as Int), forKeyPath: "sequence")
+        }
+    }
+    
+    var time : Date? {
+        
+        get {
+            
+            return setting.value(forKey: "time") as? Date
+        }
+        set (value) {
+            
+            setting.setValue(value, forKeyPath: "time")
         }
     }
     
