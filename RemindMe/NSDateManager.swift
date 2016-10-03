@@ -126,11 +126,7 @@ class NSDateManager {
         
         let dateCompareResult = currentDate!.compare(dateComponentsDate!)
         
-        let displayHour = (dateComponents.hour! > 12) ? dateComponents.hour!-12 : dateComponents.hour
-        let displayMinute = (dateComponents.minute! < 10) ? "0\(dateComponents.minute!)" : String(describing: dateComponents.minute!)
-        let displayAMPM = (dateComponents.hour! > 12) ? "PM" : "AM"
-        
-        let timeString : String = "\(displayHour!):\(displayMinute) \(displayAMPM)"
+        let timeString : String = timeStringFromComponents(dateComponents: dateComponents)
         
         var dateString : String
         
@@ -158,6 +154,15 @@ class NSDateManager {
         }
         
         return dateString
+    }
+    
+    static func timeStringFromComponents(dateComponents : DateComponents) -> String {
+        
+        let displayHour = (dateComponents.hour! > 12) ? dateComponents.hour!-12 : dateComponents.hour
+        let displayMinute = (dateComponents.minute! < 10) ? "0\(dateComponents.minute!)" : String(describing: dateComponents.minute!)
+        let displayAMPM = (dateComponents.hour! > 12) ? "PM" : "AM"
+        
+        return "\(displayHour!):\(displayMinute) \(displayAMPM)"
     }
     
     static func dateIsBeforeDate(_ date1 : Date, date2 : Date) -> Bool {

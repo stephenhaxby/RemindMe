@@ -84,11 +84,12 @@ class LocalNotificationManager {
         
         notification.categoryIdentifier = Constants.NotificationCategory
         
-        notification.title = remindMeItem.title
+        notification.title = "Don't forget to:"
         
         // Set's the reminder time label
-        let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(remindMeItem.date!)       
-        notification.body = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
+        //let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(remindMeItem.date!)
+        //notification.body = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
+        notification.body = remindMeItem.title
 
         let request = UNNotificationRequest(
             identifier: remindMeItem.id,
