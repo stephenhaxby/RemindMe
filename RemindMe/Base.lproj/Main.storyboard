@@ -25,23 +25,25 @@
                                     <frame key="frameInset" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgR-2L-ngz">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgR-2L-ngz">
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLt-dr-kFe">
-                                            <frame key="frameInset" minX="8" minY="37" width="584" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLt-dr-kFe">
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="topMargin" secondItem="cgR-2L-ngz" secondAttribute="top" id="73q-eV-wNw"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="cgR-2L-ngz" secondAttribute="trailing" id="8dL-Nx-Hrd"/>
-                                        <constraint firstAttribute="leadingMargin" secondItem="cgR-2L-ngz" secondAttribute="leading" id="hD0-Gy-5Oz"/>
+                                        <constraint firstItem="cgR-2L-ngz" firstAttribute="leading" secondItem="xoN-SC-e4V" secondAttribute="leadingMargin" id="Hk9-2f-InZ"/>
+                                        <constraint firstItem="bLt-dr-kFe" firstAttribute="top" secondItem="cgR-2L-ngz" secondAttribute="bottom" constant="8" id="PIf-SW-tRR"/>
+                                        <constraint firstItem="cgR-2L-ngz" firstAttribute="top" secondItem="xoN-SC-e4V" secondAttribute="topMargin" id="eGN-ex-jBN"/>
+                                        <constraint firstAttribute="trailing" secondItem="bLt-dr-kFe" secondAttribute="trailing" constant="8" id="fDg-Fl-ZdJ"/>
+                                        <constraint firstItem="cgR-2L-ngz" firstAttribute="trailing" secondItem="xoN-SC-e4V" secondAttribute="trailingMargin" id="iCb-6I-Jem"/>
+                                        <constraint firstAttribute="bottom" secondItem="bLt-dr-kFe" secondAttribute="bottom" constant="6" id="jnb-bS-kEG"/>
+                                        <constraint firstItem="bLt-dr-kFe" firstAttribute="leading" secondItem="xoN-SC-e4V" secondAttribute="leading" constant="8" id="x2R-Pf-bgd"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -133,7 +135,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ea0-rt-NaC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1662" y="951"/>
+            <point key="canvasLocation" x="1661.5999999999999" y="950.37481259370327"/>
         </scene>
         <!--Remind Me-->
         <scene sceneID="bN5-bO-rVT">
