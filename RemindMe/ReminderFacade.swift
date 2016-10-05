@@ -44,6 +44,11 @@ class ReminderFacade : StorageFacadeProtocol {
         NotificationCenter.default.post(name: Notification.Name(rawValue: isNewReminder ? Constants.RefreshNotificationScrollToBottom : Constants.RefreshNotification), object: nil)
     }
     
+    func removeReminder(_ Id: String) {
+        
+        reminderRepository.removeReminder(Id)
+    }
+    
     func removeReminder(_ remindMeItem : RemindMeItem) {
         
         let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!

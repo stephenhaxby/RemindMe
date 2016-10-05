@@ -15,7 +15,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     var refreshListScrollToBottomObserver : NSObjectProtocol?
     var settingsObserver : NSObjectProtocol?
     var notificationEditObserver : NSObjectProtocol?
-    var notificationRemoveObserver : NSObjectProtocol?
     
     var reminderList = [RemindMeItem]()
     
@@ -60,15 +59,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 self.performSegue(withIdentifier: "tableViewCellSegue", sender: self.reminderList[remindMeItemIndex!])
             }
         }
-        
-        notificationRemoveObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.NotificationActionRemove), object: nil, queue: nil){
-            (notification) -> Void in
-
-            if let scheduledItem : RemindMeItem = self.reminderList.filter({(reminder : RemindMeItem) in reminder.id == notification.object as? String}).first {
-                
-                self.storageFacade!.removeReminder(scheduledItem)
-            }
-        }
     }
     
     deinit {
@@ -82,6 +72,16 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         if let observer = refreshListScrollToBottomObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.RefreshNotificationScrollToBottom), object: nil)
+        }
+        
+        if let observer = settingsObserver {
+            
+            NotificationCenter.default.removeObserver(observer, name: UserDefaults.didChangeNotification, object: nil)
+        }
+        
+        if let observer = notificationEditObserver{
+            
+            NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.NotificationActionEdit), object: nil)
         }
     }
     

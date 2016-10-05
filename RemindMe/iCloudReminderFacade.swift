@@ -68,6 +68,10 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         }
     }
     
+    func removeReminder(_ Id : String) {
+        
+    }
+    
     func removeReminder(_ remindMeItem : RemindMeItem) {
         
         let reminderId : String = getReminderId(remindMeItem.title, date: remindMeItem.date! as Date)

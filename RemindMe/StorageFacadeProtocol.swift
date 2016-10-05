@@ -14,6 +14,8 @@ protocol StorageFacadeProtocol {
     
     func removeReminder(_ remindMeItem : RemindMeItem)
     
+    func removeReminder(_ Id : String)
+    
     //Expects a function that has a parameter that's an array of RemindMeItem
     func getReminders(_ returnReminders : @escaping ([RemindMeItem]) -> ())
     

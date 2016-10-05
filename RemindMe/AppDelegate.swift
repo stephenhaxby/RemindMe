@@ -170,7 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         if response.actionIdentifier == Constants.NotificationActionRemove {
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationActionRemove), object: response.notification.request.identifier)
+            storageFacade!.removeReminder(response.notification.request.identifier)
         }
         
         completionHandler()
