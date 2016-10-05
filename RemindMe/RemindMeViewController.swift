@@ -96,7 +96,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         settingsButton.setTitle("\u{1F550}", for: UIControlState())
         settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 26)
         
-        loadRemindersListWithRefresh(true, scrollToBottom: false)
         setDoneButtonTitleText()
     }
     
@@ -418,7 +417,10 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             let listItem : RemindMeItem = reminderList[(indexPath as NSIndexPath).row]
 
-            storageFacade!.removeReminder(listItem)
+            if storageFacade!.removeReminder(listItem) {
+                
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.RefreshNotification), object: nil)
+            }
         }
     }
     

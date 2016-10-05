@@ -68,22 +68,27 @@ class iCloudReminderFacade : StorageFacadeProtocol {
         }
     }
     
-    func removeReminder(_ Id : String) {
+    func removeReminder(_ Id : String) -> Bool {
         
+        return true
     }
     
-    func removeReminder(_ remindMeItem : RemindMeItem) {
+    func removeReminder(_ remindMeItem : RemindMeItem) -> Bool {
         
         let reminderId : String = getReminderId(remindMeItem.title, date: remindMeItem.date! as Date)
+        
+        var reminderRemoved = false
         
         icloudReminderManager.getReminder(reminderId, reminderIdentifier: getReminderId) {
             reminder in
             
             if let matchingReminder : EKReminder = reminder {
                 
-                self.icloudReminderManager.removeReminder(matchingReminder)
+                reminderRemoved = self.icloudReminderManager.removeReminder(matchingReminder)
             }
         }
+        
+        return reminderRemoved
     }
     
     //Expects a function that has a parameter that's an array of RemindMeItem
