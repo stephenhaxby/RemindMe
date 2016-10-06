@@ -24,23 +24,24 @@ class RemindMeTableViewCell: UITableViewCell {
 
                 reminderTextLabel.text = itemReminder.title
                 
-                let originalReminderText : NSString = NSString(string: reminderTextLabel.text!)
-                
-                var reminderText : NSString = NSString(string: reminderTextLabel.text!)
-                
-                truncateText(&reminderText, forLabel: reminderTextLabel)
-                
-                var newReminderText = String(reminderText)
-                
-                // If the original text is greater than the truncated version, replace the final 3 characters with "..."
-                if originalReminderText.length > reminderText.length {
-                    
-                    reminderText = reminderText.substring(with: NSRange(location: 0, length: reminderText.length-3)) as NSString
-                    
-                    newReminderText.append("...")
-                }
-                
-                reminderTextLabel.text = newReminderText
+                //NOTE: This is to truncate the text. We're now using a multi-line label so this isn't needed...
+//                let originalReminderText : NSString = NSString(string: reminderTextLabel.text!)
+//                
+//                var reminderText : NSString = NSString(string: reminderTextLabel.text!)
+//                
+//                truncateText(&reminderText, forLabel: reminderTextLabel)
+//                
+//                var newReminderText = String(reminderText)
+//                
+//                // If the original text is greater than the truncated version, replace the final 3 characters with "..."
+//                if originalReminderText.length > reminderText.length {
+//                    
+//                    reminderText = reminderText.substring(with: NSRange(location: 0, length: reminderText.length-3)) as NSString
+//                    
+//                    newReminderText.append("...")
+//                }
+//                
+//                reminderTextLabel.text = newReminderText
                 
                 // Set's the reminder time label
                 let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(itemReminder.date!)
@@ -50,18 +51,18 @@ class RemindMeTableViewCell: UITableViewCell {
         }
     }
     
-    // Function to truncate the text for a label based on it's visible size.
-    func truncateText(_ text : inout NSString, forLabel : UILabel) {
-        
-        let size : CGSize = text.size(attributes: [NSFontAttributeName : reminderTextLabel.font!])
-        
-        let labelWidth = forLabel.bounds.size.width
-        
-        if size.width > labelWidth {
-            
-            text = text.substring(with: NSRange(location: 0, length: text.length-1)) as NSString
-            
-            truncateText(&text, forLabel: forLabel)
-        }
-    }
+//    // Function to truncate the text for a label based on it's visible size.
+//    func truncateText(_ text : inout NSString, forLabel : UILabel) {
+//        
+//        let size : CGSize = text.size(attributes: [NSFontAttributeName : reminderTextLabel.font!])
+//        
+//        let labelWidth = forLabel.bounds.size.width
+//        
+//        if size.width > labelWidth {
+//            
+//            text = text.substring(with: NSRange(location: 0, length: text.length-1)) as NSString
+//            
+//            truncateText(&text, forLabel: forLabel)
+//        }
+//    }
 }

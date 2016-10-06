@@ -87,9 +87,21 @@ class ReminderRepository {
         return [Reminder]()
     }
     
-    func removeReminder(_ reminder : Reminder) {
+    func removeReminder(_ Id : String) -> Bool {
+        
+        if let reminder = getReminderBy(Id) {
+            
+            return removeReminder(reminder)
+        }
+        
+        return false
+    }
+    
+    func removeReminder(_ reminder : Reminder) -> Bool {
         
         managedObjectContext.delete(reminder.reminder)
+        
+        return true
     }
     
     func commit() -> Bool {

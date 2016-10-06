@@ -85,6 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.RefreshNotification), object: nil)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -170,7 +172,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         if response.actionIdentifier == Constants.NotificationActionRemove {
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationActionRemove), object: response.notification.request.identifier)
+            if (storageFacade!.removeReminder(response.notification.request.identifier)){
+                
+                UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber - 1
+            }
         }
         
         completionHandler()
