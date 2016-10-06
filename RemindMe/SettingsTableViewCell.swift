@@ -16,7 +16,11 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
     
     @IBOutlet weak var timeDatePicker: UIDatePicker!
     
+    @IBOutlet weak var reminderTypeSegmentedControll: UISegmentedControl!
+    
     @IBOutlet weak var mapView: MKMapView!
+    
+    @IBOutlet weak var mapViewView: UIView!
     
     weak var settingsTableViewController: SettingsTableViewController!
     
@@ -52,6 +56,17 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
         
         nameTextField.backgroundColor = UIColor.clear
         
+        let pressGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.viewPressed(_:)))
+        pressGesture.delegate = self
+        pressGesture.numberOfTapsRequired = 1
+        
+        if mapViewView != nil {
+            
+            mapViewView.addGestureRecognizer(pressGesture)
+        }
+        
+        layoutReminder(forSegmentIndex: reminderTypeSegmentedControll.selectedSegmentIndex)
+        
         //locationManager.requestAlwaysAuthorization()
     }
     
@@ -65,8 +80,11 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
     
     @IBAction func reminderTypeValueChanged(sender: UISegmentedControl) {
      
+        layoutReminder(forSegmentIndex: sender.selectedSegmentIndex)
+        
         timeDatePicker.isHidden = sender.selectedSegmentIndex != 0
         mapView.isHidden = sender.selectedSegmentIndex == 0
+        mapViewView.isHidden = sender.selectedSegmentIndex == 0
         
 //        if sender.selectedSegmentIndex == 1 {
 //            
@@ -83,6 +101,18 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
         setting!.Longitude = nil
         
         displayLocation(forLatitude: setting!.Latitude, andLongitude: setting!.Longitude)
+    }
+    
+    func layoutReminder(forSegmentIndex segmentIndex : Int){
+        
+        timeDatePicker.isHidden = segmentIndex != 0
+        mapView.isHidden = segmentIndex == 0
+        mapViewView.isHidden = segmentIndex == 0
+    }
+    
+    func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
+        
+        settingsTableViewController.performSegue(withIdentifier: "mapSegue", sender: self.setting)
     }
     
     // Delegate method to resign first reponder on the text field when the user hits return

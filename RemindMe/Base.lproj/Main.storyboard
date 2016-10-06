@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5fG-2j-Nom" id="xoN-SC-e4V">
-                                    <frame key="frameInset" width="375" height="63"/>
+                                    <frame key="frameInset" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgR-2L-ngz">
@@ -55,7 +55,7 @@
                                 <rect key="frame" x="0.0" y="156" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ra5-1y-TQU" id="UKs-nk-V56">
-                                    <frame key="frameInset" width="375" height="63"/>
+                                    <frame key="frameInset" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-4i-zyp">
@@ -329,24 +329,32 @@
                                         </segmentedControl>
                                         <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsCompass="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W96-mF-Q9x">
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="J96-fg-cvG"/>
-                                                <constraint firstAttribute="width" constant="200" id="ieg-qK-fc0"/>
+                                                <constraint firstAttribute="width" constant="200" id="Frb-ao-ezd"/>
+                                                <constraint firstAttribute="height" constant="80" id="UEI-zC-K8V"/>
                                             </constraints>
                                         </mapView>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kAT-3E-GMa">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="KpG-jT-Gwz"/>
+                                                <constraint firstAttribute="width" constant="200" id="Rr0-1v-LKt"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstItem="W96-mF-Q9x" firstAttribute="top" secondItem="FeZ-yR-ylg" secondAttribute="bottom" constant="8" symbolic="YES" id="A8C-bM-YtF"/>
                                         <constraint firstItem="G9F-dt-esR" firstAttribute="top" secondItem="FeZ-yR-ylg" secondAttribute="bottom" constant="8" symbolic="YES" id="Brq-jA-cvv"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="G9F-dt-esR" secondAttribute="leading" id="Cn2-pM-Jy6"/>
+                                        <constraint firstItem="W96-mF-Q9x" firstAttribute="top" secondItem="FeZ-yR-ylg" secondAttribute="bottom" constant="8" symbolic="YES" id="H1f-8K-tWh"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="9aH-5G-bDj" secondAttribute="trailing" constant="344" id="UE9-Ui-Ld6"/>
-                                        <constraint firstItem="W96-mF-Q9x" firstAttribute="centerX" secondItem="38j-7x-Obv" secondAttribute="centerX" id="XR6-cO-wlh"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="G9F-dt-esR" secondAttribute="trailing" id="cUJ-Ql-XRD"/>
+                                        <constraint firstItem="kAT-3E-GMa" firstAttribute="centerX" secondItem="38j-7x-Obv" secondAttribute="centerX" id="cVO-1f-q5i"/>
+                                        <constraint firstItem="kAT-3E-GMa" firstAttribute="top" secondItem="FeZ-yR-ylg" secondAttribute="bottom" constant="8" symbolic="YES" id="g9Y-Cx-wKy"/>
                                         <constraint firstItem="FeZ-yR-ylg" firstAttribute="top" secondItem="9aH-5G-bDj" secondAttribute="bottom" constant="11" id="hGi-Ob-flF"/>
                                         <constraint firstItem="G9F-dt-esR" firstAttribute="centerX" secondItem="38j-7x-Obv" secondAttribute="centerX" id="mm3-Pw-MDO"/>
                                         <constraint firstItem="9aH-5G-bDj" firstAttribute="leading" secondItem="38j-7x-Obv" secondAttribute="leadingMargin" id="ofI-Vo-aaK"/>
                                         <constraint firstItem="9aH-5G-bDj" firstAttribute="top" secondItem="38j-7x-Obv" secondAttribute="topMargin" constant="1" id="te9-oh-mTJ"/>
                                         <constraint firstItem="9aH-5G-bDj" firstAttribute="leading" secondItem="FeZ-yR-ylg" secondAttribute="leading" id="vsc-fY-HtP"/>
+                                        <constraint firstItem="W96-mF-Q9x" firstAttribute="centerX" secondItem="38j-7x-Obv" secondAttribute="centerX" id="xEV-ff-SSB"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -358,7 +366,9 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="mapView" destination="W96-mF-Q9x" id="LyK-2x-6sn"/>
+                                    <outlet property="mapViewView" destination="kAT-3E-GMa" id="85Y-Ju-4Xy"/>
                                     <outlet property="nameTextField" destination="9aH-5G-bDj" id="z09-RY-5ux"/>
+                                    <outlet property="reminderTypeSegmentedControll" destination="FeZ-yR-ylg" id="jTw-gq-QR2"/>
                                     <outlet property="timeDatePicker" destination="G9F-dt-esR" id="guw-fk-L5v"/>
                                 </connections>
                             </tableViewCell>
@@ -423,16 +433,17 @@
                     <connections>
                         <outlet property="doneButton" destination="UYc-9E-fNV" id="AYk-g9-HRH"/>
                         <outlet property="settingsTableView" destination="Krb-iS-m7j" id="i2D-X1-ApR"/>
+                        <segue destination="B60-TG-926" kind="show" identifier="mapSegue" id="8d9-0v-aI3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Xu-Mg-gc8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2368.8000000000002" y="950.37481259370327"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="BKh-Mm-rBE">
             <objects>
-                <viewController id="B60-TG-926" sceneMemberID="viewController">
+                <viewController id="B60-TG-926" customClass="MapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vi8-y4-fXG"/>
                         <viewControllerLayoutGuide type="bottom" id="tkb-0d-F8x"/>
