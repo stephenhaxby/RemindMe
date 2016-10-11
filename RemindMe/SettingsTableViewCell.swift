@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocationManagerDelegate
+class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -23,8 +23,6 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
     @IBOutlet weak var mapViewView: UIView!
     
     weak var settingsTableViewController: SettingsTableViewController!
-    
-    //let locationManager : CLLocationManager
     
     var setting: Setting? {
         didSet {
@@ -46,7 +44,6 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
     }
     
     required init?(coder aDecoder: NSCoder) {
-        //locationManager = CLLocationManager()
         
         super.init(coder: aDecoder)
     }
@@ -67,7 +64,6 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
         
         layoutReminder(forSegmentIndex: reminderTypeSegmentedControll.selectedSegmentIndex)
         
-        //locationManager.requestAlwaysAuthorization()
     }
     
     // Resign first responder on the text field if the time value changes
@@ -85,16 +81,6 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
         timeDatePicker.isHidden = sender.selectedSegmentIndex != 0
         mapView.isHidden = sender.selectedSegmentIndex == 0
         mapViewView.isHidden = sender.selectedSegmentIndex == 0
-        
-//        if sender.selectedSegmentIndex == 1 {
-//            
-//            if CLLocationManager.locationServicesEnabled() {
-//                
-//                locationManager.delegate = self
-//                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-//                locationManager.startUpdatingLocation()
-//            }
-//        }
         
         setting!.time = nil
         setting!.Latitude = nil
@@ -128,12 +114,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
         
         setting!.name = textField.text!
     }
-    
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//
-//        displayLocation(forLatitude: manager.location?.coordinate.latitude, andLongitude: manager.location?.coordinate.longitude)
-//    }
-    
+
     func displayLocation(forLatitude : Double?, andLongitude : Double?){
         
         if let latitude = forLatitude,
@@ -141,7 +122,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate { //CLLocation
             
             let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             
-            let span = MKCoordinateSpanMake(0.05, 0.05)
+            let span = MKCoordinateSpanMake(0.1, 0.1)
             let region = MKCoordinateRegion(center: location, span: span)
             mapView.setRegion(region, animated: true)
             

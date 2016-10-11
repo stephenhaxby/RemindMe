@@ -287,7 +287,7 @@
                                 <rect key="frame" x="0.0" y="128" width="375" height="190"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="nbo-Q7-uQI" id="38j-7x-Obv">
-                                    <frame key="frameInset" width="375" height="189"/>
+                                    <frame key="frameInset" width="375" height="190"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9aH-5G-bDj">
@@ -376,7 +376,7 @@
                                 <rect key="frame" x="0.0" y="318" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hSa-jE-Irm" id="UUp-9t-FS3">
-                                    <frame key="frameInset" width="375" height="63"/>
+                                    <frame key="frameInset" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJP-O3-kK2" userLabel="Footer Add New View">
@@ -443,7 +443,7 @@
         <!--Map View Controller-->
         <scene sceneID="BKh-Mm-rBE">
             <objects>
-                <viewController id="B60-TG-926" customClass="MapViewController" sceneMemberID="viewController">
+                <viewController id="B60-TG-926" customClass="MapViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vi8-y4-fXG"/>
                         <viewControllerLayoutGuide type="bottom" id="tkb-0d-F8x"/>
@@ -452,13 +452,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8uz-ZJ-Q4G">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uz-ZJ-Q4G">
                                 <frame key="frameInset" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="map" destination="8uz-ZJ-Q4G" id="l9f-sA-zd0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vqb-EC-23y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -489,6 +492,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hub-ei-YRI"/>
+        <segue reference="RuX-yA-r1x"/>
     </inferredMetricsTieBreakers>
 </document>

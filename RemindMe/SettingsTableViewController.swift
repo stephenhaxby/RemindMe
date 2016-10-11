@@ -43,6 +43,19 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         self.tableView.backgroundView = imageView
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "mapSegue" {
+            
+            let mapViewController : MapViewController = segue.destination as! MapViewController
+            
+            if let setting : Setting = sender as? Setting {
+                
+                mapViewController.setting = setting
+            }
+        }
+    }
+    
     // Load up the settings from Core Data
     func loadUserSettings() {
         

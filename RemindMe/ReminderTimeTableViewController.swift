@@ -127,7 +127,7 @@ class ReminderTimeTableViewController: UITableViewController {
                 
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
                     
-                    //TODO:
+                    //TODO: This broke for some reason...
                     leftButton.isSelected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time!, date2Components : itemReminderAlarmDateComponents)
                     
                     selectedSetting = reminderTimeTableViewCell.settings!.settingOne
