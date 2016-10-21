@@ -49,9 +49,9 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
             
             let mapViewController : MapViewController = segue.destination as! MapViewController
             
-            if let setting : Setting = sender as? Setting {
+            if let settingsTableViewCell : SettingsTableViewCell = sender as? SettingsTableViewCell {
                 
-                mapViewController.setting = setting
+                mapViewController.settingsTableViewCell = settingsTableViewCell
             }
         }
     }

@@ -10,7 +10,14 @@ import MapKit
 
 class MapViewController : UIViewController, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     
-    var setting: Setting?
+    var settingsTableViewCell : SettingsTableViewCell?
+    
+    var setting: Setting? {
+        
+        get{
+            return settingsTableViewCell?.setting
+        }
+    }
     
     let locationManager : CLLocationManager
     
@@ -29,7 +36,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, CLLocat
 
         locationManager.requestAlwaysAuthorization()
         
-        if setting != nil, let latitude = setting!.Latitude, let longitude = setting!.Longitude {
+        if setting != nil, let latitude = setting!.latitude, let longitude = setting!.longitude {
             
             displayLocation(forLatitude: latitude, andLongitude: longitude, withDefaultZoom: true)
         }
@@ -52,6 +59,31 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, CLLocat
         map.addGestureRecognizer(gestureRecognizer)
     }
     
+    override func viewWillDisappear(_ animated : Bool){
+        
+        if setting != nil {
+            
+            for annotation in map.annotations {
+                
+                if annotation is MKPointAnnotation {
+                    
+                    setting?.longitude = annotation.coordinate.longitude
+                    setting?.latitude = annotation.coordinate.latitude
+                    break
+                }
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        
+        if setting?.latitude != nil
+            && setting?.latitude != nil {
+        
+            settingsTableViewCell?.displayLocation(forLatitude: setting?.latitude, andLongitude: setting?.longitude)
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
         if map.annotations.count == 0 {
@@ -69,15 +101,6 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, CLLocat
         let newCoordinates = map.convert(touchPoint, toCoordinateFrom: map)
         
         displayLocation(forLatitude: newCoordinates.latitude, andLongitude: newCoordinates.longitude, withDefaultZoom: false)
-    }
-    
-    override func viewWillDisappear(_ animated : Bool){
-     
-        if setting != nil, map.annotations.count > 0 {
-            
-            setting?.Longitude = map.annotations[0].coordinate.longitude
-            setting?.Latitude = map.annotations[0].coordinate.latitude
-        }
     }
     
     func displayLocation(forLatitude : Double?, andLongitude : Double?, withDefaultZoom defaultZoom : Bool){

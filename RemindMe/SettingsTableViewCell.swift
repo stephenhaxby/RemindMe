@@ -29,14 +29,14 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
             
             if setting != nil {
 
+                
                 nameTextField.text = setting!.name
+                reminderTypeSegmentedControll.selectedSegmentIndex = setting!.type
                 
                 if let time = setting!.time {
                     
                     timeDatePicker.date = time
                 }
-                
-                displayLocation(forLatitude: setting!.Latitude, andLongitude: setting!.Longitude)
                 
                 nameTextField.delegate = self
             }
@@ -64,6 +64,14 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         layoutReminder(forSegmentIndex: reminderTypeSegmentedControll.selectedSegmentIndex)
         
+        if setting != nil {
+            
+            //We need to set the frame on initial load because it's set to 0 here and it kills the displayLocation
+            let frame = CGRect(x:60, y:89, width:200, height:80 )
+            mapView!.frame = frame
+            
+            displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude)
+        }
     }
     
     // Resign first responder on the text field if the time value changes
@@ -82,11 +90,12 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         mapView.isHidden = sender.selectedSegmentIndex == 0
         mapViewView.isHidden = sender.selectedSegmentIndex == 0
         
-        setting!.time = nil
-        setting!.Latitude = nil
-        setting!.Longitude = nil
+        setting!.type = sender.selectedSegmentIndex
         
-        displayLocation(forLatitude: setting!.Latitude, andLongitude: setting!.Longitude)
+        if !mapView.isHidden {
+        
+            displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude)
+        }
     }
     
     func layoutReminder(forSegmentIndex segmentIndex : Int){
@@ -98,7 +107,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
         
-        settingsTableViewController.performSegue(withIdentifier: "mapSegue", sender: self.setting)
+        settingsTableViewController.performSegue(withIdentifier: "mapSegue", sender: self)
     }
     
     // Delegate method to resign first reponder on the text field when the user hits return
@@ -120,11 +129,25 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         if let latitude = forLatitude,
             let longitude = andLongitude {
             
+            mapView.removeAnnotations(mapView.annotations as [MKAnnotation])
+            
             let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             
-            let span = MKCoordinateSpanMake(0.1, 0.1)
-            let region = MKCoordinateRegion(center: location, span: span)
-            mapView.setRegion(region, animated: true)
+            mapView.setCenter(location, animated: true)
+            
+            mapView.camera.altitude = 1035
+            
+//            var span = MKCoordinateSpan(latitudeDelta: 126, longitudeDelta: 179)
+//            var region = MKCoordinateRegion(center: location, span: span)
+//            
+//            mapView.setRegion(region, animated: true)
+//            
+//            span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+//            region = MKCoordinateRegion(center: location, span: span)
+//
+//            //var testRegion = mapView.regionThatFits(region)
+//            
+//            mapView.setRegion(region, animated: true)
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = location

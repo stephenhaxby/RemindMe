@@ -27,6 +27,9 @@ class ReminderFacade : StorageFacadeProtocol {
     
             reminder.title = remindMeItem.title
             reminder.date = remindMeItem.date!
+            reminder.latitude = remindMeItem.latitude!
+            reminder.longitude = remindMeItem.longitude!
+            reminder.type = remindMeItem.type
             
             localNotificationManager.setReminderNotification(remindMeItem)
         }

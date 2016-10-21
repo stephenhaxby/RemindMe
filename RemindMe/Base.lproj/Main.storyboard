@@ -376,7 +376,7 @@
                                 <rect key="frame" x="0.0" y="318" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hSa-jE-Irm" id="UUp-9t-FS3">
-                                    <frame key="frameInset" width="375" height="64"/>
+                                    <frame key="frameInset" width="375" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJP-O3-kK2" userLabel="Footer Add New View">

@@ -48,6 +48,42 @@ class Reminder {
         }
     }
     
+    var latitude : Double {
+        
+        get {
+            
+            return Double(reminder.value(forKey: "latitude") as! NSNumber)
+        }
+        set (value) {
+            
+            reminder.setValue(value, forKeyPath: "latitude")
+        }
+    }
+    
+    var longitude : Double {
+        
+        get {
+            
+            return Double(reminder.value(forKey: "longitude") as! NSNumber)
+        }
+        set (value) {
+            
+            reminder.setValue(value, forKeyPath: "longitude")
+        }
+    }
+    
+    var type : Int {
+        
+        get {
+            
+            return (reminder.value(forKey: "type") as! NSNumber).intValue
+        }
+        set (value) {
+            
+            reminder.setValue(NSNumber(value: value as Int), forKeyPath: "type")
+        }
+    }
+    
     init(managedObject : NSManagedObject) {
         
         self.reminder = managedObject

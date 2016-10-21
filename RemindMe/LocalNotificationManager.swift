@@ -8,6 +8,7 @@
 
 import Foundation
 import UserNotifications
+import CoreLocation
 
 class LocalNotificationManager {
     
@@ -86,16 +87,35 @@ class LocalNotificationManager {
         
         notification.title = "Don't forget to:"
         notification.body = remindMeItem.title
-
-        let request = UNNotificationRequest(
-            identifier: remindMeItem.id,
-            content: notification,
-            trigger: UNCalendarNotificationTrigger(
-                dateMatching: NSDateManager.getDateComponentsFromDate(remindMeItem.date!),
-                repeats: false)
-        )
         
-        UNUserNotificationCenter.current().add(request)
+        if remindMeItem.type == 0 {
+            
+            let request = UNNotificationRequest(
+                identifier: remindMeItem.id,
+                content: notification,
+                trigger: UNCalendarNotificationTrigger(
+                    dateMatching: NSDateManager.getDateComponentsFromDate(remindMeItem.date!),
+                    repeats: false)
+            )
+            
+            UNUserNotificationCenter.current().add(request)
+        }
+        else {
+        
+            TODO
+            
+            let center = CLLocationCoordinate2DMake(remindMeItem.latitude!, remindMeItem.longitude!)
+            let region = CLCircularRegion.init(center: center, radius: 100.0,
+                                               identifier: remindMeItem.id)
+            region.notifyOnEntry = true;
+            region.notifyOnExit = false;
+            
+            let request = UNNotificationRequest(
+                identifier: remindMeItem.id,
+                content: notification,
+                trigger: UNLocationNotificationTrigger.init(region: region, repeats: false))
+            
+            UNUserNotificationCenter.current().add(request)
+        }
     }
-
 }

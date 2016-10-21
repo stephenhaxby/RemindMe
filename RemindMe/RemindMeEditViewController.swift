@@ -100,10 +100,12 @@ class RemindMeEditViewController : UIViewController {
         
         reminder!.title = reminderTitleTextView.text
         
-        if reminderTimeTableViewController != nil && reminderTimeTableViewController!.selectedSetting != nil {
+        if let selectedSetting : Setting = reminderTimeTableViewController?.selectedSetting {
             
-            //TODO:
-            reminder!.date = getSelectedAlarmDateComponentsFromDate(reminderTimeTableViewController!.selectedSetting!.time! as Date) as (Date)
+            reminder!.date = getSelectedAlarmDateComponentsFromDate(selectedSetting.time! as Date) as (Date)
+            reminder!.latitude = selectedSetting.latitude
+            reminder!.longitude = selectedSetting.longitude
+            reminder!.type = selectedSetting.type
             
             storageFacade!.createOrUpdateReminder(reminder!)
         }

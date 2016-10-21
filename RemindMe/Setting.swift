@@ -24,7 +24,7 @@ class Setting {
         }
     }
     
-    var Latitude : Double? {
+    var latitude : Double? {
         
         get {
             
@@ -41,7 +41,7 @@ class Setting {
         }
     }
     
-    var Longitude : Double? {
+    var longitude : Double? {
         
         get {
             
@@ -79,6 +79,18 @@ class Setting {
         set (value) {
             
             setting.setValue(value, forKeyPath: "time")
+        }
+    }
+    
+    var type : Int {
+        
+        get {
+            
+            return (setting.value(forKey: "type") as! NSNumber).intValue
+        }
+        set (value) {
+            
+            setting.setValue(NSNumber(value: value as Int), forKeyPath: "type")
         }
     }
     

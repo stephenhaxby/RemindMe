@@ -15,4 +15,10 @@ class RemindMeItem {
     var title : String = String()
     
     var date : Date?
+    
+    var latitude : Double?
+    
+    var longitude : Double?
+    
+    var type : Int = 0
 }
