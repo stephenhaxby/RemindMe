@@ -21,4 +21,6 @@ class RemindMeItem {
     var longitude : Double?
     
     var type : Int = 0
+    
+    var label : String = String()
 }

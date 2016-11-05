@@ -24,16 +24,11 @@ class Setting {
         }
     }
     
-    var latitude : Double? {
+    var latitude : Double {
         
         get {
             
-            if let latitude = (setting.value(forKey: "latitude") as? NSNumber) {
-                
-                return latitude.doubleValue
-            }
-            
-            return nil
+            return setting.value(forKey: "latitude") as! Double
         }
         set (value) {
             
@@ -41,16 +36,11 @@ class Setting {
         }
     }
     
-    var longitude : Double? {
+    var longitude : Double {
         
         get {
             
-            if let longitude = (setting.value(forKey: "longitude") as? NSNumber) {
-                
-                return longitude.doubleValue
-            }
-            
-            return nil
+            return setting.value(forKey: "longitude") as! Double
         }
         set (value) {
             
@@ -70,11 +60,11 @@ class Setting {
         }
     }
     
-    var time : Date? {
+    var time : Date {
         
         get {
             
-            return setting.value(forKey: "time") as? Date
+            return setting.value(forKey: "time") as! Date
         }
         set (value) {
             

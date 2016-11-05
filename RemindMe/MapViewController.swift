@@ -8,7 +8,7 @@
 
 import MapKit
 
-class MapViewController : UIViewController, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+class MapViewController : UIViewController, UIGestureRecognizerDelegate {
     
     var settingsTableViewCell : SettingsTableViewCell?
     
@@ -19,13 +19,9 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, CLLocat
         }
     }
     
-    let locationManager : CLLocationManager
-    
     @IBOutlet weak var map: MKMapView!
     
     required init?(coder aDecoder: NSCoder) {
-        
-        locationManager = CLLocationManager()
         
         super.init(coder: aDecoder)
     }
@@ -34,20 +30,10 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, CLLocat
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        locationManager.requestAlwaysAuthorization()
         
-        if setting != nil, let latitude = setting!.latitude, let longitude = setting!.longitude {
+        if setting != nil && setting!.latitude != 0 && setting!.longitude != 0 {
             
-            displayLocation(forLatitude: latitude, andLongitude: longitude, withDefaultZoom: true)
-        }
-        else{
-            
-            if CLLocationManager.locationServicesEnabled() {
-
-                locationManager.delegate = self
-                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                locationManager.startUpdatingLocation()
-            }
+            displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude, withDefaultZoom: true)
         }
         
         let gestureRecognizer: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.addAnnotation(_:)))
@@ -77,20 +63,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, CLLocat
     
     override func viewDidDisappear(_ animated: Bool) {
         
-        if setting?.latitude != nil
-            && setting?.latitude != nil {
-        
-            settingsTableViewCell?.displayLocation(forLatitude: setting?.latitude, andLongitude: setting?.longitude)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-        if map.annotations.count == 0 {
-        
-            displayLocation(forLatitude: manager.location?.coordinate.latitude, andLongitude: manager.location?.coordinate.longitude, withDefaultZoom: true)
-            locationManager.stopUpdatingLocation()
-        }
+        settingsTableViewCell?.displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude)
     }
     
     func addAnnotation(_ gestureRecognizer:UIGestureRecognizer) {

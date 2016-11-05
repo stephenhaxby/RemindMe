@@ -84,6 +84,17 @@ class Reminder {
         }
     }
     
+    var label : String {
+        get {
+            
+            return reminder.value(forKey: "label") as! String
+        }
+        set (value) {
+            
+            reminder.setValue(value, forKeyPath: "label")
+        }
+    }
+    
     init(managedObject : NSManagedObject) {
         
         self.reminder = managedObject

@@ -85,7 +85,7 @@ class RemindMeEditViewController : UIViewController {
         }
     }
     
-    // When the back button is pressed we need to save everything
+    // When the back (save?) button is pressed we need to save everything
     @IBAction override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
         guard storageFacade != nil else {
@@ -102,10 +102,22 @@ class RemindMeEditViewController : UIViewController {
         
         if let selectedSetting : Setting = reminderTimeTableViewController?.selectedSetting {
             
-            reminder!.date = getSelectedAlarmDateComponentsFromDate(selectedSetting.time! as Date) as (Date)
+            reminder!.date = getSelectedAlarmDateComponentsFromDate(selectedSetting.time)
             reminder!.latitude = selectedSetting.latitude
             reminder!.longitude = selectedSetting.longitude
             reminder!.type = selectedSetting.type
+            
+            if reminder!.type == 0 {
+                
+                // Set's the reminder time label
+                let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminder!.date!)
+                
+                reminder!.label = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
+            }
+            else {
+                
+                reminder!.label = selectedSetting.name
+            }
             
             storageFacade!.createOrUpdateReminder(reminder!)
         }

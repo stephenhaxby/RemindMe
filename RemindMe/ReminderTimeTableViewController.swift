@@ -117,6 +117,8 @@ class ReminderTimeTableViewController: UITableViewController {
     
     func selectSettingButtonFor(_ reminderTimeTableViewCell : ReminderTimeTableViewCell) {
         
+        //TODO: Don't know what this will do if it's a location reminder...
+        
         // Loop through each alarm time and set the button to selected when it finds a match (left or right button)
         if let reminderItem : RemindMeItem = reminder,
         let reminderDate : Date = reminderItem.date as Date? {
@@ -128,9 +130,12 @@ class ReminderTimeTableViewController: UITableViewController {
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
                     
                     //TODO: This broke for some reason...
-                    leftButton.isSelected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time!, date2Components : itemReminderAlarmDateComponents)
+                    leftButton.isSelected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time, date2Components : itemReminderAlarmDateComponents)
                     
-                    selectedSetting = reminderTimeTableViewCell.settings!.settingOne
+                    if leftButton.isSelected {
+                    
+                        selectedSetting = reminderTimeTableViewCell.settings!.settingOne
+                    }
                 }
             }
             
@@ -139,9 +144,12 @@ class ReminderTimeTableViewController: UITableViewController {
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingTwo != nil {
                 
                     //TODO:
-                    rightButton.isSelected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time!, date2Components : itemReminderAlarmDateComponents)
+                    rightButton.isSelected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time, date2Components : itemReminderAlarmDateComponents)
                     
-                    selectedSetting = reminderTimeTableViewCell.settings!.settingTwo
+                    if rightButton.isSelected {
+                    
+                        selectedSetting = reminderTimeTableViewCell.settings!.settingTwo
+                    }
                 }
             }
         }

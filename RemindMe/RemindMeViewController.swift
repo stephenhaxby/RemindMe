@@ -270,6 +270,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             if let reminderListTable = self.tableView{
                 
+                //TODO: Don't know what this will do for location reminders... (as this is really only for iCloud Reminders)
+                
                 // Filter out reminder items that don't have an alarm set
                 let scheduledItems : [RemindMeItem] = iCloudShoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})
                 

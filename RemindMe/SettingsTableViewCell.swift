@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
+class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -21,6 +21,8 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var mapViewView: UIView!
+    
+    let locationManager : CLLocationManager
     
     weak var settingsTableViewController: SettingsTableViewController!
     
@@ -33,10 +35,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
                 nameTextField.text = setting!.name
                 reminderTypeSegmentedControll.selectedSegmentIndex = setting!.type
                 
-                if let time = setting!.time {
-                    
-                    timeDatePicker.date = time
-                }
+                timeDatePicker.date = setting!.time
                 
                 nameTextField.delegate = self
             }
@@ -44,6 +43,8 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     required init?(coder aDecoder: NSCoder) {
+        
+        locationManager = CLLocationManager()
         
         super.init(coder: aDecoder)
     }
@@ -103,6 +104,28 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         timeDatePicker.isHidden = segmentIndex != 0
         mapView.isHidden = segmentIndex == 0
         mapViewView.isHidden = segmentIndex == 0
+        
+        if segmentIndex != 0 {
+            
+            locationManager.requestAlwaysAuthorization()
+            
+            if CLLocationManager.locationServicesEnabled() && setting!.latitude == 0 && setting?.longitude == 0 {
+                
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        setting!.latitude = manager.location!.coordinate.latitude
+        setting!.longitude = manager.location!.coordinate.longitude
+
+        locationManager.stopUpdatingLocation()
+        
+        displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude)
     }
     
     func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
@@ -124,19 +147,16 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
         setting!.name = textField.text!
     }
 
-    func displayLocation(forLatitude : Double?, andLongitude : Double?){
+    func displayLocation(forLatitude latitude : Double, andLongitude longitude : Double){
         
-        if let latitude = forLatitude,
-            let longitude = andLongitude {
-            
-            mapView.removeAnnotations(mapView.annotations as [MKAnnotation])
-            
-            let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            
-            mapView.setCenter(location, animated: true)
-            
-            mapView.camera.altitude = 1035
-            
+        mapView.removeAnnotations(mapView.annotations as [MKAnnotation])
+        
+        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        mapView.setCenter(location, animated: true)
+        
+        mapView.camera.altitude = 1035
+        
 //            var span = MKCoordinateSpan(latitudeDelta: 126, longitudeDelta: 179)
 //            var region = MKCoordinateRegion(center: location, span: span)
 //            
@@ -148,13 +168,12 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate {
 //            //var testRegion = mapView.regionThatFits(region)
 //            
 //            mapView.setRegion(region, animated: true)
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = location
-            //            annotation.title = "Big Ben"
-            //            annotation.subtitle = "London"
-            mapView.addAnnotation(annotation)
-        }
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location
+        //            annotation.title = "Big Ben"
+        //            annotation.subtitle = "London"
+        mapView.addAnnotation(annotation)
     }
 }
 

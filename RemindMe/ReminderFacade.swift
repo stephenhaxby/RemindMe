@@ -30,6 +30,7 @@ class ReminderFacade : StorageFacadeProtocol {
             reminder.latitude = remindMeItem.latitude!
             reminder.longitude = remindMeItem.longitude!
             reminder.type = remindMeItem.type
+            reminder.label = remindMeItem.label
             
             localNotificationManager.setReminderNotification(remindMeItem)
         }
@@ -37,7 +38,13 @@ class ReminderFacade : StorageFacadeProtocol {
             
             isNewReminder = true
     
-            let reminder : Reminder = reminderRepository.createNewReminder(remindMeItem.title, time : remindMeItem.date!)
+            let reminder : Reminder = reminderRepository.createNewReminder(
+                remindMeItem.title,
+                time : remindMeItem.date!,
+                latitude : remindMeItem.latitude!,
+                longitude : remindMeItem.longitude!,
+                type : remindMeItem.type,
+                label : remindMeItem.label)
             
             let newRemindMeItem : RemindMeItem = getReminderItemFrom(reminder)
             
@@ -84,6 +91,10 @@ class ReminderFacade : StorageFacadeProtocol {
         remindMeItem.id = reminder.id
         remindMeItem.title = reminder.title
         remindMeItem.date = reminder.date
+        remindMeItem.latitude = reminder.latitude
+        remindMeItem.longitude = reminder.longitude
+        remindMeItem.type = reminder.type
+        remindMeItem.label = reminder.label
         
         return remindMeItem
     }
