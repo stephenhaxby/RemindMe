@@ -85,6 +85,8 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
     
     @IBAction func reminderTypeValueChanged(sender: UISegmentedControl) {
      
+        nameTextField.resignFirstResponder()
+        
         layoutReminder(forSegmentIndex: sender.selectedSegmentIndex)
         
         timeDatePicker.isHidden = sender.selectedSegmentIndex != 0

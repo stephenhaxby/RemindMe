@@ -42,8 +42,20 @@ class RemindMeTableViewCell: UITableViewCell {
 //                }
 //                
 //                reminderTextLabel.text = newReminderText
+
+                if itemReminder.type == 0 {
                 
-                reminderTimeLable.text = itemReminder.label
+                    // Set's the reminder time label
+                    let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminder!.date!)
+                    
+                    reminderTimeLable.text = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
+                    reminderTimeLable.textColor = UIColor.orange
+                }
+                else{
+                    
+                    reminderTimeLable.text = itemReminder.label
+                    reminderTimeLable.textColor = UIColor(colorLiteralRed: <#T##Float#>, green: <#T##Float#>, blue: <#T##Float#>, alpha: <#T##Float#>)
+                }
             }
         }
     }

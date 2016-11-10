@@ -240,7 +240,15 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         // Scroll to the last item in the list
         settingsTableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
         
-        newSettingIndexPath = indexPath
+        if let newRow : SettingsTableViewCell = settingsTableView.cellForRow(at: indexPath) as? SettingsTableViewCell {
+            
+            newRow.nameTextField.becomeFirstResponder()
+            
+        }
+        else {
+            
+            newSettingIndexPath = indexPath
+        }
     }
     
     // Resign first responder on the text field if the user starts to scroll

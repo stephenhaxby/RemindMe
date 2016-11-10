@@ -8,13 +8,15 @@
 
 import UIKit
 
-class RemindMeEditViewController : UIViewController {
+class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var reminderTitleTextView: UITextView!
     
     @IBOutlet weak var saveButton: UIButton!
     
     @IBOutlet weak var reminderTimeTableViewControllerContainer: UIView!
+    
+    @IBOutlet weak var doneButton: UIButton!
     
     weak var reminderTimeTableViewController : ReminderTimeTableViewController?
     
@@ -51,6 +53,8 @@ class RemindMeEditViewController : UIViewController {
             
             reminderTitleTextView.text = reminderItem.title
         }
+        
+        reminderTitleTextView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +87,11 @@ class RemindMeEditViewController : UIViewController {
             
             destinationViewController.reminder = reminder
         }
+    }
+    
+    @IBAction func doneButtonTouchUpInside(_ sender: Any) {
+        
+        reminderTitleTextView.resignFirstResponder()
     }
     
     // When the back (save?) button is pressed we need to save everything
@@ -139,5 +148,15 @@ class RemindMeEditViewController : UIViewController {
             
             return NSDateManager.addDaysToDate(reminderDate, days: 1)
         }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        doneButton.isHidden = false
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
+        doneButton.isHidden = true
     }
 }

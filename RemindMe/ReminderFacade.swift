@@ -61,7 +61,7 @@ class ReminderFacade : StorageFacadeProtocol {
     
     func removeReminder(_ remindMeItem : RemindMeItem) -> Bool {
         
-        localNotificationManager.clearReminderNotification(remindMeItem)
+        localNotificationManager.clearReminderNotification(remindMeItem: remindMeItem)
         
         let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id)!
         

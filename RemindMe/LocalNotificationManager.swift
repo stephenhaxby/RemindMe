@@ -12,38 +12,45 @@ import CoreLocation
 
 class LocalNotificationManager {
     
-    func getPendingReminderNotificationRequest(_ remindMeItem : RemindMeItem) -> UNNotificationRequest? {
-        
-        var notifications : [UNNotificationRequest] = [UNNotificationRequest]()
+    func removePendingReminderNotificationRequest(remindMeItem : RemindMeItem) {
         
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             
-            notifications.append(contentsOf: requests)
-        }
-        
-        return getNotificationRequest(identifier: remindMeItem.id, notifications: notifications)
-    }
-    
-    func getDeliveredReminderNotificationRequest(_ remindMeItem : RemindMeItem) -> UNNotificationRequest? {
-        
-        var notifications : [UNNotificationRequest] = [UNNotificationRequest]()
-        
-        UNUserNotificationCenter.current().getDeliveredNotifications { requests in
-            
-            for notification in requests {
+            if let calendarNotification : UNNotificationRequest =
+                self.getNotificationRequest(identifier: remindMeItem.id, notifications: requests) {
                 
-                notifications.append(notification.request)
+                UNUserNotificationCenter.current().removePendingNotificationRequests(
+                    withIdentifiers: [calendarNotification.identifier])
             }
         }
+    }
+    
+    func removeDeliveredReminderNotification(remindMeItem : RemindMeItem) {
         
-        return getNotificationRequest(identifier: remindMeItem.id, notifications: notifications)
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+            
+            var requests : [UNNotificationRequest] = [UNNotificationRequest]()
+            
+            for notification in notifications {
+                
+                requests.append(notification.request)
+            }
+            
+            if let calendarNotification : UNNotificationRequest =
+                self.getNotificationRequest(identifier: remindMeItem.id, notifications: requests) {
+                
+                UNUserNotificationCenter.current().removeDeliveredNotifications(
+                    withIdentifiers: [calendarNotification.identifier])
+            }
+        }
     }
     
     func getNotificationRequest(identifier : String, notifications : [UNNotificationRequest]) -> UNNotificationRequest? {
         
         var reminderNotification : UNNotificationRequest?
         
-        let notificationIndex : Int? = notifications.index(where: {(notification : UNNotificationRequest) in notification.identifier == identifier})
+        let notificationIndex : Int? =
+            notifications.index(where: {(notification : UNNotificationRequest) in notification.identifier.hasPrefix(identifier)})
         
         if notificationIndex != nil {
             
@@ -53,33 +60,16 @@ class LocalNotificationManager {
         return reminderNotification
     }
     
-    func clearReminderNotification(_ remindMeItem : RemindMeItem) {
+    func clearReminderNotification(remindMeItem : RemindMeItem) {
         
-        if let pendingReminderNotification : UNNotificationRequest = getPendingReminderNotificationRequest(remindMeItem) {
-            
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [pendingReminderNotification.identifier])
-            
-            return
-        }
+        removePendingReminderNotificationRequest(remindMeItem: remindMeItem)
         
-        if let deliveredReminderNotification : UNNotificationRequest = getDeliveredReminderNotificationRequest(remindMeItem) {
-            
-            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [deliveredReminderNotification.identifier])
-        }
+        removeDeliveredReminderNotification(remindMeItem: remindMeItem)
     }
     
     func setReminderNotification(_ remindMeItem : RemindMeItem) {
         
-        if let calendarNotification : UNNotificationRequest = getPendingReminderNotificationRequest(remindMeItem) {
-            
-            UNUserNotificationCenter.current().removePendingNotificationRequests(
-                withIdentifiers: [calendarNotification.identifier])
-        }
-        else if let calendarNotification : UNNotificationRequest = getDeliveredReminderNotificationRequest(remindMeItem) {
-            
-            UNUserNotificationCenter.current().removeDeliveredNotifications(
-                withIdentifiers: [calendarNotification.identifier])
-        }
+        clearReminderNotification(remindMeItem: remindMeItem)
         
         let notification = UNMutableNotificationContent()
         
@@ -108,8 +98,10 @@ class LocalNotificationManager {
             trigger = UNLocationNotificationTrigger(region: region, repeats: false)
         }
         
+        //NOTE: As the find/remove methods are async, we could create a new request with this id before the old on has been deleted
+        //      thus our new notification could be removed. The find method needs to use has prefix instead...
         let request = UNNotificationRequest(
-            identifier: remindMeItem.id,
+            identifier: remindMeItem.id.appending(UUID().uuidString),
             content: notification,
             trigger: trigger!
         )
