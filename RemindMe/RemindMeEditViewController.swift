@@ -18,6 +18,8 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var doneButton: UIButton!
     
+    @IBOutlet weak var reminderTimeContainerView: UIView!
+    
     weak var reminderTimeTableViewController : ReminderTimeTableViewController?
     
     weak var remindMeViewController : RemindMeViewController?
@@ -92,6 +94,19 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     @IBAction func doneButtonTouchUpInside(_ sender: Any) {
         
         reminderTitleTextView.resignFirstResponder()
+        reminderTimeContainerView.isHidden = false
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        
+        if let button = sender as? UIButton,
+            let buttonLabel : UILabel = button.titleLabel {
+                
+            return buttonLabel.text == "Save"
+                && reminderTimeTableViewController?.selectedSetting != nil
+        }
+        
+        return true
     }
     
     // When the back (save?) button is pressed we need to save everything
@@ -153,10 +168,11 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         
         doneButton.isHidden = false
+        reminderTimeContainerView.isHidden = true
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         
-        doneButton.isHidden = true
+        doneButton.isHidden = false
     }
 }

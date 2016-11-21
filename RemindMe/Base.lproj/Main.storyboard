@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5fG-2j-Nom" id="xoN-SC-e4V">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgR-2L-ngz">
@@ -35,7 +35,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLt-dr-kFe">
-                                            <rect key="frame" x="20" y="37" width="347" height="20"/>
+                                            <rect key="frame" x="15" y="37" width="352" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -48,7 +48,7 @@
                                         <constraint firstAttribute="trailing" secondItem="bLt-dr-kFe" secondAttribute="trailing" constant="8" id="fDg-Fl-ZdJ"/>
                                         <constraint firstItem="cgR-2L-ngz" firstAttribute="trailing" secondItem="xoN-SC-e4V" secondAttribute="trailingMargin" id="iCb-6I-Jem"/>
                                         <constraint firstAttribute="bottom" secondItem="bLt-dr-kFe" secondAttribute="bottom" constant="6" id="jnb-bS-kEG"/>
-                                        <constraint firstItem="bLt-dr-kFe" firstAttribute="leading" secondItem="xoN-SC-e4V" secondAttribute="leading" constant="20" id="x2R-Pf-bgd"/>
+                                        <constraint firstItem="bLt-dr-kFe" firstAttribute="leading" secondItem="xoN-SC-e4V" secondAttribute="leading" constant="15" id="x2R-Pf-bgd"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -214,6 +214,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="doneButton" destination="PKT-Le-dGF" id="pvs-9Y-otX"/>
+                        <outlet property="reminderTimeContainerView" destination="DRN-tb-41R" id="929-g2-n5G"/>
                         <outlet property="reminderTitleTextView" destination="XAk-7V-Yux" id="QFb-zK-6dk"/>
                         <outlet property="saveButton" destination="xJc-jx-KGz" id="QYQ-pm-zjb"/>
                     </connections>
@@ -353,6 +354,7 @@
                                                 <segment title="Time"/>
                                                 <segment title="Location"/>
                                             </segments>
+                                            <color key="tintColor" red="1" green="0.50058603286743164" blue="0.0016310368664562702" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="reminderTypeValueChangedWithSender:" destination="nbo-Q7-uQI" eventType="valueChanged" id="SUF-L0-kEs"/>
                                             </connections>

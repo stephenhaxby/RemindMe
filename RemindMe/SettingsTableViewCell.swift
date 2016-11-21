@@ -107,6 +107,10 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         mapView.isHidden = segmentIndex == 0
         mapViewView.isHidden = segmentIndex == 0
         
+        reminderTypeSegmentedControll.tintColor = segmentIndex == 0
+            ? UIColor(colorLiteralRed: 1, green: 0.50058603286743164, blue: 0.0016310368664562702, alpha: 1)
+            : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
+        
         if segmentIndex != 0 {
             
             locationManager.requestAlwaysAuthorization()
