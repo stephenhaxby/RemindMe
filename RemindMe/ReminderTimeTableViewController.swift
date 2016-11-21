@@ -11,7 +11,7 @@ import EventKit
 
 class ReminderTimeTableViewController: UITableViewController {
     
-    var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.sharedApplication().delegate as! AppDelegate)
+    var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.shared.delegate as! AppDelegate)
     
     var reminderTimeTableViewCellItems : [ReminderTimeTableViewCellItem] = [ReminderTimeTableViewCellItem]()
 
@@ -30,7 +30,7 @@ class ReminderTimeTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Clear the table separator color
-        tableView.separatorColor = UIColor.clearColor();
+        tableView.separatorColor = UIColor.clear;
         
         // Setup the table cells to display the user default alarm options (left and right)
         reminderTimeTableViewCellItems.removeAll()
@@ -49,7 +49,7 @@ class ReminderTimeTableViewController: UITableViewController {
         // Sort the settings before displaying them
         if settingsList.count > 1 {
             
-            settingsList.sortInPlace({(setting1, setting2) in
+            settingsList.sort(by: {(setting1, setting2) in
                 
                 setting1.sequence < setting2.sequence
             })
@@ -79,10 +79,10 @@ class ReminderTimeTableViewController: UITableViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        tableView.backgroundColor = .clearColor()
+        tableView.backgroundColor = UIColor.clear
     }
     
     // Function to clear all the setting buttons
@@ -96,12 +96,12 @@ class ReminderTimeTableViewController: UITableViewController {
                 
                 if let leftButton = reminderTimeTableViewCell.leftButton {
                     
-                    leftButton.selected = false
+                    leftButton.isSelected = false
                 }
                 
                 if let rightButton = reminderTimeTableViewCell.rightButton {
                     
-                    rightButton.selected = false
+                    rightButton.isSelected = false
                 }
             }
          }
@@ -115,20 +115,38 @@ class ReminderTimeTableViewController: UITableViewController {
         }
     }
     
-    func selectSettingButtonFor(reminderTimeTableViewCell : ReminderTimeTableViewCell) {
+    func selectSettingButtonFor(_ reminderTimeTableViewCell : ReminderTimeTableViewCell) {
+        
+        //TODO: Don't know what this will do if it's a location reminder...
         
         // Loop through each alarm time and set the button to selected when it finds a match (left or right button)
         if let reminderItem : RemindMeItem = reminder,
-        let reminderDate : NSDate = reminderItem.date,
-            let itemReminderAlarmDateComponents : NSDateComponents = NSDateManager.getDateComponentsFromDate(reminderDate) {
-    
+        let reminderDate : Date = reminderItem.date as Date?,
+        let latitude : Double = reminderItem.latitude,
+        let longitude : Double = reminderItem.longitude
+        {
+            let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminderDate)
+            
             if let leftButton = reminderTimeTableViewCell.leftButton {
                 
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
                     
-                    leftButton.selected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time, date2Components : itemReminderAlarmDateComponents)
+                    if reminderItem.type == 0 {
+                        
+                        leftButton.isSelected =
+                            NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time, date2Components : itemReminderAlarmDateComponents)
+                    }
+                    else {
+                        
+                        leftButton.isSelected =
+                            reminderTimeTableViewCell.settings!.settingOne!.latitude == latitude
+                            && reminderTimeTableViewCell.settings!.settingOne!.longitude == longitude
+                    }
                     
-                    selectedSetting = reminderTimeTableViewCell.settings!.settingOne
+                    if leftButton.isSelected {
+                    
+                        selectedSetting = reminderTimeTableViewCell.settings!.settingOne
+                    }
                 }
             }
             
@@ -136,24 +154,36 @@ class ReminderTimeTableViewController: UITableViewController {
                 
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingTwo != nil {
                 
-                    rightButton.selected = NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time, date2Components : itemReminderAlarmDateComponents)
+                    if reminderItem.type == 0 {
+                        rightButton.isSelected =
+                            NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time, date2Components : itemReminderAlarmDateComponents)
+                    }
+                    else {
+                        
+                        rightButton.isSelected =
+                            reminderTimeTableViewCell.settings!.settingTwo!.latitude == latitude
+                            && reminderTimeTableViewCell.settings!.settingTwo!.longitude == longitude
+                    }
                     
-                    selectedSetting = reminderTimeTableViewCell.settings!.settingTwo
+                    if rightButton.isSelected {
+                    
+                        selectedSetting = reminderTimeTableViewCell.settings!.settingTwo
+                    }
                 }
             }
         }
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return reminderTimeTableViewCellItems.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell : ReminderTimeTableViewCell = tableView.dequeueReusableCellWithIdentifier("ReminderTimeCell")! as! ReminderTimeTableViewCell
+        let cell : ReminderTimeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ReminderTimeCell")! as! ReminderTimeTableViewCell
         
-        cell.settings = reminderTimeTableViewCellItems[indexPath.row]
+        cell.settings = reminderTimeTableViewCellItems[(indexPath as NSIndexPath).row]
         cell.reminderTimeTableViewController = self
         
         selectSettingButtonFor(cell)
@@ -161,35 +191,35 @@ class ReminderTimeTableViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         
         return false
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         //cell.backgroundColor = .clearColor()
         //cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        cell.backgroundColor = .clearColor()
+        cell.backgroundColor = UIColor.clear
     }
     
-    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        let footerRow = tableView.dequeueReusableCellWithIdentifier("FooterCell") as! TableRowSpacer
+        let footerRow = tableView.dequeueReusableCell(withIdentifier: "FooterCell") as! TableRowSpacer
         
         // Set the background color of the footer cell
-        footerRow.backgroundColor = .clearColor()
+        footerRow.backgroundColor = UIColor.clear
         
         return footerRow
     }
     
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         // Set's the height for the footer cell
         return CGFloat(64)
     }
     
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         reminderTitleTextViewResignFirstResponder()
     }

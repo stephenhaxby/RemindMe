@@ -16,7 +16,7 @@ class Setting {
     var name : String {
         get {
             
-            return setting.valueForKey("name") as! String
+            return setting.value(forKey: "name") as! String
         }
         set (value) {
             
@@ -24,15 +24,27 @@ class Setting {
         }
     }
     
-    var time : NSDate {
+    var latitude : Double {
         
         get {
             
-            return setting.valueForKey("time") as! NSDate
+            return setting.value(forKey: "latitude") as! Double
         }
         set (value) {
             
-            setting.setValue(value, forKeyPath: "time")
+            setting.setValue(value, forKeyPath: "latitude")
+        }
+    }
+    
+    var longitude : Double {
+        
+        get {
+            
+            return setting.value(forKey: "longitude") as! Double
+        }
+        set (value) {
+            
+            setting.setValue(value, forKeyPath: "longitude")
         }
     }
     
@@ -40,11 +52,35 @@ class Setting {
         
         get {
             
-            return (setting.valueForKey("sequence") as! NSNumber).integerValue
+            return (setting.value(forKey: "sequence") as! NSNumber).intValue
         }
         set (value) {
             
-            setting.setValue(NSNumber(integer: value), forKeyPath: "sequence")
+            setting.setValue(NSNumber(value: value as Int), forKeyPath: "sequence")
+        }
+    }
+    
+    var time : Date {
+        
+        get {
+            
+            return setting.value(forKey: "time") as! Date
+        }
+        set (value) {
+            
+            setting.setValue(value, forKeyPath: "time")
+        }
+    }
+    
+    var type : Int {
+        
+        get {
+            
+            return (setting.value(forKey: "type") as! NSNumber).intValue
+        }
+        set (value) {
+            
+            setting.setValue(NSNumber(value: value as Int), forKeyPath: "type")
         }
     }
     

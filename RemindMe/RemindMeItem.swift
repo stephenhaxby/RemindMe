@@ -14,5 +14,13 @@ class RemindMeItem {
     
     var title : String = String()
     
-    var date : NSDate?
+    var date : Date?
+    
+    var latitude : Double?
+    
+    var longitude : Double?
+    
+    var type : Int = 0
+    
+    var label : String = String()
 }

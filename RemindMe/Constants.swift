@@ -27,7 +27,7 @@ class Constants{
     
     static let DefaultMorningTimeText : String = "In the Morning"
     
-    static let DefaultMorningTime : NSDate = NSDateManager.currentDateWithHour(7, minute: 0, second: 0)
+    static let DefaultMorningTime : Date = NSDateManager.currentDateWithHour(7, minute: 0, second: 0)
     
     static let AfternoonTimeText : String = "AfternoonTimeText"
     
@@ -35,7 +35,7 @@ class Constants{
     
     static let DefaultAfternoonTimeText : String = "Tonight"
     
-    static let DefaultAfternoonTime : NSDate = NSDateManager.currentDateWithHour(18, minute: 0, second: 0)
+    static let DefaultAfternoonTime : Date = NSDateManager.currentDateWithHour(18, minute: 0, second: 0)
     
     static let RefreshNotification : String = "Refresh"
     
@@ -45,4 +45,10 @@ class Constants{
         case local
         case iCloudReminders
     }
+    
+    static let NotificationCategory : String = "NotificationCategory"
+    
+    static let NotificationActionRemove : String = "NotificationActionRemove"
+    
+    static let NotificationActionEdit : String = "NotificationActionEdit"
 }

@@ -11,6 +11,7 @@
 		0E1D5ED41D0B6259005EDF08 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0E1D5ED31D0B6259005EDF08 /* Settings.bundle */; };
 		0E1DE2991C22B8950041D864 /* EKAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */; };
 		0E27BF4F1C16E5BC0053D90D /* RemindMeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */; };
+		0E2B58211DA6D892007DFBB8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2B58201DA6D892007DFBB8 /* MapViewController.swift */; };
 		0E2C30CB1CEB2A1800DD87A4 /* iCloudReminderFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C30C91CEB2A1800DD87A4 /* iCloudReminderFacade.swift */; };
 		0E2C30CC1CEB2A1800DD87A4 /* ReminderFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C30CA1CEB2A1800DD87A4 /* ReminderFacade.swift */; };
 		0E2C30CE1CEB2A3600DD87A4 /* StorageFacadeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C30CD1CEB2A3600DD87A4 /* StorageFacadeProtocol.swift */; };
@@ -47,6 +48,7 @@
 		0E1D5ED31D0B6259005EDF08 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EKAlarmManager.swift; sourceTree = "<group>"; };
 		0E27BF4E1C16E5BC0053D90D /* RemindMeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindMeEditViewController.swift; sourceTree = "<group>"; };
+		0E2B58201DA6D892007DFBB8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		0E2C30C91CEB2A1800DD87A4 /* iCloudReminderFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iCloudReminderFacade.swift; sourceTree = "<group>"; };
 		0E2C30CA1CEB2A1800DD87A4 /* ReminderFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderFacade.swift; sourceTree = "<group>"; };
 		0E2C30CD1CEB2A3600DD87A4 /* StorageFacadeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFacadeProtocol.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				0E58392F1C43AB4900FA3138 /* ReminderTimeTableViewController.swift */,
 				0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */,
 				0E1ACF251D2067B800E8F5FD /* NavigationController.swift */,
+				0E2B58201DA6D892007DFBB8 /* MapViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -215,12 +218,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Stephen Haxby";
 				TargetAttributes = {
 					0E40FE271C0702EC00ACB6F6 = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = BWGHTFZGRF;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -260,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E2B58211DA6D892007DFBB8 /* MapViewController.swift in Sources */,
 				0E2C30CB1CEB2A1800DD87A4 /* iCloudReminderFacade.swift in Sources */,
 				0E2C30D31CEB2AE500DD87A4 /* RemindMeItem.swift in Sources */,
 				0E2C30D11CEB2AAE00DD87A4 /* ReminderRepository.swift in Sources */,
@@ -320,13 +325,16 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = BWGHTFZGRF;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -343,7 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -364,13 +372,16 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: stephen.haxby@me.com (M8DC842G2N)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = BWGHTFZGRF;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -381,9 +392,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -399,6 +412,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MyCompany.RemindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -413,6 +427,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MyCompany.RemindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

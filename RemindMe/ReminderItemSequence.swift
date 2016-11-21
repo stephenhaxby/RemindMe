@@ -10,9 +10,9 @@ import Foundation
 
 class ReminderItemSequence : NSObject, NSCoding {
     
-    static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     
-    static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("ReminderItemSequence")
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("ReminderItemSequence")
     
     var calendarItemExternalIdentifier : String = ""
     var sequenceNumber : Int = 0
@@ -26,16 +26,16 @@ class ReminderItemSequence : NSObject, NSCoding {
     
     required convenience init(coder decoder: NSCoder){
         
-        let calendarItemExternalIdentifier : String = decoder.decodeObjectForKey("calendarItemExternalIdentifier") as! String
-        let sequenceNumber : Int = decoder.decodeIntegerForKey("sequenceNumber")
+        let calendarItemExternalIdentifier : String = decoder.decodeObject(forKey: "calendarItemExternalIdentifier") as! String
+        let sequenceNumber : Int = decoder.decodeInteger(forKey: "sequenceNumber")
         
         self.init(calendarItemExternalIdentifier: calendarItemExternalIdentifier, sequenceNumber: sequenceNumber)
     }
     
-    func encodeWithCoder(coder: NSCoder) {
+    func encode(with coder: NSCoder) {
         
-        coder.encodeObject(calendarItemExternalIdentifier, forKey: "calendarItemExternalIdentifier")
+        coder.encode(calendarItemExternalIdentifier, forKey: "calendarItemExternalIdentifier")
         
-        coder.encodeInteger(sequenceNumber, forKey: "sequenceNumber")
+        coder.encode(sequenceNumber, forKey: "sequenceNumber")
     }
 }

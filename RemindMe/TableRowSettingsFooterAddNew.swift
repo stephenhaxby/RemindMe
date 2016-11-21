@@ -21,7 +21,7 @@ class TableRowSettingsFooterAddNew : UITableViewCell {
         if let containerView = footerAddNewView {
             
             //containerView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:1.0)
-            containerView.backgroundColor = .clearColor()
+            containerView.backgroundColor = UIColor.clear
         }
         
         let selectPress : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TableRowSettingsFooterAddNew.viewSelected(_:)))
@@ -32,7 +32,7 @@ class TableRowSettingsFooterAddNew : UITableViewCell {
         self.addGestureRecognizer(selectPress)
     }
     
-    @IBAction func addNewButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func addNewButtonTouchUpInside(_ sender: AnyObject) {
         
         if let tableViewController = settingsTableViewController {
             
@@ -40,9 +40,9 @@ class TableRowSettingsFooterAddNew : UITableViewCell {
         }
     }
 
-    func viewSelected(gestureRecognizer:UIGestureRecognizer) {
+    func viewSelected(_ gestureRecognizer:UIGestureRecognizer) {
         
-        if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
+        if (gestureRecognizer.state == UIGestureRecognizerState.ended) {
             
             if let tableViewController = settingsTableViewController {
                 

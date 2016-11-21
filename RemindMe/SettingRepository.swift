@@ -20,24 +20,26 @@ class SettingRepository {
 
     func createNewSetting() -> Setting {
         
-        let entity = NSEntityDescription.entityForName("Setting", inManagedObjectContext:context)
+        let entity = NSEntityDescription.entity(forEntityName: "Setting", in:context)
         
-        let settingManagedObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: context)
+        let settingManagedObject = NSManagedObject(entity: entity!, insertInto: context)
         
         return Setting(managedObject: settingManagedObject)
     }
     
-    func createNewSetting(name : String, time : NSDate) -> Setting {
+    func createNewSetting(_ name : String, time : Date) -> Setting {
         
         let setting : Setting = createNewSetting()
         
         setting.name = name
         setting.time = time
+        setting.latitude = 0
+        setting.longitude = 0
         
         return setting
     }
     
-    func createNewSetting(name : String, time : NSDate, sequence : Int) -> Setting {
+    func createNewSetting(_ name : String, time : Date, sequence : Int) -> Setting {
         
         let setting : Setting = createNewSetting(name, time: time)
         setting.sequence = sequence
@@ -45,9 +47,9 @@ class SettingRepository {
         return setting
     }
     
-    func removeSetting(setting : Setting) {
+    func removeSetting(_ setting : Setting) {
         
-        context.deleteObject(setting.setting)
+        context.delete(setting.setting)
     }
     
     func getSettings() -> [Setting] {
@@ -55,7 +57,7 @@ class SettingRepository {
         do {
         
         return
-            (try context.executeFetchRequest(NSFetchRequest(entityName: "Setting")) as! [NSManagedObject]).map({
+            (try context.fetch(NSFetchRequest(entityName: "Setting")) ).map({
                 
                 (managedObject : NSManagedObject) -> Setting in
                 
