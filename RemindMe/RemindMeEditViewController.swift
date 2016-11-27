@@ -173,6 +173,6 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         
-        doneButton.isHidden = false
+        doneButton.isHidden = true
     }
 }
