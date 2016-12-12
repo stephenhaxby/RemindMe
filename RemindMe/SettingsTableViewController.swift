@@ -25,6 +25,9 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let nibName = UINib(nibName: "SettingsFooterView", bundle:nil)
+        tableView.register(nibName, forHeaderFooterViewReuseIdentifier: "FooterCell")
+        
         tableView.separatorColor = UIColor.orange;
         
         loadUserSettings()
@@ -209,13 +212,13 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        let  footerRow = tableView.dequeueReusableCell(withIdentifier: "FooterCell") as! TableRowSettingsFooterAddNew
+        let footerRow = tableView.dequeueReusableHeaderFooterView(withIdentifier: "FooterCell") as! TableRowSettingsFooterAddNew
         
         // Set up properties on the Footer so we can call methods from the controller
         footerRow.settingsTableViewController = self
         
         // Set the background color of the footer cell
-        footerRow.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
+        footerRow.contentView.backgroundColor = UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.8)
         
         return footerRow
     }
@@ -223,7 +226,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         // Set the height of the footer cell
-        return CGFloat(64)
+        return CGFloat(52)
     }
     
     // Add a new setting row to the user defaults. Need to use the keyed archiver to save our custom Settings object to make it compatable with NSData
