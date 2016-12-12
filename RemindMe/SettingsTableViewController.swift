@@ -17,8 +17,6 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     var settingsList : [Setting] = [Setting]()
     
-    var newSettingIndexPath : IndexPath?
-    
     // Create an instance of our repository
     var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.shared.delegate as! AppDelegate)
     
@@ -155,21 +153,6 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if let newIndexPath : IndexPath = newSettingIndexPath , (newIndexPath as NSIndexPath).section == (indexPath as NSIndexPath).section && (newIndexPath as NSIndexPath).row == (indexPath as NSIndexPath).row
-        {
-            if let settingTableViewCell : SettingsTableViewCell = cell as? SettingsTableViewCell {
-    
-                settingTableViewCell.nameTextField.becomeFirstResponder()
-                
-                newSettingIndexPath = nil
-            }
-        }
-        
-        //cell.backgroundColor = UIColor.clear //UIColor(red:0.95, green:0.95, blue:0.95, alpha:0.6)
-    }
-    
     //This method is setting which cells can be edited
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
@@ -226,7 +209,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         // Set the height of the footer cell
-        return CGFloat(52)
+        return CGFloat(64)
     }
     
     // Add a new setting row to the user defaults. Need to use the keyed archiver to save our custom Settings object to make it compatable with NSData
@@ -243,14 +226,13 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         // Scroll to the last item in the list
         settingsTableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
         
-        if let newRow : SettingsTableViewCell = settingsTableView.cellForRow(at: indexPath) as? SettingsTableViewCell {
+        delay(0.3){
             
-            newRow.nameTextField.becomeFirstResponder()
-            
-        }
-        else {
-            
-            newSettingIndexPath = indexPath
+            if let newRow : SettingsTableViewCell = self.settingsTableView.cellForRow(at: indexPath) as? SettingsTableViewCell {
+                
+                newRow.nameTextField.becomeFirstResponder()
+                
+            }
         }
     }
     
@@ -282,5 +264,12 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         let titleText : String = self.isEditing ? "Done" : "Edit"
         
         doneButton.setTitle(titleText, for: UIControlState())
+    }
+    
+    func delay(_ delay: Double, closure: @escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
+            execute: closure
+        )
     }
 }

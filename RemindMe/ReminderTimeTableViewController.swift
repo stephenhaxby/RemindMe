@@ -200,7 +200,7 @@ class ReminderTimeTableViewController: UITableViewController {
         
         //cell.backgroundColor = .clearColor()
         //cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        cell.backgroundColor = UIColor.clear
+        //cell.backgroundColor = UIColor.clear
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -208,7 +208,7 @@ class ReminderTimeTableViewController: UITableViewController {
         let footerRow = tableView.dequeueReusableCell(withIdentifier: "FooterCell") as! TableRowSpacer
         
         // Set the background color of the footer cell
-        footerRow.backgroundColor = UIColor.clear
+        //footerRow.backgroundColor = UIColor.clear
         
         return footerRow
     }
