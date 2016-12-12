@@ -13,6 +13,13 @@ class TableRowSettingsFooterAddNew : UITableViewHeaderFooterView {
 
     @IBOutlet weak var footerAddNewView: UIView!
     
+    @IBAction func addNewButtonTouchUpInside(_ sender: Any) {
+        
+        if let tableViewController = settingsTableViewController {
+            
+            tableViewController.addNewSettingRow()
+        }
+    }
     weak var settingsTableViewController: SettingsTableViewController!
     
     override func layoutSubviews() {
