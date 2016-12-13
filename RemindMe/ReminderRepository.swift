@@ -44,12 +44,23 @@ class ReminderRepository {
     
     func getReminderBy(_ id : String) -> Reminder? {
     
+        var reminderId = id
+        
+        //36 is the length of a GUID.
+        //This is to cater for the setReminderNotification fix in LocationNotificationManager to cater for async methods
+        if id.characters.count > 36 {
+            
+            let index = id.index(id.startIndex, offsetBy: 36)
+            
+            reminderId = reminderId.substring(to: index)
+        }
+        
         let reminderFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Reminder")
     
-        reminderFetch.predicate = NSPredicate(format: "id == %@", id)
+        reminderFetch.predicate = NSPredicate(format: "id == %@", reminderId)
     
         do {
-        
+            
             let reminders : [Reminder] = (try managedObjectContext.fetch(reminderFetch) as! [NSManagedObject]).map({
                 
                 (managedObject : NSManagedObject) -> Reminder in
