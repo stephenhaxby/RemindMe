@@ -18,7 +18,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     var settingsList : [Setting] = [Setting]()
     
     // Create an instance of our repository
-    var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.shared.delegate as! AppDelegate)
+    var settingRepository : SettingRepository = SettingRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -11,7 +11,7 @@ import EventKit
 
 class ReminderTimeTableViewController: UITableViewController {
     
-    var settingRepository : SettingRepository = SettingRepository(appDelegate: UIApplication.shared.delegate as! AppDelegate)
+    var settingRepository : SettingRepository = SettingRepository()
     
     var reminderTimeTableViewCellItems : [ReminderTimeTableViewCellItem] = [ReminderTimeTableViewCellItem]()
 
