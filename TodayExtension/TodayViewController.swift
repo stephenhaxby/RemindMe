@@ -17,7 +17,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     
     let localNotificationManager : LocalNotificationManager = LocalNotificationManager()
     
-    var pendingReminderList = [RemindMeItem]()
+    var deliveredReminderList = [RemindMeItem]()
     
     var reminderList = [RemindMeItem]()
     
@@ -62,13 +62,13 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         else {
             
             //TODO: Not sure what we can do here for the content size.?.?
-            self.preferredContentSize = CGSize(width: maxSize.width, height: CGFloat(pendingReminderList.count * 64))
+            self.preferredContentSize = CGSize(width: maxSize.width, height: CGFloat(deliveredReminderList.count * 64))
         }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return pendingReminderList.count
+        return deliveredReminderList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,7 +77,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ReminderCell")! as! RemindMeTableViewCell
                 
         // Sets the reminder list item for the cell
-        let reminderListItem : RemindMeItem = pendingReminderList[(indexPath as NSIndexPath).row]
+        let reminderListItem : RemindMeItem = deliveredReminderList[(indexPath as NSIndexPath).row]
         cell.reminder = reminderListItem
         
         return cell
@@ -87,21 +87,27 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         
         for remindMeItem in reminderList {
             
-            if (notificationRequests.contains { notificationRequest in
-             
+            if (!notificationRequests.contains { notificationRequest in
+                
                 return notificationRequest.identifier.hasPrefix(remindMeItem.id)
             }){
-                pendingReminderList.append(remindMeItem)
+                deliveredReminderList.append(remindMeItem)
+            }
+        }
+        
+        deliveredReminderList.sort {
+            (reminder1, reminder2) in
+            if reminder1.type == 0 && reminder2.type == 0 {
+                return reminder1.date! < reminder2.date!
+            }
+            else {
+                return true
             }
         }
         
         tableView.reloadData()
     }
 }
-
-
-
-TODO: Need to setup the core data store to use the 'group.com.Stephen.Haxby.RemindMe' group
 
 
 
