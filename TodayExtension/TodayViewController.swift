@@ -25,18 +25,19 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         super.viewDidLoad()
         // Do any additional setup after loading the view from its nib.
         
+        let pressGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.viewPressed(_:)))
+        pressGesture.numberOfTapsRequired = 1
+        
+        if tableView != nil {
+            
+            tableView.addGestureRecognizer(pressGesture)
+        }
+        
         let storageFacade = ReminderFacade(reminderRepository: ReminderRepository(managedObjectContext: coreDataContext))
 
         storageFacade.getReminders(getReminders)
 
-        self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
-    }
-    
-    func getReminders(reminders : [RemindMeItem]) {
-        
-        reminderList = reminders
-        
-        localNotificationManager.getPendingReminderNotificationRequests(getUNNotificationRequests: updateReminderListWithPendingNotifications)
+        //self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,6 +82,48 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         cell.reminder = reminderListItem
         
         return cell
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        
+        var numberOfSections = 0
+        
+        if deliveredReminderList.count > 0
+        {
+            numberOfSections = 1
+            tableView.backgroundView = nil
+        }
+        else
+        {
+            let rect : CGRect = CGRect(x: 0, y: 0, width: Double(tableView.bounds.size.width), height: Double(tableView.bounds.size.height))
+            
+            let noDataLabel: UILabel = UILabel(frame: rect)
+            
+            noDataLabel.text = "No Overdue Reminders"
+            noDataLabel.textColor = UIColor.black
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView = noDataLabel
+            tableView.separatorStyle = .none
+        }
+        
+        return numberOfSections
+    }
+    
+    func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
+        
+        let url: URL? = URL(string: "RemindMe:")!
+        
+        if let appurl = url {
+            
+            self.extensionContext!.open(appurl, completionHandler: nil)
+        }
+    }
+    
+    func getReminders(reminders : [RemindMeItem]) {
+        
+        reminderList = reminders
+        
+        localNotificationManager.getPendingReminderNotificationRequests(getUNNotificationRequests: updateReminderListWithPendingNotifications)
     }
     
     func updateReminderListWithPendingNotifications(notificationRequests : [UNNotificationRequest]) {
