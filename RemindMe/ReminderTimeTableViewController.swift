@@ -145,6 +145,7 @@ class ReminderTimeTableViewController: UITableViewController {
                     
                     if leftButton.isSelected {
                     
+                        leftButton.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
                         selectedSetting = reminderTimeTableViewCell.settings!.settingOne
                     }
                 }
@@ -167,6 +168,7 @@ class ReminderTimeTableViewController: UITableViewController {
                     
                     if rightButton.isSelected {
                     
+                        rightButton.tintColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
                         selectedSetting = reminderTimeTableViewCell.settings!.settingTwo
                     }
                 }

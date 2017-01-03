@@ -58,11 +58,10 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
      
         if (activeDisplayMode == NCWidgetDisplayMode.compact) {
-            self.preferredContentSize = maxSize
+            self.preferredContentSize = CGSize(width: maxSize.width, height: CGFloat(64))
         }
         else {
             
-            //TODO: Not sure what we can do here for the content size.?.?
             self.preferredContentSize = CGSize(width: maxSize.width, height: CGFloat(deliveredReminderList.count * 64))
         }
     }
