@@ -12,6 +12,28 @@ import CoreLocation
 
 class LocalNotificationManager {
     
+    func getPendingReminderNotificationRequests(getUNNotificationRequests : @escaping ([UNNotificationRequest]) -> ()) {
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            getUNNotificationRequests(requests)
+        }
+    }
+    
+    func getDeliveredReminderNotificationRequests(getUNNotificationRequests : @escaping ([UNNotificationRequest]) -> ()) {
+        
+        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
+            
+            var requests : [UNNotificationRequest] = [UNNotificationRequest]()
+            
+            for notification in notifications {
+                
+                requests.append(notification.request)
+            }
+
+            getUNNotificationRequests(requests)
+        }
+    }
+    
     func removePendingReminderNotificationRequest(remindMeItem : RemindMeItem) {
         
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in

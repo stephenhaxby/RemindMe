@@ -11,18 +11,14 @@ import CoreData
 
 class SettingRepository {
     
-    let context : NSManagedObjectContext
-    
-    init(appDelegate : AppDelegate){
-        
-        self.context = appDelegate.managedObjectContext
-    }
+    //Gets the managed object context for core data (as a singleton)
+    let coreDataContext = CoreDataManager.context()
 
     func createNewSetting() -> Setting {
         
-        let entity = NSEntityDescription.entity(forEntityName: "Setting", in:context)
+        let entity = NSEntityDescription.entity(forEntityName: "Setting", in:coreDataContext)
         
-        let settingManagedObject = NSManagedObject(entity: entity!, insertInto: context)
+        let settingManagedObject = NSManagedObject(entity: entity!, insertInto: coreDataContext)
         
         return Setting(managedObject: settingManagedObject)
     }
@@ -49,7 +45,7 @@ class SettingRepository {
     
     func removeSetting(_ setting : Setting) {
         
-        context.delete(setting.setting)
+        coreDataContext.delete(setting.setting)
     }
     
     func getSettings() -> [Setting] {
@@ -57,7 +53,7 @@ class SettingRepository {
         do {
         
         return
-            (try context.fetch(NSFetchRequest(entityName: "Setting")) ).map({
+            (try coreDataContext.fetch(NSFetchRequest(entityName: "Setting")) ).map({
                 
                 (managedObject : NSManagedObject) -> Setting in
                 
@@ -76,7 +72,7 @@ class SettingRepository {
         
         do {
             
-            try context.save()
+            try coreDataContext.save()
 
         } catch let error as NSError  {
             

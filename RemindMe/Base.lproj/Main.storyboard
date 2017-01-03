@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="84j-94-rQU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="84j-94-rQU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -165,7 +165,7 @@
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJc-jx-KGz">
                                 <rect key="frame" x="150" y="605" width="75" height="42"/>
-                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="rFn-Zm-Qo3"/>
                                 </constraints>
@@ -306,13 +306,13 @@
         <scene sceneID="TQK-fy-SYz">
             <objects>
                 <tableViewController id="fml-qY-3KS" customClass="SettingsTableViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="190" sectionHeaderHeight="64" sectionFooterHeight="64" id="Krb-iS-m7j">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="190" sectionHeaderHeight="28" sectionFooterHeight="28" id="Krb-iS-m7j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" rowHeight="190" id="nbo-Q7-uQI" customClass="SettingsTableViewCell" customModule="RemindMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="375" height="190"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="190"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="nbo-Q7-uQI" id="38j-7x-Obv">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="190"/>
@@ -404,46 +404,6 @@
                                     <outlet property="nameTextField" destination="9aH-5G-bDj" id="z09-RY-5ux"/>
                                     <outlet property="reminderTypeSegmentedControll" destination="FeZ-yR-ylg" id="jTw-gq-QR2"/>
                                     <outlet property="timeDatePicker" destination="G9F-dt-esR" id="guw-fk-L5v"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FooterCell" rowHeight="64" id="hSa-jE-Irm" customClass="TableRowSettingsFooterAddNew" customModule="RemindMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="254" width="375" height="64"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hSa-jE-Irm" id="UUp-9t-FS3">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XJP-O3-kK2" userLabel="Footer Add New View">
-                                            <rect key="frame" x="8" y="8" width="359" height="48"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMl-Sp-pQJ">
-                                                    <rect key="frame" x="0.0" y="1" width="30" height="38"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="48"/>
-                                                    <state key="normal" title="+">
-                                                        <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="addNewButtonTouchUpInside:" destination="hSa-jE-Irm" eventType="touchUpInside" id="rQr-lZ-dvZ"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstItem="eMl-Sp-pQJ" firstAttribute="leading" secondItem="XJP-O3-kK2" secondAttribute="leading" id="jLF-Vb-Xc0"/>
-                                                <constraint firstItem="eMl-Sp-pQJ" firstAttribute="top" secondItem="XJP-O3-kK2" secondAttribute="top" constant="1" id="lAj-Zo-4Jo"/>
-                                                <constraint firstAttribute="bottom" secondItem="eMl-Sp-pQJ" secondAttribute="bottom" constant="9" id="pBC-Xj-Ic8"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="leadingMargin" secondItem="XJP-O3-kK2" secondAttribute="leading" id="BvB-m0-m2c"/>
-                                        <constraint firstAttribute="topMargin" secondItem="XJP-O3-kK2" secondAttribute="top" id="D8r-2k-muC"/>
-                                        <constraint firstItem="XJP-O3-kK2" firstAttribute="centerY" secondItem="UUp-9t-FS3" secondAttribute="centerY" id="L4m-zX-qrV"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="XJP-O3-kK2" secondAttribute="trailing" id="fZb-C5-wrc"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="footerAddNewView" destination="XJP-O3-kK2" id="IpC-ZQ-lu0"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

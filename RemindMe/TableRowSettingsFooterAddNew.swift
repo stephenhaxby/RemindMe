@@ -9,10 +9,17 @@
 import UIKit
 
 // Footer cell class for adding a new settings alarm item; complete with gesture recogniser to add the new row
-class TableRowSettingsFooterAddNew : UITableViewCell {
+class TableRowSettingsFooterAddNew : UITableViewHeaderFooterView {
 
     @IBOutlet weak var footerAddNewView: UIView!
     
+    @IBAction func addNewButtonTouchUpInside(_ sender: Any) {
+        
+        if let tableViewController = settingsTableViewController {
+            
+            tableViewController.addNewSettingRow()
+        }
+    }
     weak var settingsTableViewController: SettingsTableViewController!
     
     override func layoutSubviews() {
@@ -25,19 +32,11 @@ class TableRowSettingsFooterAddNew : UITableViewCell {
         }
         
         let selectPress : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TableRowSettingsFooterAddNew.viewSelected(_:)))
-        selectPress.delegate = self
+        //selectPress.delegate = self
         //selectPress.minimumPressDuration = 1
         selectPress.numberOfTouchesRequired = 1
         
         self.addGestureRecognizer(selectPress)
-    }
-    
-    @IBAction func addNewButtonTouchUpInside(_ sender: AnyObject) {
-        
-        if let tableViewController = settingsTableViewController {
-            
-            tableViewController.addNewSettingRow()
-        }
     }
 
     func viewSelected(_ gestureRecognizer:UIGestureRecognizer) {
