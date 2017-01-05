@@ -104,13 +104,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationActionEdit), object: response.notification.request.identifier)
         }
         
-        if response.actionIdentifier == Constants.NotificationActionRemove {
-            
-            if (storageFacade!.removeReminder(response.notification.request.identifier)){
-                
-                UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber - 1
-            }
-        }
+//        if response.actionIdentifier == Constants.NotificationActionRemove {
+//            
+//            if (storageFacade!.removeReminder(response.notification.request.identifier)){
+//                
+//                UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber - 1
+//            }
+//        }
         
         completionHandler()
     }
