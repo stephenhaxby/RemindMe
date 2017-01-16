@@ -65,7 +65,6 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
         let searchBar = resultSearchController!.searchBar
         searchBar.sizeToFit()
         searchBar.placeholder = "Search for places"
-        navigationItem.titleView = resultSearchController?.searchBar
         
         resultSearchController?.hidesNavigationBarDuringPresentation = false
         resultSearchController?.dimsBackgroundDuringPresentation = true
@@ -74,6 +73,18 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
         locationSearchTable.mapView = map
         
         locationSearchTable.handleMapSearchDelegate = self
+        
+        //navigationItem.titleView = resultSearchController?.searchBar
+        
+        let searchBarFrame : CGRect = (resultSearchController?.searchBar.frame)!
+        let mapViewFrame : CGRect = self.view.frame
+        
+        resultSearchController?.searchBar.frame = CGRect(x: searchBarFrame.origin.x, y: 64.0, width: mapViewFrame.size.width, height: 44.0)
+        
+        self.view.addSubview((resultSearchController?.searchBar)!)
+        self.view.bringSubview(toFront: (resultSearchController?.searchBar)!)
+        
+        navigationItem.title = "Location Search"
     }
     
     override func viewWillDisappear(_ animated : Bool){

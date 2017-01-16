@@ -315,31 +315,12 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 }
                 
                 // Update the app's badge icon
-                let localNotificationManager : LocalNotificationManager = LocalNotificationManager()
-                localNotificationManager.getPendingReminderNotificationRequests(getUNNotificationRequests: self.updateBadgeIconWithPendingNotifications)
+                UIApplication.shared.applicationIconBadgeNumber = scheduledItems.count
                 
                 // Request a reload of the Table
                 reminderListTable.reloadData()
             }
         }
-    }
-    
-    func updateBadgeIconWithPendingNotifications(notificationRequests : [UNNotificationRequest]) {
-        
-        var notificationCount : Int = 0
-        
-        for remindMeItem in reminderList {
-            
-            if (!notificationRequests.contains { notificationRequest in
-                
-                return notificationRequest.identifier.hasPrefix(remindMeItem.id)
-                }){
-                notificationCount = notificationCount + 1
-            }
-        }
-        
-        // Update the app's badge icon
-        UIApplication.shared.applicationIconBadgeNumber = notificationCount
     }
     
     // This method gets called for our Gesture Recognizer
