@@ -26,14 +26,14 @@ class ReminderTimeTableViewCell: UITableViewCell {
                 
                 if let settingOne : Setting = settings!.settingOne {
                     
-                    leftButton.setTitle(settingOne.name, for: UIControlState())
+                    leftButton.setTitle(settingOne.name == "" ? "No Title" : settingOne.name, for: UIControlState())
                     leftButton.isHidden = false
                     leftButton.tintColor = settingOne.type == 0 ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
                 }
                 
                 if let settingTwo : Setting = settings!.settingTwo {
                     
-                    rightButton.setTitle(settingTwo.name, for: UIControlState())
+                    rightButton.setTitle(settingTwo.name == "" ? "No Title" : settingTwo.name, for: UIControlState())
                     rightButton.isHidden = false
                     rightButton.tintColor = settingTwo.type == 0 ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
                 }
