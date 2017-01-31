@@ -23,8 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func setStorageType() {
         
-        storageType = (SettingsUserDefaults.useICloudReminders) ? Constants.StorageType.iCloudReminders : Constants.StorageType.local
+        //storageType = (SettingsUserDefaults.useICloudReminders) ? Constants.StorageType.iCloudReminders : Constants.StorageType.local
         
+        storageType = Constants.StorageType.local
         storageFacade = StorageFacadeFactory.getStorageFacade(storageType, managedObjectContext: coreDataContext)
         
         if let navigationController = window?.rootViewController as? UINavigationController,

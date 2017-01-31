@@ -32,13 +32,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>9</string>
+	<string>10</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCalendarsUsageDescription</key>
-	<string>iCloud Calendar based reminders</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Location based reminders</string>
 	<key>UILaunchStoryboardName</key>
