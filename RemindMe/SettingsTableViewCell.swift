@@ -181,6 +181,22 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         //            annotation.subtitle = "London"
         mapView.addAnnotation(annotation)
     }
+    
+    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        
+        //As we a in another thread, post back to the main thread so we can update the UI
+        DispatchQueue.main.async { () -> Void in
+            
+            let errorAlert = UIAlertController(title: "Error!", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+            
+            errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler:
+                { (action: UIAlertAction!) in
+                    
+            }))
+            
+            self.settingsTableViewController.present(errorAlert, animated: true, completion: nil)
+        }
+    }
 }
 
 
