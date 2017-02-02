@@ -7,13 +7,14 @@
 //
 
 import MapKit
-import UIKit
 
 protocol HandleMapSearch: class {
     func dropPinZoomIn(placemark:MKPlacemark)
 }
 
 class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearchBarDelegate, HandleMapSearch {
+    
+    let navigationTitle : String = "Location Search"
     
     var resultSearchController:UISearchController? = nil
     
@@ -89,7 +90,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
         self.view.addSubview((resultSearchController?.searchBar)!)
         self.view.bringSubview(toFront: (resultSearchController?.searchBar)!)
         
-        navigationItem.title = "Location Search"
+        navigationItem.title = navigationTitle
     }
     
     override func viewWillDisappear(_ animated : Bool){
@@ -215,55 +216,18 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
     
     func resetSearchBar() {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            
-            self.navigationItem.hidesBackButton = false
-            self.navigationItem.titleView = UIView()
-            
-            let mapViewFrame : CGRect = self.view.frame
-            
-            let containerView : UIView = UIView(frame: CGRect(x: self.searchBarFrame.origin.x, y: 64.0, width: mapViewFrame.size.width, height: 44.0))
-            containerView.backgroundColor = UIColor.lightGray
-            
-            //self.resultSearchController?.searchBar.frame = CGRect(x: self.searchBarFrame.origin.x, y: 64.0, width: mapViewFrame.size.width, height: 44.0)
-            //self.resultSearchController?.searchBar.frame = CGRect(x: containerView.frame.origin.x + 20, y: 64.0, width: containerView.frame.size.width - 40, height: 44.0)
-            
-            //TODO: Get the UISearchBarTextField from the sub view
-            //po self.view.subviews[3].subviews[0].subviews
-            //UISearchBar
-            //UIView
-            //UISearchBarTextField
-            
-//            let searchBarTextField : [UITextField] = self.getSubviewsOfView(view: (self.resultSearchController?.searchBar)!)
-//            
-//            if searchBarTextField.count == 1 {
-//                
-//                //searchBarTextField[0].frame = CGRect(x: self.searchBarFrame.origin.x + 20, y: 64.0, width: mapViewFrame.size.width - 40, height: 44.0)
-//                
-//                var currentTextFieldBounds = searchBarTextField[0].bounds
-//                currentTextFieldBounds.size.width = 50.0
-//                searchBarTextField[0].bounds = currentTextFieldBounds
-//            }
-            
-            containerView.addSubview((self.resultSearchController?.searchBar)!)
-            
-            self.view.addSubview(containerView)
-            self.view.bringSubview(toFront: containerView)
-        }
-    }
-    
-    func getSubviewsOfView<T>(view : UIView) -> [T] {
-        var viewsOfType = [T]()
+        navigationItem.hidesBackButton = false
+        navigationItem.titleView = nil
+        navigationItem.title = navigationTitle
         
-        for subview in view.subviews {
-            
-            viewsOfType += getSubviewsOfView(view: subview)
-            
-            if subview is T {
-                viewsOfType.append(subview as! T)
-            }
-        }
+        let mapViewFrame : CGRect = view.frame
         
-        return viewsOfType
+        let containerView : UIView = UIView(frame: CGRect(x: searchBarFrame.origin.x, y: 64.0, width: mapViewFrame.size.width, height: 44.0))
+        containerView.backgroundColor = UIColor(colorLiteralRed: 0.78800457715988159, green: 0.78874188661575317, blue: 0.80776858329772949, alpha: 1)
+        
+        containerView.addSubview((resultSearchController?.searchBar)!)
+        
+        view.addSubview(containerView)
+        view.bringSubview(toFront: containerView)
     }
 }
