@@ -43,7 +43,6 @@ class Constants{
     
     enum StorageType {
         case local
-        case iCloudReminders
     }
     
     static let NotificationCategory : String = "NotificationCategory"

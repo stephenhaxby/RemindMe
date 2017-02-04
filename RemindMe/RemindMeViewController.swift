@@ -34,20 +34,13 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         refreshListObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.RefreshNotification), object: nil, queue: nil){
             (notification) -> Void in
             
-            self.loadRemindersListWithRefresh(true, scrollToBottom: false)
+            self.loadRemindersListAnd(scrollToBottom: false)
         }
         
         refreshListScrollToBottomObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.RefreshNotificationScrollToBottom), object: nil, queue: nil){
             (notification) -> Void in
             
-            self.loadRemindersListWithRefresh(true, scrollToBottom: true)
-        }
-        
-        //Observer for when our settings change
-        settingsObserver = NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: nil){
-            (notification) -> Void in
-            
-            self.storageOptionChanged()
+            self.loadRemindersListAnd(scrollToBottom: true)
         }
         
         notificationEditObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.NotificationActionEdit), object: nil, queue: nil){
@@ -171,12 +164,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         }
     }
     
-    func storageOptionChanged() {
-        
-        (UIApplication.shared.delegate as! AppDelegate).setStorageType()
-        loadRemindersListWithRefresh(true, scrollToBottom: false)
-    }
-    
     func refreshSequence() {
         
         var reminderItemSequence : [ReminderItemSequence] = [ReminderItemSequence]()
@@ -202,23 +189,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         //As we a in another thread, post back to the main thread so we can update the UI
         DispatchQueue.main.async { () -> Void in
             
-            self.loadRemindersListWithRefresh(true, scrollToBottom: false)
-        }
-    }
-    
-    func startRefreshControl(){
-        
-        if let refresh = refreshControl{
-            
-            refresh.beginRefreshing()
-        }
-    }
-    
-    func endRefreshControl(){
-        
-        if let refresh = refreshControl{
-            
-            refresh.endRefreshing()
+            self.loadRemindersListAnd(scrollToBottom: false)
         }
     }
     
@@ -237,18 +208,14 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         self.present(errorAlert, animated: true, completion: nil)
     }
     
-    func loadRemindersListWithRefresh(_ refresh : Bool, scrollToBottom : Bool) {
+    func loadRemindersList(){
         
-        if refresh {
-            
-            startRefreshControl()
-            loadRemindersList()
-            endRefreshControl()
-        }
-        else {
-            
-            loadRemindersList()
-        }
+        storageFacade!.getReminders(getReminderList)
+    }
+    
+    func loadRemindersListAnd(scrollToBottom : Bool){
+        
+        loadRemindersList()
         
         if scrollToBottom {
             
@@ -260,18 +227,13 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         }
     }
     
-    func loadRemindersList(){
-        
-        storageFacade!.getReminders(getReminderList)
-    }
-    
     func getReminderList(_ shoppingList : [RemindMeItem]){
 
         DispatchQueue.main.async { () -> Void in
             
             if let reminderListTable = self.tableView{
                 
-                //TODO: Don't know what this will do for location reminders... (as this is really only for iCloud Reminders)
+                //TODO: Don't know what this will do for location reminders...
                 
                 // Filter out reminder items that don't have an alarm set
                 let scheduledItems : [RemindMeItem] = shoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})

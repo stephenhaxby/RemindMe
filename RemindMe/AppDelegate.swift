@@ -22,9 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var storageFacade : StorageFacadeProtocol?
     
     func setStorageType() {
-        
-        //storageType = (SettingsUserDefaults.useICloudReminders) ? Constants.StorageType.iCloudReminders : Constants.StorageType.local
-        
+                
         storageType = Constants.StorageType.local
         storageFacade = StorageFacadeFactory.getStorageFacade(storageType, managedObjectContext: coreDataContext)
         
