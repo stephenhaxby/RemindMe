@@ -60,7 +60,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ra5-1y-TQU" id="UKs-nk-V56">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iaW-4i-zyp">
@@ -448,17 +448,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uz-ZJ-Q4G">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uz-ZJ-Q4G">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <autoresizingMask key="autoresizingMask"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="8uz-ZJ-Q4G" firstAttribute="top" secondItem="vi8-y4-fXG" secondAttribute="bottom" id="Au0-gf-KMG"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8uz-ZJ-Q4G" secondAttribute="trailing" constant="-16" id="OT7-ZK-fB9"/>
-                            <constraint firstItem="8uz-ZJ-Q4G" firstAttribute="leading" secondItem="PDd-xN-GD5" secondAttribute="leadingMargin" constant="-16" id="cV8-rw-KGT"/>
-                            <constraint firstItem="tkb-0d-F8x" firstAttribute="top" secondItem="8uz-ZJ-Q4G" secondAttribute="bottom" id="sDO-xI-loA"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="map" destination="8uz-ZJ-Q4G" id="l9f-sA-zd0"/>
