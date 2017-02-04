@@ -265,7 +265,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         storageFacade!.getReminders(getReminderList)
     }
     
-    func getReminderList(_ iCloudShoppingList : [RemindMeItem]){
+    func getReminderList(_ shoppingList : [RemindMeItem]){
 
         DispatchQueue.main.async { () -> Void in
             
@@ -274,7 +274,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 //TODO: Don't know what this will do for location reminders... (as this is really only for iCloud Reminders)
                 
                 // Filter out reminder items that don't have an alarm set
-                let scheduledItems : [RemindMeItem] = iCloudShoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})
+                let scheduledItems : [RemindMeItem] = shoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})
                 
                 // Load up the reminder item sequence from disk
                 if let reminderItemSequence : [ReminderItemSequence] = NSKeyedUnarchiver.unarchiveObject(withFile: ReminderItemSequence.ArchiveURL.path) as? [ReminderItemSequence] {
@@ -315,31 +315,12 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 }
                 
                 // Update the app's badge icon
-                let localNotificationManager : LocalNotificationManager = LocalNotificationManager()
-                localNotificationManager.getPendingReminderNotificationRequests(getUNNotificationRequests: self.updateBadgeIconWithPendingNotifications)
+                UIApplication.shared.applicationIconBadgeNumber = scheduledItems.count
                 
                 // Request a reload of the Table
                 reminderListTable.reloadData()
             }
         }
-    }
-    
-    func updateBadgeIconWithPendingNotifications(notificationRequests : [UNNotificationRequest]) {
-        
-        var notificationCount : Int = 0
-        
-        for remindMeItem in reminderList {
-            
-            if (!notificationRequests.contains { notificationRequest in
-                
-                return notificationRequest.identifier.hasPrefix(remindMeItem.id)
-                }){
-                notificationCount = notificationCount + 1
-            }
-        }
-        
-        // Update the app's badge icon
-        UIApplication.shared.applicationIconBadgeNumber = notificationCount
     }
     
     // This method gets called for our Gesture Recognizer

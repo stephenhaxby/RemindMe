@@ -112,13 +112,6 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
             }
         }
         
-        if settingsList[settingsList.count-1].name == "" {
-            
-            settingRepository.removeSetting(settingsList[settingsList.count-1])
-            
-            settingsList.remove(at: settingsList.count-1)
-        }
-        
         for i in 0 ..< settingsList.count {
             
             settingsList[i].sequence = i
