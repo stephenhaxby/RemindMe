@@ -154,7 +154,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Setup the destination view controllers data
         let remindMeEditViewController : RemindMeEditViewController = segue.destination as! RemindMeEditViewController
         remindMeEditViewController.remindMeViewController = self
-        remindMeEditViewController.storageFacade = storageFacade
         
         // If we are editing an existing item
         if let reminderListItem : RemindMeItem = sender as? RemindMeItem {

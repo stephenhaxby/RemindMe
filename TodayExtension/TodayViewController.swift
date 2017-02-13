@@ -36,8 +36,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         let storageFacade = ReminderFacade(reminderRepository: ReminderRepository(managedObjectContext: coreDataContext))
 
         storageFacade.getReminders(getReminders)
-
-        //self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
     }
     
     override func didReceiveMemoryWarning() {

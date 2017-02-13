@@ -24,14 +24,13 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     weak var remindMeViewController : RemindMeViewController?
     
-    var storageFacade : StorageFacadeProtocol?
+    let storageFacade : StorageFacadeProtocol = (UIApplication.shared.delegate as! AppDelegate).AppStorageFacade
 
     var reminder : RemindMeItem?
     
     deinit{
         
         remindMeViewController = nil
-        storageFacade = nil
         reminderTimeTableViewController = nil
     }
     
@@ -111,12 +110,7 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     // When the back (save?) button is pressed we need to save everything
     @IBAction override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
-        
-        guard storageFacade != nil else {
-            
-            return
-        }
-        
+                
         let reminderToSave = reminder ?? RemindMeItem()
         
         if let selectedSetting : SettingItem = reminderTimeTableViewController?.selectedSetting {
@@ -142,7 +136,13 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
                     return
             }
             
-            storageFacade!.createOrUpdateReminder(reminderToSave)
+            storageFacade.createOrUpdateReminder(reminderToSave)
+            
+            if !storageFacade.commit() {
+                
+                Utilities().diaplayError(message: "Unable to save settings!")
+            }
+
         }
     }
     
