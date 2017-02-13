@@ -17,10 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     private var storageType : Constants.StorageType = Constants.StorageType.local
     
-    internal var window: UIWindow?
+    //internal var window: UIWindow?
     
     private var storageFacade : StorageFacadeProtocol?
     private var settingFacade : SettingFacadeProtocol?
+    
+    var AppStorageFacade : StorageFacadeProtocol {
+        
+        get{
+            
+            return storageFacade!
+        }
+    }
     
     var AppSettingFacade : SettingFacadeProtocol {
         
@@ -35,12 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         storageType = Constants.StorageType.local
         storageFacade = StorageFacadeFactory.getStorageFacade(storageType, managedObjectContext: coreDataContext)
         settingFacade = SettingFacadeFactory.getSettingFacade(storageType: storageType, managedObjectContext: coreDataContext)
-        
-        if let navigationController = window?.rootViewController as? UINavigationController,
-            let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {
-            
-            remindMeViewController.storageFacade = storageFacade
-        }
+
+        //Not needed but add it to your notes...
+//        if let navigationController = window?.rootViewController as? UINavigationController,
+//            let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {
+//            
+//            remindMeViewController.storageFacade = storageFacade
+//        }
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {

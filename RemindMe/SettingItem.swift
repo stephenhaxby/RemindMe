@@ -41,6 +41,6 @@ class SettingItem {
         latitude = nil
         longitude = nil
         
-        type = Constants.ReminderType.location
+        type = Constants.ReminderType.dateTime
     }
 }

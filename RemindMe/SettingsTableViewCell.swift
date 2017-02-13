@@ -96,9 +96,9 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         
         layoutReminder(forSegmentIndex: sender.selectedSegmentIndex)
         
-        timeDatePicker.isHidden = sender.selectedSegmentIndex != 0
-        mapView.isHidden = sender.selectedSegmentIndex == 0
-        mapViewView.isHidden = sender.selectedSegmentIndex == 0
+        timeDatePicker.isHidden = sender.selectedSegmentIndex != Constants.ReminderType.dateTime.rawValue
+        mapView.isHidden = sender.selectedSegmentIndex == Constants.ReminderType.dateTime.rawValue
+        mapViewView.isHidden = sender.selectedSegmentIndex == Constants.ReminderType.dateTime.rawValue
         
         if !mapView.isHidden
             && setting!.latitude != nil
@@ -110,19 +110,19 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
     
     func layoutReminder(forSegmentIndex segmentIndex : Int){
         
-        timeDatePicker.isHidden = segmentIndex != 0
-        mapView.isHidden = segmentIndex == 0
-        mapViewView.isHidden = segmentIndex == 0
+        timeDatePicker.isHidden = segmentIndex != Constants.ReminderType.dateTime.rawValue
+        mapView.isHidden = segmentIndex == Constants.ReminderType.dateTime.rawValue
+        mapViewView.isHidden = segmentIndex == Constants.ReminderType.dateTime.rawValue
         
-        reminderTypeSegmentedControll.tintColor = segmentIndex == 0
+        reminderTypeSegmentedControll.tintColor = segmentIndex == Constants.ReminderType.dateTime.rawValue
             ? UIColor(colorLiteralRed: 1, green: 0.50058603286743164, blue: 0.0016310368664562702, alpha: 1)
             : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
         
-        if segmentIndex != 0 {
+        if segmentIndex != Constants.ReminderType.dateTime.rawValue {
             
             locationManager.requestAlwaysAuthorization()
             
-            if CLLocationManager.locationServicesEnabled() && setting!.latitude == 0 && setting?.longitude == 0 {
+            if CLLocationManager.locationServicesEnabled() && setting!.latitude == nil && setting?.longitude == nil {
                 
                 locationManager.delegate = self
                 locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters

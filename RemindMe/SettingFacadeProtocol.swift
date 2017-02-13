@@ -12,6 +12,8 @@ protocol SettingFacadeProtocol {
 
     func createNewSetting() -> SettingItem
     
+    func updateSetting(settingItem : SettingItem)
+    
     func remove(settingItem : SettingItem)
     
     func getSettings() -> [SettingItem]

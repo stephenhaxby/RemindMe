@@ -22,6 +22,19 @@ class SettingFacade : SettingFacadeProtocol {
         return getSettingItemFrom(setting: settingRepository.createNewSetting())
     }
     
+    func updateSetting(settingItem : SettingItem) {
+        
+        if let setting = settingRepository.getSettingBy(id: settingItem.id) {
+            
+            setting.name = settingItem.name
+            setting.sequence = settingItem.sequence
+            setting.type = settingItem.type.rawValue
+            setting.time = settingItem.time
+            setting.longitude = settingItem.longitude
+            setting.latitude = settingItem.latitude
+        }
+    }
+    
     func getSettingItemFrom(setting : Setting) -> SettingItem {
         
         let settingItem = SettingItem()

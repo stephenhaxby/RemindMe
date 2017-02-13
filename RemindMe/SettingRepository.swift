@@ -29,6 +29,8 @@ class SettingRepository {
         
         let setting = Setting(managedObject: settingManagedObject)
         setting.id = UUID().uuidString
+        setting.name = ""
+        setting.sequence = 0
         
         return setting
     }

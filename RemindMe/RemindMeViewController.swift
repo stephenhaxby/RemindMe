@@ -19,7 +19,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     var reminderList = [RemindMeItem]()
     
-    var storageFacade : StorageFacadeProtocol?
+    let storageFacade : StorageFacadeProtocol = (UIApplication.shared.delegate as! AppDelegate).AppStorageFacade
     
     let reminderItemSequenceRepository = ReminderItemSequenceRepository()
     
@@ -211,7 +211,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     func loadRemindersList(){
         
-        storageFacade!.getReminders(getReminderList)
+        storageFacade.getReminders(getReminderList)
     }
     
     func loadRemindersListAnd(scrollToBottom : Bool){
@@ -385,7 +385,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             let listItem : RemindMeItem = reminderList[(indexPath as NSIndexPath).row]
 
-            if storageFacade!.removeReminder(listItem) {
+            if storageFacade.removeReminder(listItem) {
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.RefreshNotification), object: nil)
             }

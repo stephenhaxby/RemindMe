@@ -125,12 +125,14 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         for i in 0 ..< settingsList.count {
             
             settingsList[i].sequence = i
+            
+            settingFacade.updateSetting(settingItem: settingsList[i])
         }
         
-        if !settingFacade.commit() {
-            
-            Utilities().diaplayError(message: "Unable to save settings!")
-        }
+//        if !settingFacade.commit() {
+//            
+//            Utilities().diaplayError(message: "Unable to save settings!")
+//        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
