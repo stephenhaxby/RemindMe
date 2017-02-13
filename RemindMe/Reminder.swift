@@ -36,11 +36,11 @@ class Reminder {
         }
     }
     
-    var date : Date {
+    var date : Date? {
         
         get {
             
-            return reminder.value(forKey: "date") as! Date
+            return reminder.value(forKey: "date") as? Date
         }
         set (value) {
             
@@ -48,23 +48,33 @@ class Reminder {
         }
     }
     
-    var latitude : Double {
+    var latitude : Double? {
         
         get {
             
-            return Double(reminder.value(forKey: "latitude") as! NSNumber)
+            if let latitudeValue = reminder.value(forKey: "latitude") as? NSNumber {
+                
+                return Double(latitudeValue)
+            }
+            
+            return nil
         }
         set (value) {
-            
+
             reminder.setValue(value, forKeyPath: "latitude")
         }
     }
     
-    var longitude : Double {
+    var longitude : Double? {
         
         get {
             
-            return Double(reminder.value(forKey: "longitude") as! NSNumber)
+            if let longitudeValue = reminder.value(forKey: "longitude") as? NSNumber {
+                
+                return Double(longitudeValue)
+            }
+            
+            return nil
         }
         set (value) {
             

@@ -25,4 +25,17 @@ class Utilities {
         
         return viewsOfType
     }
+    
+    func diaplayError(message : String) {
+        
+        DispatchQueue.main.async { () -> Void in
+            
+            let errorAlert = UIAlertController(title: "Error!", message: message, preferredStyle: UIAlertControllerStyle.alert)
+            
+            errorAlert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler:
+                { (action: UIAlertAction!) in
+                    
+            }))
+        }
+    }
 }

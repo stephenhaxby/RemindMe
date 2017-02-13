@@ -1,22 +1,22 @@
 //
-//  RemindMeItem.swift
+//  SettingItem.swift
 //  RemindMe
 //
-//  Created by Stephen Haxby on 5/01/2016.
-//  Copyright © 2016 Stephen Haxby. All rights reserved.
+//  Created by Stephen Haxby on 12/2/17.
+//  Copyright © 2017 Stephen Haxby. All rights reserved.
 //
 
 import Foundation
 
-class RemindMeItem {
+class SettingItem {
     
-    var id = String()
+    var id : String = String()
     
-    var title = String()
+    var name : String = String()
     
-    var label = String()
+    var sequence : Int = 0
     
-    private(set) var date : Date?
+    private(set) var time : Date?
     
     private(set) var latitude : Double?
     
@@ -29,14 +29,14 @@ class RemindMeItem {
         self.latitude = latitude
         self.longitude = longitude
         
-        date = nil
+        time = nil
         
         type = Constants.ReminderType.location
     }
     
     func set(date : Date) {
         
-        self.date = date
+        self.time = date
         
         latitude = nil
         longitude = nil

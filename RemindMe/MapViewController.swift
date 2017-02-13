@@ -22,7 +22,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
     
     var searchBarFrame : CGRect = CGRect()
     
-    var setting: Setting? {
+    var setting: SettingItem? {
         
         get{
             return settingsTableViewCell?.setting
@@ -101,8 +101,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
                 
                 if annotation is MKPointAnnotation {
                     
-                    setting?.longitude = annotation.coordinate.longitude
-                    setting?.latitude = annotation.coordinate.latitude
+                    setting!.set(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
                     break
                 }
             }
@@ -111,7 +110,13 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
     
     override func viewDidDisappear(_ animated: Bool) {
         
-        settingsTableViewCell?.displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude)
+        guard setting!.latitude != nil && setting!.longitude != nil else {
+            
+            Utilities().diaplayError(message: "No latitude and longitude values could be set")
+            return
+        }
+        
+        settingsTableViewCell?.displayLocation(forLatitude: setting!.latitude!, andLongitude: setting!.longitude!)
     }
     
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {

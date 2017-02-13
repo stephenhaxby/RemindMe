@@ -45,9 +45,17 @@ class Constants{
         case local
     }
     
+    enum ReminderType : Int {
+        case notSpecified = -1
+        case dateTime = 0
+        case location = 1
+    }
+    
     static let NotificationCategory : String = "NotificationCategory"
     
     static let NotificationActionRemove : String = "NotificationActionRemove"
     
     static let NotificationActionEdit : String = "NotificationActionEdit"
+    
+    static let ArchivePath : String = "ReminderItemSequence"
 }

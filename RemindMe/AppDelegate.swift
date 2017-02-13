@@ -13,18 +13,28 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     //Gets the managed object context for core data (as a singleton)
-    let coreDataContext = CoreDataManager.context()
+    private let coreDataContext = CoreDataManager.context()
     
-    var storageType : Constants.StorageType = Constants.StorageType.local
+    private var storageType : Constants.StorageType = Constants.StorageType.local
     
-    var window: UIWindow?
+    internal var window: UIWindow?
     
-    var storageFacade : StorageFacadeProtocol?
+    private var storageFacade : StorageFacadeProtocol?
+    private var settingFacade : SettingFacadeProtocol?
+    
+    var AppSettingFacade : SettingFacadeProtocol {
+        
+        get{
+            
+            return settingFacade!
+        }
+    }
     
     func setStorageType() {
                 
         storageType = Constants.StorageType.local
         storageFacade = StorageFacadeFactory.getStorageFacade(storageType, managedObjectContext: coreDataContext)
+        settingFacade = SettingFacadeFactory.getSettingFacade(storageType: storageType, managedObjectContext: coreDataContext)
         
         if let navigationController = window?.rootViewController as? UINavigationController,
             let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {

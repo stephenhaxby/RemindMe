@@ -26,16 +26,14 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
     
     weak var settingsTableViewController: SettingsTableViewController!
     
-    var setting: Setting? {
+    var setting: SettingItem? {
         didSet {
             
             if setting != nil {
 
                 
                 nameTextField.text = setting!.name
-                reminderTypeSegmentedControll.selectedSegmentIndex = setting!.type
-                
-                timeDatePicker.date = setting!.time
+                reminderTypeSegmentedControll.selectedSegmentIndex = setting!.type.rawValue
                 
                 nameTextField.delegate = self
             }
@@ -71,7 +69,16 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
             let frame = CGRect(x:60, y:89, width:200, height:80 )
             mapView!.frame = frame
             
-            displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude)
+            if setting!.time != nil {
+                
+                timeDatePicker.date = setting!.time!
+            }
+            
+            if setting!.longitude != nil
+                && setting!.latitude != nil {
+                
+                displayLocation(forLatitude: setting!.latitude!, andLongitude: setting!.longitude!)
+            }
         }
     }
     
@@ -80,7 +87,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         
         nameTextField.resignFirstResponder()
         
-        setting!.time = timeDatePicker.date
+        setting!.set(date: timeDatePicker.date)
     }
     
     @IBAction func reminderTypeValueChanged(sender: UISegmentedControl) {
@@ -93,11 +100,11 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         mapView.isHidden = sender.selectedSegmentIndex == 0
         mapViewView.isHidden = sender.selectedSegmentIndex == 0
         
-        setting!.type = sender.selectedSegmentIndex
+        if !mapView.isHidden
+            && setting!.latitude != nil
+            && setting!.longitude != nil {
         
-        if !mapView.isHidden {
-        
-            displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude)
+            displayLocation(forLatitude: setting!.latitude!, andLongitude: setting!.longitude!)
         }
     }
     
@@ -126,12 +133,14 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        setting!.latitude = manager.location!.coordinate.latitude
-        setting!.longitude = manager.location!.coordinate.longitude
-
+        let latitude = manager.location!.coordinate.latitude
+        let longitude = manager.location!.coordinate.longitude
+        
+        setting!.set(latitude: latitude, longitude: longitude)
+        
         locationManager.stopUpdatingLocation()
         
-        displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude)
+        displayLocation(forLatitude: latitude, andLongitude: longitude)
     }
     
     func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {

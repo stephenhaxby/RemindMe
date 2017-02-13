@@ -11,11 +11,11 @@ import EventKit
 
 class ReminderTimeTableViewController: UITableViewController {
     
-    var settingRepository : SettingRepository = SettingRepository()
+    let settingFacade : SettingFacadeProtocol = (UIApplication.shared.delegate as! AppDelegate).AppSettingFacade
     
     var reminderTimeTableViewCellItems : [ReminderTimeTableViewCellItem] = [ReminderTimeTableViewCellItem]()
 
-    var selectedSetting : Setting?
+    var selectedSetting : SettingItem?
     
     weak var remindMeEditViewController : RemindMeEditViewController?
     
@@ -36,14 +36,25 @@ class ReminderTimeTableViewController: UITableViewController {
         reminderTimeTableViewCellItems.removeAll()
         
         // Get the settings from CoreData
-        var settingsList : [Setting] = settingRepository.getSettings()
+        var settingsList : [SettingItem] = settingFacade.getSettings()
         
         // Create default values for morning and afternoon if none exist...
         if settingsList.count == 0 {
             
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime, sequence: 0))
+            //TODO: This is duplicated in SettingsTableViewController...
+            let defaultMorningSetting = settingFacade.createNewSetting()
+            defaultMorningSetting.name = Constants.DefaultMorningTimeText
+            defaultMorningSetting.set(date: Constants.DefaultMorningTime)
+            defaultMorningSetting.sequence = 0
             
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime, sequence: 1))
+            settingsList.append(defaultMorningSetting)
+            
+            let defaultAfternoonSetting = settingFacade.createNewSetting()
+            defaultAfternoonSetting.name = Constants.DefaultAfternoonTimeText
+            defaultAfternoonSetting.set(date: Constants.DefaultAfternoonTime)
+            defaultAfternoonSetting.sequence = 1
+            
+            settingsList.append(defaultAfternoonSetting)
         }
         
         // Sort the settings before displaying them
@@ -131,16 +142,20 @@ class ReminderTimeTableViewController: UITableViewController {
                 
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingOne != nil {
                     
-                    if reminderItem.type == 0 {
-                        
-                        leftButton.isSelected =
-                            NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time, date2Components : itemReminderAlarmDateComponents)
-                    }
-                    else {
-                        
-                        leftButton.isSelected =
-                            reminderTimeTableViewCell.settings!.settingOne!.latitude == latitude
-                            && reminderTimeTableViewCell.settings!.settingOne!.longitude == longitude
+                    switch reminderItem.type {
+                        case Constants.ReminderType.dateTime:
+                            
+                            leftButton.isSelected =
+                                NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time!, date2Components : itemReminderAlarmDateComponents)
+                            
+                        case Constants.ReminderType.location:
+                            
+                            leftButton.isSelected =
+                                reminderTimeTableViewCell.settings!.settingOne!.latitude == latitude
+                                && reminderTimeTableViewCell.settings!.settingOne!.longitude == longitude
+                            
+                        default:
+                            Utilities().diaplayError(message: "No reminder type could be found for \(reminderItem.title)")
                     }
                     
                     if leftButton.isSelected {
@@ -155,15 +170,20 @@ class ReminderTimeTableViewController: UITableViewController {
                 
                 if reminderTimeTableViewCell.settings != nil && reminderTimeTableViewCell.settings!.settingTwo != nil {
                 
-                    if reminderItem.type == 0 {
-                        rightButton.isSelected =
-                            NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time, date2Components : itemReminderAlarmDateComponents)
-                    }
-                    else {
+                    switch reminderItem.type {
+                        case Constants.ReminderType.dateTime:
                         
-                        rightButton.isSelected =
-                            reminderTimeTableViewCell.settings!.settingTwo!.latitude == latitude
-                            && reminderTimeTableViewCell.settings!.settingTwo!.longitude == longitude
+                            rightButton.isSelected =
+                                NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time!, date2Components : itemReminderAlarmDateComponents)
+                        
+                        case Constants.ReminderType.location:
+                        
+                            rightButton.isSelected =
+                                reminderTimeTableViewCell.settings!.settingTwo!.latitude == latitude
+                                && reminderTimeTableViewCell.settings!.settingTwo!.longitude == longitude
+                        
+                        default:
+                            Utilities().diaplayError(message: "No reminder type could be found for \(reminderItem.title)")
                     }
                     
                     if rightButton.isSelected {

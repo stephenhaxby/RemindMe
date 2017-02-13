@@ -29,7 +29,7 @@ class ReminderFacade : StorageFacadeProtocol {
             reminder.date = remindMeItem.date!
             reminder.latitude = remindMeItem.latitude!
             reminder.longitude = remindMeItem.longitude!
-            reminder.type = remindMeItem.type
+            reminder.type = remindMeItem.type.rawValue
             reminder.label = remindMeItem.label
             
             localNotificationManager.setReminderNotification(remindMeItem)
@@ -43,7 +43,7 @@ class ReminderFacade : StorageFacadeProtocol {
                 time : remindMeItem.date!,
                 latitude : remindMeItem.latitude!,
                 longitude : remindMeItem.longitude!,
-                type : remindMeItem.type,
+                type : remindMeItem.type.rawValue,
                 label : remindMeItem.label)
             
             let newRemindMeItem : RemindMeItem = getReminderItemFrom(reminder)
@@ -86,15 +86,35 @@ class ReminderFacade : StorageFacadeProtocol {
     
     func getReminderItemFrom(_ reminder : Reminder) -> RemindMeItem {
     
-        let remindMeItem : RemindMeItem = RemindMeItem()
-        
+        let remindMeItem = RemindMeItem()
         remindMeItem.id = reminder.id
         remindMeItem.title = reminder.title
-        remindMeItem.date = reminder.date
-        remindMeItem.latitude = reminder.latitude
-        remindMeItem.longitude = reminder.longitude
-        remindMeItem.type = reminder.type
         remindMeItem.label = reminder.label
+
+        switch reminder.type {
+            case Constants.ReminderType.dateTime.rawValue:
+                
+                guard reminder.date != nil else {
+                    
+                    Utilities().diaplayError(message: "No reminder date could be found for \(remindMeItem.title)")
+                    break
+                }
+               
+                remindMeItem.set(date: reminder.date!)
+            
+            case Constants.ReminderType.location.rawValue:
+                
+                guard reminder.latitude != nil && reminder.longitude != nil else {
+                    
+                    Utilities().diaplayError(message: "No reminder date could be found for \(remindMeItem.title)")
+                    break
+                }
+            
+                remindMeItem.set(latitude: reminder.latitude!, longitude: reminder.longitude!)
+            
+            default:
+                break
+        }
         
         return remindMeItem
     }

@@ -21,6 +21,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     var storageFacade : StorageFacadeProtocol?
     
+    let reminderItemSequenceRepository = ReminderItemSequenceRepository()
+    
     @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet var remindersTableView: UITableView!
@@ -174,12 +176,11 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             reminderItemSequence.append(ReminderItemSequence(calendarItemExternalIdentifier: reminderList[i].id, sequenceNumber: i))
         }
         
-        // Save our reminder sequence to disk
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL.path)
-        
-        if !isSuccessfulSave {
+        // Serialize the reminder item sequence list to the file system
+        guard reminderItemSequenceRepository.Archive(reminderItemSequenceList: reminderItemSequence) else {
             
             displayError("Unable to save Reminder Order!")
+            return
         }
     }
     
@@ -238,8 +239,10 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 // Filter out reminder items that don't have an alarm set
                 let scheduledItems : [RemindMeItem] = shoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})
                 
+                let reminderItemSequence  : [ReminderItemSequence] = self.reminderItemSequenceRepository.UnArchive()
+                
                 // Load up the reminder item sequence from disk
-                if let reminderItemSequence : [ReminderItemSequence] = NSKeyedUnarchiver.unarchiveObject(withFile: ReminderItemSequence.ArchiveURL.path) as? [ReminderItemSequence] {
+                if reminderItemSequence.count > 0 {
                     
                     var sortedScheduledItems : [RemindMeItem] = [RemindMeItem]()
                     

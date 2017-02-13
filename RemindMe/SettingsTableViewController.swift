@@ -15,10 +15,9 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     
     @IBOutlet weak var doneButton: UIButton!
     
-    var settingsList : [Setting] = [Setting]()
+    var settingsList : [SettingItem] = [SettingItem]()
     
-    // Create an instance of our repository
-    var settingRepository : SettingRepository = SettingRepository()
+    let settingFacade : SettingFacadeProtocol = (UIApplication.shared.delegate as! AppDelegate).AppSettingFacade
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,14 +59,25 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     // Load up the settings from Core Data
     func loadUserSettings() {
         
-        settingsList = settingRepository.getSettings()
+        settingsList = settingFacade.getSettings()
         
         // Create default values for morning and afternoon if none exist...
         if settingsList.count == 0 {
             
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultMorningTimeText, time: Constants.DefaultMorningTime))
+            //TODO: This is duplicated in ReminderTimeTableViewController...
+            let defaultMorningSetting = settingFacade.createNewSetting()
+            defaultMorningSetting.name = Constants.DefaultMorningTimeText
+            defaultMorningSetting.set(date: Constants.DefaultMorningTime)
+            defaultMorningSetting.sequence = 0
             
-            settingsList.append(settingRepository.createNewSetting(Constants.DefaultAfternoonTimeText, time: Constants.DefaultAfternoonTime))
+            settingsList.append(defaultMorningSetting)
+            
+            let defaultAfternoonSetting = settingFacade.createNewSetting()
+            defaultAfternoonSetting.name = Constants.DefaultAfternoonTimeText
+            defaultAfternoonSetting.set(date: Constants.DefaultAfternoonTime)
+            defaultAfternoonSetting.sequence = 1
+            
+            settingsList.append(defaultAfternoonSetting)
         }
         
         if settingsList.count > 1 {
@@ -117,7 +127,10 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
             settingsList[i].sequence = i
         }
         
-        settingRepository.commit()
+        if !settingFacade.commit() {
+            
+            Utilities().diaplayError(message: "Unable to save settings!")
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -155,7 +168,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     //This method is for the swipe left to delete
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        settingRepository.removeSetting(settingsList[(indexPath as NSIndexPath).row])
+        settingFacade.remove(settingItem: settingsList[(indexPath as NSIndexPath).row])
         
         settingsList.remove(at: (indexPath as NSIndexPath).row)
         
@@ -208,7 +221,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     // Add a new setting row to the user defaults. Need to use the keyed archiver to save our custom Settings object to make it compatable with NSData
     func addNewSettingRow() {
         
-        let setting : Setting = settingRepository.createNewSetting("", time: Date())
+        let setting : SettingItem = settingFacade.createNewSetting()
+        setting.set(date: Date())
         
         settingsList.append(setting)
 

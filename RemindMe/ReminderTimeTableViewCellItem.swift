@@ -10,7 +10,7 @@ import Foundation
 
 class ReminderTimeTableViewCellItem {
     
-    var settingOne : Setting?
+    var settingOne : SettingItem?
     
-    var settingTwo : Setting?
+    var settingTwo : SettingItem?
 }

@@ -116,34 +116,33 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
             
             return
         }
-
-        if reminder == nil {
-            
-            reminder = RemindMeItem()
-        }
         
-        reminder!.title = reminderTitleTextView.text
+        let reminderToSave = reminder ?? RemindMeItem()
         
-        if let selectedSetting : Setting = reminderTimeTableViewController?.selectedSetting {
+        if let selectedSetting : SettingItem = reminderTimeTableViewController?.selectedSetting {
             
-            reminder!.date = getSelectedAlarmDateComponentsFromDate(selectedSetting.time)
-            reminder!.latitude = selectedSetting.latitude
-            reminder!.longitude = selectedSetting.longitude
-            reminder!.type = selectedSetting.type
+            reminderToSave.title = reminderTitleTextView.text
             
-            if reminder!.type == 0 {
+            switch selectedSetting.type {
+                case Constants.ReminderType.dateTime:
                 
-                // Set's the reminder time label
-                let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminder!.date!)
+                    // Set's the reminder time label
+                    let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(selectedSetting.time!)
+                    
+                    reminderToSave.set(date: getSelectedAlarmDateComponentsFromDate(selectedSetting.time!))
+                    reminderToSave.label = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
                 
-                reminder!.label = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
+                case Constants.ReminderType.location:
+                
+                    reminderToSave.set(latitude: selectedSetting.latitude!, longitude: selectedSetting.longitude!)
+                    reminderToSave.label = selectedSetting.name
+                
+                default:
+                    Utilities().diaplayError(message: "No reminder type could be found for \(reminderTitleTextView.text)")
+                    return
             }
-            else {
-                
-                reminder!.label = selectedSetting.name
-            }
             
-            storageFacade!.createOrUpdateReminder(reminder!)
+            storageFacade!.createOrUpdateReminder(reminderToSave)
         }
     }
     

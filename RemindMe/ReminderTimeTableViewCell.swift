@@ -24,18 +24,18 @@ class ReminderTimeTableViewCell: UITableViewCell {
                 leftButton.isHidden = true
                 rightButton.isHidden = true
                 
-                if let settingOne : Setting = settings!.settingOne {
+                if let settingOne : SettingItem = settings!.settingOne {
                     
                     leftButton.setTitle(settingOne.name == "" ? "No Title" : settingOne.name, for: UIControlState())
                     leftButton.isHidden = false
-                    leftButton.tintColor = settingOne.type == 0 ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
+                    leftButton.tintColor = settingOne.type == Constants.ReminderType.dateTime ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
                 }
                 
-                if let settingTwo : Setting = settings!.settingTwo {
+                if let settingTwo : SettingItem = settings!.settingTwo {
                     
                     rightButton.setTitle(settingTwo.name == "" ? "No Title" : settingTwo.name, for: UIControlState())
                     rightButton.isHidden = false
-                    rightButton.tintColor = settingTwo.type == 0 ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
+                    rightButton.tintColor = settingTwo.type == Constants.ReminderType.dateTime ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
                 }
             }
         }

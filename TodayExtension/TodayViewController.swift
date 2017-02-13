@@ -139,7 +139,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         
         deliveredReminderList.sort {
             (reminder1, reminder2) in
-            if reminder1.type == 0 && reminder2.type == 0 {
+            if reminder1.type == Constants.ReminderType.dateTime && reminder2.type == Constants.ReminderType.dateTime {
                 return reminder1.date! < reminder2.date!
             }
             else {
