@@ -69,15 +69,17 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
             let frame = CGRect(x:60, y:89, width:200, height:80 )
             mapView!.frame = frame
             
-            if setting!.time != nil {
+            switch setting!.type {
+                case Constants.ReminderType.dateTime:
+                    
+                    timeDatePicker.date = setting!.time!
                 
-                timeDatePicker.date = setting!.time!
-            }
-            
-            if setting!.longitude != nil
-                && setting!.latitude != nil {
+                case Constants.ReminderType.location:
                 
-                displayLocation(forLatitude: setting!.latitude!, andLongitude: setting!.longitude!)
+                    displayLocation(forLatitude: setting!.latitude!, andLongitude: setting!.longitude!)
+                
+                default:
+                    Utilities().diaplayError(message: "No setting type could be found for \(setting!.name)")
             }
         }
     }
@@ -96,16 +98,16 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         
         layoutReminder(forSegmentIndex: sender.selectedSegmentIndex)
         
-        timeDatePicker.isHidden = sender.selectedSegmentIndex != Constants.ReminderType.dateTime.rawValue
-        mapView.isHidden = sender.selectedSegmentIndex == Constants.ReminderType.dateTime.rawValue
-        mapViewView.isHidden = sender.selectedSegmentIndex == Constants.ReminderType.dateTime.rawValue
-        
-        if !mapView.isHidden
-            && setting!.latitude != nil
-            && setting!.longitude != nil {
-        
-            displayLocation(forLatitude: setting!.latitude!, andLongitude: setting!.longitude!)
-        }
+//        timeDatePicker.isHidden = sender.selectedSegmentIndex != Constants.ReminderType.dateTime.rawValue
+//        mapView.isHidden = sender.selectedSegmentIndex == Constants.ReminderType.dateTime.rawValue
+//        mapViewView.isHidden = sender.selectedSegmentIndex == Constants.ReminderType.dateTime.rawValue
+//        
+//        if !mapView.isHidden
+//            && setting!.latitude != nil
+//            && setting!.longitude != nil {
+//        
+//            displayLocation(forLatitude: setting!.latitude!, andLongitude: setting!.longitude!)
+//        }
     }
     
     func layoutReminder(forSegmentIndex segmentIndex : Int){

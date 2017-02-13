@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     private var storageType : Constants.StorageType = Constants.StorageType.local
     
-    //internal var window: UIWindow?
+    internal var window: UIWindow?
     
     private var storageFacade : StorageFacadeProtocol?
     private var settingFacade : SettingFacadeProtocol?
@@ -36,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             return settingFacade!
         }
+    }
+    
+    override init() {
+        super.init()
+        
+        setStorageType()
     }
     
     func setStorageType() {
@@ -78,8 +84,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 currentNotificationCenter.setNotificationCategories([notificationCategory])
             }
         }
-        
-        setStorageType()
 
         return true
     }
@@ -101,6 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

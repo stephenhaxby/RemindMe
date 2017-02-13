@@ -64,20 +64,8 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         // Create default values for morning and afternoon if none exist...
         if settingsList.count == 0 {
             
-            //TODO: This is duplicated in ReminderTimeTableViewController...
-            let defaultMorningSetting = settingFacade.createNewSetting()
-            defaultMorningSetting.name = Constants.DefaultMorningTimeText
-            defaultMorningSetting.set(date: Constants.DefaultMorningTime)
-            defaultMorningSetting.sequence = 0
-            
-            settingsList.append(defaultMorningSetting)
-            
-            let defaultAfternoonSetting = settingFacade.createNewSetting()
-            defaultAfternoonSetting.name = Constants.DefaultAfternoonTimeText
-            defaultAfternoonSetting.set(date: Constants.DefaultAfternoonTime)
-            defaultAfternoonSetting.sequence = 1
-            
-            settingsList.append(defaultAfternoonSetting)
+            settingsList.append(settingFacade.createNewDefaultMorningSetting())
+            settingsList.append(settingFacade.createNewDefaultAfternoonSetting())
         }
         
         if settingsList.count > 1 {

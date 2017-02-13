@@ -22,6 +22,26 @@ class SettingFacade : SettingFacadeProtocol {
         return getSettingItemFrom(setting: settingRepository.createNewSetting())
     }
     
+    func createNewDefaultMorningSetting() -> SettingItem {
+        
+        let defaultMorningSetting = createNewSetting()
+        defaultMorningSetting.name = Constants.DefaultMorningTimeText
+        defaultMorningSetting.set(date: Constants.DefaultMorningTime)
+        defaultMorningSetting.sequence = 0
+        
+        return defaultMorningSetting
+    }
+    
+    func createNewDefaultAfternoonSetting() -> SettingItem {
+        
+        let defaultAfternoonSetting = createNewSetting()
+        defaultAfternoonSetting.name = Constants.DefaultAfternoonTimeText
+        defaultAfternoonSetting.set(date: Constants.DefaultAfternoonTime)
+        defaultAfternoonSetting.sequence = 1
+        
+        return defaultAfternoonSetting
+    }
+    
     func updateSetting(settingItem : SettingItem) {
         
         if let setting = settingRepository.getSettingBy(id: settingItem.id) {

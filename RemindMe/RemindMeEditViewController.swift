@@ -142,7 +142,6 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
                 
                 Utilities().diaplayError(message: "Unable to save settings!")
             }
-
         }
     }
     

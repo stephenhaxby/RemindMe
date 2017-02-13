@@ -39,8 +39,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
-        if setting != nil && setting!.latitude != 0 && setting!.longitude != 0 {
+        if setting != nil && setting!.latitude != nil && setting!.longitude != nil {
             
             displayLocation(forLatitude: setting!.latitude, andLongitude: setting!.longitude, withDefaultZoom: true)
         }

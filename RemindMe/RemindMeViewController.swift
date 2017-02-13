@@ -14,7 +14,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
 
     var refreshListObserver : NSObjectProtocol?
     var refreshListScrollToBottomObserver : NSObjectProtocol?
-    var settingsObserver : NSObjectProtocol?
     var notificationEditObserver : NSObjectProtocol?
     
     var reminderList = [RemindMeItem]()
@@ -70,11 +69,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.RefreshNotificationScrollToBottom), object: nil)
         }
         
-        if let observer = settingsObserver {
-            
-            NotificationCenter.default.removeObserver(observer, name: UserDefaults.didChangeNotification, object: nil)
-        }
-        
         if let observer = notificationEditObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.NotificationActionEdit), object: nil)
@@ -116,14 +110,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         
         //The background view sit's above the refresh control so we need to put it back a notch...
         self.tableView.backgroundView!.layer.zPosition -= 1;
-    }
-    
-    // When a refresh is actioned
-    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
-        
-        loadRemindersList()
-        
-        sender.endRefreshing()
     }
     
     // Disable table editing once the Done button is pressed

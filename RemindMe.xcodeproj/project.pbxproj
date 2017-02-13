@@ -21,8 +21,8 @@
 		0E2C30D71CEB2BEE00DD87A4 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C30D61CEB2BEE00DD87A4 /* Reminder.swift */; };
 		0E2E3DA81C98099100D64CA2 /* Setting.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E3DA61C98099100D64CA2 /* Setting.xcdatamodeld */; };
 		0E2E3DCD1C981F1000D64CA2 /* SettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E3DCC1C981F1000D64CA2 /* SettingRepository.swift */; };
-		0E3388CA1E0C4A3500BFEE14 /* CoreDataMamager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3388C91E0C4A3500BFEE14 /* CoreDataMamager.swift */; };
-		0E3388CB1E0C4FFC00BFEE14 /* CoreDataMamager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3388C91E0C4A3500BFEE14 /* CoreDataMamager.swift */; };
+		0E3388CA1E0C4A3500BFEE14 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3388C91E0C4A3500BFEE14 /* CoreDataManager.swift */; };
+		0E3388CB1E0C4FFC00BFEE14 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3388C91E0C4A3500BFEE14 /* CoreDataManager.swift */; };
 		0E39D2D41E4E031E00639B27 /* ReminderItemSequenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E39D2D31E4E031E00639B27 /* ReminderItemSequenceRepository.swift */; };
 		0E40FE2C1C0702EC00ACB6F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2B1C0702EC00ACB6F6 /* AppDelegate.swift */; };
 		0E40FE2E1C0702EC00ACB6F6 /* RemindMeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E40FE2D1C0702EC00ACB6F6 /* RemindMeViewController.swift */; };
@@ -103,7 +103,7 @@
 		0E2C30D61CEB2BEE00DD87A4 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		0E2E3DA71C98099100D64CA2 /* Setting.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Setting.xcdatamodel; sourceTree = "<group>"; };
 		0E2E3DCC1C981F1000D64CA2 /* SettingRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingRepository.swift; sourceTree = "<group>"; };
-		0E3388C91E0C4A3500BFEE14 /* CoreDataMamager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataMamager.swift; sourceTree = "<group>"; };
+		0E3388C91E0C4A3500BFEE14 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0E3388CC1E0C5B2200BFEE14 /* RemindMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RemindMe.entitlements; sourceTree = "<group>"; };
 		0E3388CD1E0C5C0900BFEE14 /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayExtension.entitlements; sourceTree = "<group>"; };
 		0E39D2D31E4E031E00639B27 /* ReminderItemSequenceRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderItemSequenceRepository.swift; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 				0E8B72B81C153D69000C71D7 /* NSDateManager.swift */,
 				0E1DE2981C22B8950041D864 /* EKAlarmManager.swift */,
 				0E94040F1CFE189900980DAD /* LocalNotificationManager.swift */,
-				0E3388C91E0C4A3500BFEE14 /* CoreDataMamager.swift */,
+				0E3388C91E0C4A3500BFEE14 /* CoreDataManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -417,7 +417,7 @@
 				0E932BF11C7C55A10010CE0F /* TableRowFooterAddNew.swift in Sources */,
 				0E2C30D51CEB2B7000DD87A4 /* StorageFacadeFactory.swift in Sources */,
 				0EE685861C0C656100E3317D /* Constants.swift in Sources */,
-				0E3388CA1E0C4A3500BFEE14 /* CoreDataMamager.swift in Sources */,
+				0E3388CA1E0C4A3500BFEE14 /* CoreDataManager.swift in Sources */,
 				0E39D2D41E4E031E00639B27 /* ReminderItemSequenceRepository.swift in Sources */,
 				0E4F75AF1C3BC0B4003AFF2C /* Setting.swift in Sources */,
 				0E5839341C43B10300FA3138 /* ReminderTimeTableViewCellItem.swift in Sources */,
@@ -447,7 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E58033D1E09BDF400CEDD55 /* Setting.xcdatamodeld in Sources */,
-				0E3388CB1E0C4FFC00BFEE14 /* CoreDataMamager.swift in Sources */,
+				0E3388CB1E0C4FFC00BFEE14 /* CoreDataManager.swift in Sources */,
 				0E5803421E09BF6000CEDD55 /* ReminderRepository.swift in Sources */,
 				0E5803441E09C00F00CEDD55 /* StorageFacadeProtocol.swift in Sources */,
 				0E96301B1E4FC24700600A14 /* Utilities.swift in Sources */,

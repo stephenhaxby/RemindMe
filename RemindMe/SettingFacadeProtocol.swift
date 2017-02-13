@@ -12,6 +12,10 @@ protocol SettingFacadeProtocol {
 
     func createNewSetting() -> SettingItem
     
+    func createNewDefaultMorningSetting() -> SettingItem
+    
+    func createNewDefaultAfternoonSetting() -> SettingItem
+    
     func updateSetting(settingItem : SettingItem)
     
     func remove(settingItem : SettingItem)

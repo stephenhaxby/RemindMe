@@ -41,20 +41,8 @@ class ReminderTimeTableViewController: UITableViewController {
         // Create default values for morning and afternoon if none exist...
         if settingsList.count == 0 {
             
-            //TODO: This is duplicated in SettingsTableViewController...
-            let defaultMorningSetting = settingFacade.createNewSetting()
-            defaultMorningSetting.name = Constants.DefaultMorningTimeText
-            defaultMorningSetting.set(date: Constants.DefaultMorningTime)
-            defaultMorningSetting.sequence = 0
-            
-            settingsList.append(defaultMorningSetting)
-            
-            let defaultAfternoonSetting = settingFacade.createNewSetting()
-            defaultAfternoonSetting.name = Constants.DefaultAfternoonTimeText
-            defaultAfternoonSetting.set(date: Constants.DefaultAfternoonTime)
-            defaultAfternoonSetting.sequence = 1
-            
-            settingsList.append(defaultAfternoonSetting)
+            settingsList.append(settingFacade.createNewDefaultMorningSetting())
+            settingsList.append(settingFacade.createNewDefaultAfternoonSetting())
         }
         
         // Sort the settings before displaying them
@@ -128,15 +116,8 @@ class ReminderTimeTableViewController: UITableViewController {
     
     func selectSettingButtonFor(_ reminderTimeTableViewCell : ReminderTimeTableViewCell) {
         
-        //TODO: Don't know what this will do if it's a location reminder...
-        
         // Loop through each alarm time and set the button to selected when it finds a match (left or right button)
-        if let reminderItem : RemindMeItem = reminder,
-        let reminderDate : Date = reminderItem.date as Date?,
-        let latitude : Double = reminderItem.latitude,
-        let longitude : Double = reminderItem.longitude
-        {
-            let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminderDate)
+        if let reminderItem : RemindMeItem = reminder {
             
             if let leftButton = reminderTimeTableViewCell.leftButton {
                 
@@ -145,14 +126,16 @@ class ReminderTimeTableViewController: UITableViewController {
                     switch reminderItem.type {
                         case Constants.ReminderType.dateTime:
                             
+                            let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminderItem.date!)
+                            
                             leftButton.isSelected =
                                 NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingOne!.time!, date2Components : itemReminderAlarmDateComponents)
                             
                         case Constants.ReminderType.location:
                             
                             leftButton.isSelected =
-                                reminderTimeTableViewCell.settings!.settingOne!.latitude == latitude
-                                && reminderTimeTableViewCell.settings!.settingOne!.longitude == longitude
+                                reminderTimeTableViewCell.settings!.settingOne!.latitude == reminderItem.latitude!
+                                && reminderTimeTableViewCell.settings!.settingOne!.longitude == reminderItem.longitude!
                             
                         default:
                             Utilities().diaplayError(message: "No reminder type could be found for \(reminderItem.title)")
@@ -173,14 +156,16 @@ class ReminderTimeTableViewController: UITableViewController {
                     switch reminderItem.type {
                         case Constants.ReminderType.dateTime:
                         
+                            let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminderItem.date!)
+                            
                             rightButton.isSelected =
                                 NSDateManager.timeIsEqualToTime(reminderTimeTableViewCell.settings!.settingTwo!.time!, date2Components : itemReminderAlarmDateComponents)
                         
                         case Constants.ReminderType.location:
                         
                             rightButton.isSelected =
-                                reminderTimeTableViewCell.settings!.settingTwo!.latitude == latitude
-                                && reminderTimeTableViewCell.settings!.settingTwo!.longitude == longitude
+                                reminderTimeTableViewCell.settings!.settingTwo!.latitude == reminderItem.latitude!
+                                && reminderTimeTableViewCell.settings!.settingTwo!.longitude == reminderItem.longitude!
                         
                         default:
                             Utilities().diaplayError(message: "No reminder type could be found for \(reminderItem.title)")
