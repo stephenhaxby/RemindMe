@@ -27,7 +27,7 @@ class ReminderRepository {
         return Reminder(managedObject: reminderManagedObject)
     }
     
-    func createNewReminder(_ name : String, time : Date, latitude : Double, longitude : Double, type : Int, label : String) -> Reminder {
+    func createNewReminder(_ name : String, time : Date?, latitude : Double?, longitude : Double?, type : Int, label : String) -> Reminder {
         
         let reminder : Reminder = createNewReminder()
         

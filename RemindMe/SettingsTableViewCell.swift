@@ -117,7 +117,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         mapViewView.isHidden = segmentIndex == Constants.ReminderType.dateTime.rawValue
         
         reminderTypeSegmentedControll.tintColor = segmentIndex == Constants.ReminderType.dateTime.rawValue
-            ? UIColor(colorLiteralRed: 1, green: 0.50058603286743164, blue: 0.0016310368664562702, alpha: 1)
+            ? UIColor.orange
             : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
         
         if segmentIndex != Constants.ReminderType.dateTime.rawValue {

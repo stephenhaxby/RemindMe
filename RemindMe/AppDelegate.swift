@@ -131,6 +131,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             if (storageFacade!.removeReminder(response.notification.request.identifier)){
                 
+                var _ = storageFacade!.commit()
+                
                 UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber - 1
             }
         }

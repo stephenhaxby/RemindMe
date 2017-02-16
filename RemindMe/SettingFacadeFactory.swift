@@ -15,8 +15,8 @@ class SettingFacadeFactory {
         
         switch storageType {
             
-        case Constants.StorageType.local:
-            return SettingFacade(settingRepository: SettingRepository(managedObjectContext : managedObjectContext!))
+            case Constants.StorageType.local:
+                return SettingFacade(settingRepository: SettingRepository(managedObjectContext : managedObjectContext!))
         }
     }
 }
