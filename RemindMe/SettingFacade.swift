@@ -29,6 +29,8 @@ class SettingFacade : SettingFacadeProtocol {
         defaultMorningSetting.set(date: Constants.DefaultMorningTime)
         defaultMorningSetting.sequence = 0
         
+        updateSetting(settingItem: defaultMorningSetting)
+        
         return defaultMorningSetting
     }
     
@@ -38,6 +40,8 @@ class SettingFacade : SettingFacadeProtocol {
         defaultAfternoonSetting.name = Constants.DefaultAfternoonTimeText
         defaultAfternoonSetting.set(date: Constants.DefaultAfternoonTime)
         defaultAfternoonSetting.sequence = 1
+        
+        updateSetting(settingItem: defaultAfternoonSetting)
         
         return defaultAfternoonSetting
     }

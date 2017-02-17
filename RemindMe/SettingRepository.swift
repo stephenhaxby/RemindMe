@@ -93,7 +93,10 @@ class SettingRepository {
         
         do {
             
-            try managedObjectContext.save()
+            if managedObjectContext.hasChanges {
+            
+                try managedObjectContext.save()
+            }
 
         } catch let error as NSError  {
             

@@ -43,6 +43,11 @@ class ReminderTimeTableViewController: UITableViewController {
             
             settingsList.append(settingFacade.createNewDefaultMorningSetting())
             settingsList.append(settingFacade.createNewDefaultAfternoonSetting())
+            
+            if !settingFacade.commit() {
+                
+                Utilities().diaplayError(message: "Unable to save settings!")
+            }
         }
         
         // Sort the settings before displaying them
