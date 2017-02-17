@@ -219,11 +219,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             if let reminderListTable = self.tableView{
                 
-                //TODO: Don't know what this will do for location reminders...
-                
-                // Filter out reminder items that don't have an alarm set
-                let scheduledItems : [RemindMeItem] = shoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})
-                
                 let reminderItemSequence  : [ReminderItemSequence] = self.reminderItemSequenceRepository.UnArchive()
                 
                 // Load up the reminder item sequence from disk
@@ -235,7 +230,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                     for itemSequence in reminderItemSequence {
                         
                         // Get the first matching item by calendarItemExternalIdentifier and add to our new list
-                        if let matchingReminderItem : RemindMeItem = scheduledItems.filter({(reminderItem : RemindMeItem) in
+                        if let matchingReminderItem : RemindMeItem = shoppingList.filter({(reminderItem : RemindMeItem) in
                             reminderItem.id == itemSequence.calendarItemExternalIdentifier}).first {
                             
                             sortedScheduledItems.append(matchingReminderItem)
@@ -246,7 +241,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                     self.reminderList = sortedScheduledItems
                     
                     // Get all items that were not in our sorted item list and append them to the sorted list
-                    let unSortedScheduleItems : [RemindMeItem] = scheduledItems.filter({(reminderItem : RemindMeItem) in
+                    let unSortedScheduleItems : [RemindMeItem] = shoppingList.filter({(reminderItem : RemindMeItem) in
                         sortedScheduledItems.index(where: {$0.id == reminderItem.id}) == nil})
                     
                     if unSortedScheduleItems.count > 0 {
@@ -259,13 +254,13 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 else{
                     
                     // If no sequence could be loaded from disk
-                    self.reminderList = scheduledItems
+                    self.reminderList = shoppingList
                     
                     self.refreshSequence()
                 }
                 
                 // Update the app's badge icon
-                UIApplication.shared.applicationIconBadgeNumber = scheduledItems.count
+                UIApplication.shared.applicationIconBadgeNumber = shoppingList.count
                 
                 // Request a reload of the Table
                 reminderListTable.reloadData()
