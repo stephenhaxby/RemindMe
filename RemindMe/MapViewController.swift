@@ -111,7 +111,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
         
         guard setting!.latitude != nil && setting!.longitude != nil else {
             
-            Utilities().diaplayError(message: "No latitude and longitude values could be set")
+            Utilities().diaplayError(message: "No latitude and longitude values could be set", inViewController: self)
             return
         }
         

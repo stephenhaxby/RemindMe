@@ -79,7 +79,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
                     displayLocation(forLatitude: setting!.latitude!, andLongitude: setting!.longitude!)
                 
                 default:
-                    Utilities().diaplayError(message: "No setting type could be found for \(setting!.name)")
+                    Utilities().diaplayError(message: "No setting type could be found for \(setting!.name)", inViewController: settingsTableViewController)
             }
         }
     }

@@ -119,7 +119,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
         
         if !settingFacade.commit() {
             
-            Utilities().diaplayError(message: "Unable to save settings!")
+            Utilities().diaplayError(message: "Unable to save settings!", inViewController: self)
         }
     }
     

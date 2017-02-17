@@ -313,6 +313,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Sets the reminder list item for the cell
         let reminderListItem : RemindMeItem = reminderList[(indexPath as NSIndexPath).row]
         cell.reminder = reminderListItem
+        cell.remindMeViewController = self
         
         return cell
     }

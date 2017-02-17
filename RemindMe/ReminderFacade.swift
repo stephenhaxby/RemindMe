@@ -9,7 +9,7 @@
 import Foundation
 
 class ReminderFacade : StorageFacadeProtocol {
-       
+    
     let localNotificationManager : LocalNotificationManager = LocalNotificationManager()
     
     var reminderRepository : ReminderRepository
@@ -19,7 +19,7 @@ class ReminderFacade : StorageFacadeProtocol {
         self.reminderRepository = reminderRepository
     }
     
-    func createOrUpdateReminder(_ remindMeItem : RemindMeItem) {
+    func createOrUpdateReminder(_ remindMeItem : RemindMeItem) -> Bool {
     
         var isNewReminder : Bool = false
         
@@ -32,7 +32,10 @@ class ReminderFacade : StorageFacadeProtocol {
             reminder.type = remindMeItem.type.rawValue
             reminder.label = remindMeItem.label
             
-            localNotificationManager.setReminderNotification(remindMeItem)
+            if !localNotificationManager.setReminderNotification(remindMeItem) {
+                
+                return false
+            }
         }
         else {
             
@@ -48,10 +51,15 @@ class ReminderFacade : StorageFacadeProtocol {
             
             let newRemindMeItem : RemindMeItem = getReminderItemFrom(reminder)
             
-            localNotificationManager.setReminderNotification(newRemindMeItem)
+            if !localNotificationManager.setReminderNotification(newRemindMeItem) {
+                
+                return false
+            }
         }
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: isNewReminder ? Constants.RefreshNotificationScrollToBottom : Constants.RefreshNotification), object: nil)
+        
+        return true
     }
     
     func removeReminder(_ Id: String) -> Bool {
@@ -94,21 +102,9 @@ class ReminderFacade : StorageFacadeProtocol {
         switch reminder.type {
             case Constants.ReminderType.dateTime.rawValue:
                 
-                guard reminder.date != nil else {
-                    
-                    Utilities().diaplayError(message: "No reminder date could be found for \(remindMeItem.title)")
-                    break
-                }
-               
                 remindMeItem.set(date: reminder.date!)
             
             case Constants.ReminderType.location.rawValue:
-                
-                guard reminder.latitude != nil && reminder.longitude != nil else {
-                    
-                    Utilities().diaplayError(message: "No reminder date could be found for \(remindMeItem.title)")
-                    break
-                }
             
                 remindMeItem.set(latitude: reminder.latitude!, longitude: reminder.longitude!)
             

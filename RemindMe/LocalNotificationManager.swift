@@ -89,7 +89,7 @@ class LocalNotificationManager {
         removeDeliveredReminderNotification(remindMeItem: remindMeItem)
     }
     
-    func setReminderNotification(_ remindMeItem : RemindMeItem) {
+    func setReminderNotification(_ remindMeItem : RemindMeItem) -> Bool {
         
         clearReminderNotification(remindMeItem: remindMeItem)
         
@@ -120,8 +120,7 @@ class LocalNotificationManager {
                 trigger = UNLocationNotificationTrigger(region: region, repeats: false)
             
             default:
-                Utilities().diaplayError(message: "No reminder type could be found for \(remindMeItem.title)")
-                return
+                return false
         }
         
         //NOTE: As the find/remove methods are async, we could create a new request with this id before the old on has been deleted
@@ -133,5 +132,7 @@ class LocalNotificationManager {
         )
         
         UNUserNotificationCenter.current().add(request)
+        
+        return true
     }
 }
