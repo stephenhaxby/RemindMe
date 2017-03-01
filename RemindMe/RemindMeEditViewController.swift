@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
@@ -24,14 +25,13 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     weak var remindMeViewController : RemindMeViewController?
     
-    var storageFacade : StorageFacadeProtocol?
+    let storageFacade : StorageFacadeProtocol = (UIApplication.shared.delegate as! AppDelegate).AppStorageFacade
 
     var reminder : RemindMeItem?
     
     deinit{
         
         remindMeViewController = nil
-        storageFacade = nil
         reminderTimeTableViewController = nil
     }
     
@@ -112,38 +112,51 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     // When the back (save?) button is pressed we need to save everything
     @IBAction override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
-        guard storageFacade != nil else {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
+            (granted, error) in
+            // Enable or disable features based on authorization.
             
-            return
-        }
-
-        if reminder == nil {
-            
-            reminder = RemindMeItem()
-        }
+            if granted {
         
-        reminder!.title = reminderTitleTextView.text
-        
-        if let selectedSetting : Setting = reminderTimeTableViewController?.selectedSetting {
-            
-            reminder!.date = getSelectedAlarmDateComponentsFromDate(selectedSetting.time)
-            reminder!.latitude = selectedSetting.latitude
-            reminder!.longitude = selectedSetting.longitude
-            reminder!.type = selectedSetting.type
-            
-            if reminder!.type == 0 {
-                
-                // Set's the reminder time label
-                let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(reminder!.date!)
-                
-                reminder!.label = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
+                self.save(remindMeItem: self.reminder ?? RemindMeItem())
             }
             else {
                 
-                reminder!.label = selectedSetting.name
+                Utilities().diaplayError(message: "You must allow access to notifications in order to save a Reminder", inViewController: self)
+            }
+        }
+    }
+    
+    func save(remindMeItem : RemindMeItem) {
+        
+        if let selectedSetting : SettingItem = reminderTimeTableViewController?.selectedSetting {
+            
+            remindMeItem.title = reminderTitleTextView.text
+            
+            switch selectedSetting.type {
+            case Constants.ReminderType.dateTime:
+                
+                // Set's the reminder time label
+                let itemReminderAlarmDateComponents : DateComponents = NSDateManager.getDateComponentsFromDate(selectedSetting.time!)
+                
+                remindMeItem.set(date: getSelectedAlarmDateComponentsFromDate(selectedSetting.time!))
+                remindMeItem.label = NSDateManager.dateStringFromComponents(itemReminderAlarmDateComponents)
+                
+            case Constants.ReminderType.location:
+                
+                remindMeItem.set(latitude: selectedSetting.latitude!, longitude: selectedSetting.longitude!)
+                remindMeItem.label = selectedSetting.name
+                
+            default:
+                Utilities().diaplayError(message: "No reminder type could be found for \(reminderTitleTextView.text)", inViewController: self)
+                return
             }
             
-            storageFacade!.createOrUpdateReminder(reminder!)
+            if !storageFacade.createOrUpdateReminder(remindMeItem)
+                || !storageFacade.commit() {
+                
+                Utilities().diaplayError(message: "Unable to save Reminder", inViewController: self)
+            }
         }
     }
     

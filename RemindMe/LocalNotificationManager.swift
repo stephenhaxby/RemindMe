@@ -89,7 +89,7 @@ class LocalNotificationManager {
         removeDeliveredReminderNotification(remindMeItem: remindMeItem)
     }
     
-    func setReminderNotification(_ remindMeItem : RemindMeItem) {
+    func setReminderNotification(_ remindMeItem : RemindMeItem) -> Bool {
         
         clearReminderNotification(remindMeItem: remindMeItem)
         
@@ -102,22 +102,25 @@ class LocalNotificationManager {
         
         var trigger : UNNotificationTrigger?
         
-        if remindMeItem.type == 0 {
+        switch remindMeItem.type {
+            case Constants.ReminderType.dateTime:
+                
+                trigger = UNCalendarNotificationTrigger(
+                    dateMatching: NSDateManager.getDateComponentsFromDate(remindMeItem.date!),
+                    repeats: false)
             
-            trigger = UNCalendarNotificationTrigger(
-                dateMatching: NSDateManager.getDateComponentsFromDate(remindMeItem.date!),
-                repeats: false)
+            case Constants.ReminderType.location:
             
-        }
-        else {
+                let center = CLLocationCoordinate2DMake(remindMeItem.latitude!, remindMeItem.longitude!)
+                let region = CLCircularRegion.init(center: center, radius: 100.0,
+                                                   identifier: remindMeItem.id)
+                region.notifyOnEntry = true;
+                region.notifyOnExit = false;
+                
+                trigger = UNLocationNotificationTrigger(region: region, repeats: false)
             
-            let center = CLLocationCoordinate2DMake(remindMeItem.latitude!, remindMeItem.longitude!)
-            let region = CLCircularRegion.init(center: center, radius: 100.0,
-                                               identifier: remindMeItem.id)
-            region.notifyOnEntry = true;
-            region.notifyOnExit = false;
-            
-            trigger = UNLocationNotificationTrigger(region: region, repeats: false)
+            default:
+                return false
         }
         
         //NOTE: As the find/remove methods are async, we could create a new request with this id before the old on has been deleted
@@ -129,5 +132,7 @@ class LocalNotificationManager {
         )
         
         UNUserNotificationCenter.current().add(request)
+        
+        return true
     }
 }

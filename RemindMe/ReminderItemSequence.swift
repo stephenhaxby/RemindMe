@@ -8,11 +8,8 @@
 
 import Foundation
 
+// Serializable / Archive class to keep track of a reminders sequence
 class ReminderItemSequence : NSObject, NSCoding {
-    
-    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    
-    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("ReminderItemSequence")
     
     var calendarItemExternalIdentifier : String = ""
     var sequenceNumber : Int = 0

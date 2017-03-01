@@ -43,7 +43,12 @@ class Constants{
     
     enum StorageType {
         case local
-        case iCloudReminders
+    }
+    
+    enum ReminderType : Int {
+        case notSpecified = -1
+        case dateTime = 0
+        case location = 1
     }
     
     static let NotificationCategory : String = "NotificationCategory"
@@ -51,4 +56,6 @@ class Constants{
     static let NotificationActionRemove : String = "NotificationActionRemove"
     
     static let NotificationActionEdit : String = "NotificationActionEdit"
+    
+    static let ArchivePath : String = "ReminderItemSequence"
 }

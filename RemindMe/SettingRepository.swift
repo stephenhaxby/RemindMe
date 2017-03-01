@@ -12,40 +12,61 @@ import CoreData
 class SettingRepository {
     
     //Gets the managed object context for core data (as a singleton)
-    let coreDataContext = CoreDataManager.context()
+    //let coreDataContext = CoreDataManager.context()
+    
+    var managedObjectContext : NSManagedObjectContext
+    
+    init(managedObjectContext : NSManagedObjectContext){
+        
+        self.managedObjectContext = managedObjectContext
+    }
 
     func createNewSetting() -> Setting {
         
-        let entity = NSEntityDescription.entity(forEntityName: "Setting", in:coreDataContext)
+        let entity = NSEntityDescription.entity(forEntityName: "Setting", in:managedObjectContext)
         
-        let settingManagedObject = NSManagedObject(entity: entity!, insertInto: coreDataContext)
+        let settingManagedObject = NSManagedObject(entity: entity!, insertInto: managedObjectContext)
         
-        return Setting(managedObject: settingManagedObject)
-    }
-    
-    func createNewSetting(_ name : String, time : Date) -> Setting {
-        
-        let setting : Setting = createNewSetting()
-        
-        setting.name = name
-        setting.time = time
-        setting.latitude = 0
-        setting.longitude = 0
+        let setting = Setting(managedObject: settingManagedObject)
+        setting.id = UUID().uuidString
+        setting.name = ""
+        setting.sequence = 0
         
         return setting
     }
     
-    func createNewSetting(_ name : String, time : Date, sequence : Int) -> Setting {
+    func remove(setting : Setting) {
         
-        let setting : Setting = createNewSetting(name, time: time)
-        setting.sequence = sequence
-        
-        return setting
+        managedObjectContext.delete(setting.setting)
     }
     
-    func removeSetting(_ setting : Setting) {
+    func getSettingBy(id : String) -> Setting? {
         
-        coreDataContext.delete(setting.setting)
+        let settingFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Setting")
+        
+        settingFetch.predicate = NSPredicate(format: "id == %@", id)
+        
+        do {
+            
+            let settings : [Setting] = (try managedObjectContext.fetch(settingFetch) as! [NSManagedObject]).map({
+                
+                (managedObject : NSManagedObject) -> Setting in
+                
+                return Setting(managedObject: managedObject)
+            })
+            
+            if settings.count == 1 {
+                
+                return settings.first!
+            }
+        }
+        catch {
+            
+            fatalError("Failed to fetch settings: \(error)")
+        }
+        
+        return nil
+
     }
     
     func getSettings() -> [Setting] {
@@ -53,7 +74,7 @@ class SettingRepository {
         do {
         
         return
-            (try coreDataContext.fetch(NSFetchRequest(entityName: "Setting")) ).map({
+            (try managedObjectContext.fetch(NSFetchRequest(entityName: "Setting")) ).map({
                 
                 (managedObject : NSManagedObject) -> Setting in
                 
@@ -72,7 +93,10 @@ class SettingRepository {
         
         do {
             
-            try coreDataContext.save()
+            if managedObjectContext.hasChanges {
+            
+                try managedObjectContext.save()
+            }
 
         } catch let error as NSError  {
             

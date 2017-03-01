@@ -9,7 +9,7 @@
 import Foundation
 
 class ReminderFacade : StorageFacadeProtocol {
-       
+    
     let localNotificationManager : LocalNotificationManager = LocalNotificationManager()
     
     var reminderRepository : ReminderRepository
@@ -19,20 +19,23 @@ class ReminderFacade : StorageFacadeProtocol {
         self.reminderRepository = reminderRepository
     }
     
-    func createOrUpdateReminder(_ remindMeItem : RemindMeItem) {
+    func createOrUpdateReminder(_ remindMeItem : RemindMeItem) -> Bool {
     
         var isNewReminder : Bool = false
         
         if let reminder : Reminder = reminderRepository.getReminderBy(remindMeItem.id) {
     
             reminder.title = remindMeItem.title
-            reminder.date = remindMeItem.date!
-            reminder.latitude = remindMeItem.latitude!
-            reminder.longitude = remindMeItem.longitude!
-            reminder.type = remindMeItem.type
+            reminder.date = remindMeItem.date
+            reminder.latitude = remindMeItem.latitude
+            reminder.longitude = remindMeItem.longitude
+            reminder.type = remindMeItem.type.rawValue
             reminder.label = remindMeItem.label
             
-            localNotificationManager.setReminderNotification(remindMeItem)
+            if !localNotificationManager.setReminderNotification(remindMeItem) {
+                
+                return false
+            }
         }
         else {
             
@@ -40,18 +43,23 @@ class ReminderFacade : StorageFacadeProtocol {
     
             let reminder : Reminder = reminderRepository.createNewReminder(
                 remindMeItem.title,
-                time : remindMeItem.date!,
-                latitude : remindMeItem.latitude!,
-                longitude : remindMeItem.longitude!,
-                type : remindMeItem.type,
+                time : remindMeItem.date,
+                latitude : remindMeItem.latitude,
+                longitude : remindMeItem.longitude,
+                type : remindMeItem.type.rawValue,
                 label : remindMeItem.label)
             
             let newRemindMeItem : RemindMeItem = getReminderItemFrom(reminder)
             
-            localNotificationManager.setReminderNotification(newRemindMeItem)
+            if !localNotificationManager.setReminderNotification(newRemindMeItem) {
+                
+                return false
+            }
         }
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: isNewReminder ? Constants.RefreshNotificationScrollToBottom : Constants.RefreshNotification), object: nil)
+        
+        return true
     }
     
     func removeReminder(_ Id: String) -> Bool {
@@ -86,15 +94,23 @@ class ReminderFacade : StorageFacadeProtocol {
     
     func getReminderItemFrom(_ reminder : Reminder) -> RemindMeItem {
     
-        let remindMeItem : RemindMeItem = RemindMeItem()
-        
+        let remindMeItem = RemindMeItem()
         remindMeItem.id = reminder.id
         remindMeItem.title = reminder.title
-        remindMeItem.date = reminder.date
-        remindMeItem.latitude = reminder.latitude
-        remindMeItem.longitude = reminder.longitude
-        remindMeItem.type = reminder.type
         remindMeItem.label = reminder.label
+
+        switch reminder.type {
+            case Constants.ReminderType.dateTime.rawValue:
+                
+                remindMeItem.set(date: reminder.date!)
+            
+            case Constants.ReminderType.location.rawValue:
+            
+                remindMeItem.set(latitude: reminder.latitude!, longitude: reminder.longitude!)
+            
+            default:
+                break
+        }
         
         return remindMeItem
     }

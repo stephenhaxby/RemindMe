@@ -13,6 +13,18 @@ class Setting {
     
     var setting : NSManagedObject
     
+    var id : String {
+        
+        get {
+            
+            return setting.value(forKey: "id") as! String
+        }
+        set (value) {
+            
+            setting.setValue(value, forKeyPath: "id")
+        }
+    }
+    
     var name : String {
         get {
             
@@ -24,11 +36,11 @@ class Setting {
         }
     }
     
-    var latitude : Double {
+    var latitude : Double? {
         
         get {
             
-            return setting.value(forKey: "latitude") as! Double
+            return setting.value(forKey: "latitude") as? Double
         }
         set (value) {
             
@@ -36,11 +48,11 @@ class Setting {
         }
     }
     
-    var longitude : Double {
+    var longitude : Double? {
         
         get {
             
-            return setting.value(forKey: "longitude") as! Double
+            return setting.value(forKey: "longitude") as? Double
         }
         set (value) {
             
@@ -60,11 +72,11 @@ class Setting {
         }
     }
     
-    var time : Date {
+    var time : Date? {
         
         get {
             
-            return setting.value(forKey: "time") as! Date
+            return setting.value(forKey: "time") as? Date
         }
         set (value) {
             

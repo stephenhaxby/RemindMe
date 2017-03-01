@@ -13,26 +13,49 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     //Gets the managed object context for core data (as a singleton)
-    let coreDataContext = CoreDataManager.context()
+    private let coreDataContext = CoreDataManager.context()
     
-    var storageType : Constants.StorageType = Constants.StorageType.local
+    private var storageType : Constants.StorageType = Constants.StorageType.local
     
-    var window: UIWindow?
+    internal var window: UIWindow?
     
-    var storageFacade : StorageFacadeProtocol?
+    private var storageFacade : StorageFacadeProtocol?
+    private var settingFacade : SettingFacadeProtocol?
+    
+    var AppStorageFacade : StorageFacadeProtocol {
+        
+        get{
+            
+            return storageFacade!
+        }
+    }
+    
+    var AppSettingFacade : SettingFacadeProtocol {
+        
+        get{
+            
+            return settingFacade!
+        }
+    }
+    
+    override init() {
+        super.init()
+        
+        setStorageType()
+    }
     
     func setStorageType() {
-        
-        //storageType = (SettingsUserDefaults.useICloudReminders) ? Constants.StorageType.iCloudReminders : Constants.StorageType.local
-        
+                
         storageType = Constants.StorageType.local
         storageFacade = StorageFacadeFactory.getStorageFacade(storageType, managedObjectContext: coreDataContext)
-        
-        if let navigationController = window?.rootViewController as? UINavigationController,
-            let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {
-            
-            remindMeViewController.storageFacade = storageFacade
-        }
+        settingFacade = SettingFacadeFactory.getSettingFacade(storageType: storageType, managedObjectContext: coreDataContext)
+
+        //Not needed but add it to your notes...
+//        if let navigationController = window?.rootViewController as? UINavigationController,
+//            let remindMeViewController = navigationController.viewControllers.first as? RemindMeViewController {
+//            
+//            remindMeViewController.storageFacade = storageFacade
+//        }
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -61,8 +84,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 currentNotificationCenter.setNotificationCategories([notificationCategory])
             }
         }
-        
-        setStorageType()
 
         return true
     }
@@ -84,6 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -108,6 +130,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if response.actionIdentifier == Constants.NotificationActionRemove {
             
             if (storageFacade!.removeReminder(response.notification.request.identifier)){
+                
+                var _ = storageFacade!.commit()
                 
                 UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber - 1
             }

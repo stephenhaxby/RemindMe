@@ -14,12 +14,13 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
 
     var refreshListObserver : NSObjectProtocol?
     var refreshListScrollToBottomObserver : NSObjectProtocol?
-    var settingsObserver : NSObjectProtocol?
     var notificationEditObserver : NSObjectProtocol?
     
     var reminderList = [RemindMeItem]()
     
-    var storageFacade : StorageFacadeProtocol?
+    let storageFacade : StorageFacadeProtocol = (UIApplication.shared.delegate as! AppDelegate).AppStorageFacade
+    
+    let reminderItemSequenceRepository = ReminderItemSequenceRepository()
     
     @IBOutlet weak var settingsButton: UIButton!
     
@@ -34,20 +35,13 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         refreshListObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.RefreshNotification), object: nil, queue: nil){
             (notification) -> Void in
             
-            self.loadRemindersListWithRefresh(true, scrollToBottom: false)
+            self.loadRemindersListAnd(scrollToBottom: false)
         }
         
         refreshListScrollToBottomObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.RefreshNotificationScrollToBottom), object: nil, queue: nil){
             (notification) -> Void in
             
-            self.loadRemindersListWithRefresh(true, scrollToBottom: true)
-        }
-        
-        //Observer for when our settings change
-        settingsObserver = NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: nil, queue: nil){
-            (notification) -> Void in
-            
-            self.storageOptionChanged()
+            self.loadRemindersListAnd(scrollToBottom: true)
         }
         
         notificationEditObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Constants.NotificationActionEdit), object: nil, queue: nil){
@@ -73,11 +67,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         if let observer = refreshListScrollToBottomObserver{
             
             NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: Constants.RefreshNotificationScrollToBottom), object: nil)
-        }
-        
-        if let observer = settingsObserver {
-            
-            NotificationCenter.default.removeObserver(observer, name: UserDefaults.didChangeNotification, object: nil)
         }
         
         if let observer = notificationEditObserver{
@@ -123,14 +112,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         self.tableView.backgroundView!.layer.zPosition -= 1;
     }
     
-    // When a refresh is actioned
-    @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
-        
-        loadRemindersList()
-        
-        sender.endRefreshing()
-    }
-    
     // Disable table editing once the Done button is pressed
     @IBAction func doneButtonTouchUpInside(_ sender: UIButton) {
         
@@ -159,7 +140,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Setup the destination view controllers data
         let remindMeEditViewController : RemindMeEditViewController = segue.destination as! RemindMeEditViewController
         remindMeEditViewController.remindMeViewController = self
-        remindMeEditViewController.storageFacade = storageFacade
         
         // If we are editing an existing item
         if let reminderListItem : RemindMeItem = sender as? RemindMeItem {
@@ -169,12 +149,6 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 remindMeEditViewController.reminder = reminderListItem
             }
         }
-    }
-    
-    func storageOptionChanged() {
-        
-        (UIApplication.shared.delegate as! AppDelegate).setStorageType()
-        loadRemindersListWithRefresh(true, scrollToBottom: false)
     }
     
     func refreshSequence() {
@@ -187,12 +161,11 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             reminderItemSequence.append(ReminderItemSequence(calendarItemExternalIdentifier: reminderList[i].id, sequenceNumber: i))
         }
         
-        // Save our reminder sequence to disk
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(reminderItemSequence, toFile: ReminderItemSequence.ArchiveURL.path)
-        
-        if !isSuccessfulSave {
+        // Serialize the reminder item sequence list to the file system
+        guard reminderItemSequenceRepository.Archive(reminderItemSequenceList: reminderItemSequence) else {
             
             displayError("Unable to save Reminder Order!")
+            return
         }
     }
     
@@ -202,23 +175,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         //As we a in another thread, post back to the main thread so we can update the UI
         DispatchQueue.main.async { () -> Void in
             
-            self.loadRemindersListWithRefresh(true, scrollToBottom: false)
-        }
-    }
-    
-    func startRefreshControl(){
-        
-        if let refresh = refreshControl{
-            
-            refresh.beginRefreshing()
-        }
-    }
-    
-    func endRefreshControl(){
-        
-        if let refresh = refreshControl{
-            
-            refresh.endRefreshing()
+            self.loadRemindersListAnd(scrollToBottom: false)
         }
     }
     
@@ -237,18 +194,14 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         self.present(errorAlert, animated: true, completion: nil)
     }
     
-    func loadRemindersListWithRefresh(_ refresh : Bool, scrollToBottom : Bool) {
+    func loadRemindersList(){
         
-        if refresh {
-            
-            startRefreshControl()
-            loadRemindersList()
-            endRefreshControl()
-        }
-        else {
-            
-            loadRemindersList()
-        }
+        storageFacade.getReminders(getReminderList)
+    }
+    
+    func loadRemindersListAnd(scrollToBottom : Bool){
+        
+        loadRemindersList()
         
         if scrollToBottom {
             
@@ -260,24 +213,16 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         }
     }
     
-    func loadRemindersList(){
-        
-        storageFacade!.getReminders(getReminderList)
-    }
-    
     func getReminderList(_ shoppingList : [RemindMeItem]){
 
         DispatchQueue.main.async { () -> Void in
             
             if let reminderListTable = self.tableView{
                 
-                //TODO: Don't know what this will do for location reminders... (as this is really only for iCloud Reminders)
-                
-                // Filter out reminder items that don't have an alarm set
-                let scheduledItems : [RemindMeItem] = shoppingList.filter({(reminder : RemindMeItem) in reminder.date != nil})
+                let reminderItemSequence  : [ReminderItemSequence] = self.reminderItemSequenceRepository.UnArchive()
                 
                 // Load up the reminder item sequence from disk
-                if let reminderItemSequence : [ReminderItemSequence] = NSKeyedUnarchiver.unarchiveObject(withFile: ReminderItemSequence.ArchiveURL.path) as? [ReminderItemSequence] {
+                if reminderItemSequence.count > 0 {
                     
                     var sortedScheduledItems : [RemindMeItem] = [RemindMeItem]()
                     
@@ -285,7 +230,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                     for itemSequence in reminderItemSequence {
                         
                         // Get the first matching item by calendarItemExternalIdentifier and add to our new list
-                        if let matchingReminderItem : RemindMeItem = scheduledItems.filter({(reminderItem : RemindMeItem) in
+                        if let matchingReminderItem : RemindMeItem = shoppingList.filter({(reminderItem : RemindMeItem) in
                             reminderItem.id == itemSequence.calendarItemExternalIdentifier}).first {
                             
                             sortedScheduledItems.append(matchingReminderItem)
@@ -296,7 +241,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                     self.reminderList = sortedScheduledItems
                     
                     // Get all items that were not in our sorted item list and append them to the sorted list
-                    let unSortedScheduleItems : [RemindMeItem] = scheduledItems.filter({(reminderItem : RemindMeItem) in
+                    let unSortedScheduleItems : [RemindMeItem] = shoppingList.filter({(reminderItem : RemindMeItem) in
                         sortedScheduledItems.index(where: {$0.id == reminderItem.id}) == nil})
                     
                     if unSortedScheduleItems.count > 0 {
@@ -309,13 +254,13 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
                 else{
                     
                     // If no sequence could be loaded from disk
-                    self.reminderList = scheduledItems
+                    self.reminderList = shoppingList
                     
                     self.refreshSequence()
                 }
                 
                 // Update the app's badge icon
-                UIApplication.shared.applicationIconBadgeNumber = scheduledItems.count
+                UIApplication.shared.applicationIconBadgeNumber = shoppingList.count
                 
                 // Request a reload of the Table
                 reminderListTable.reloadData()
@@ -368,6 +313,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
         // Sets the reminder list item for the cell
         let reminderListItem : RemindMeItem = reminderList[(indexPath as NSIndexPath).row]
         cell.reminder = reminderListItem
+        cell.remindMeViewController = self
         
         return cell
     }
@@ -420,7 +366,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             
             let listItem : RemindMeItem = reminderList[(indexPath as NSIndexPath).row]
 
-            if storageFacade!.removeReminder(listItem) {
+            if storageFacade.removeReminder(listItem) {
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.RefreshNotification), object: nil)
             }

@@ -25,6 +25,8 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         super.viewDidLoad()
         // Do any additional setup after loading the view from its nib.
         
+        self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
+        
         let pressGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.viewPressed(_:)))
         pressGesture.numberOfTapsRequired = 1
         
@@ -36,8 +38,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         let storageFacade = ReminderFacade(reminderRepository: ReminderRepository(managedObjectContext: coreDataContext))
 
         storageFacade.getReminders(getReminders)
-
-        //self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
     }
     
     override func didReceiveMemoryWarning() {
@@ -139,7 +139,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         
         deliveredReminderList.sort {
             (reminder1, reminder2) in
-            if reminder1.type == 0 && reminder2.type == 0 {
+            if reminder1.type == Constants.ReminderType.dateTime && reminder2.type == Constants.ReminderType.dateTime {
                 return reminder1.date! < reminder2.date!
             }
             else {
