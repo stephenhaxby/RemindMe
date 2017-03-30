@@ -181,10 +181,7 @@ class NSDateManager {
     
     static func getDateFromComponents(_ components : DateComponents) -> Date {
         
-        let gregorian = Calendar(identifier:Calendar.Identifier.gregorian)
-        let date = gregorian.date(from: components)
-        
-        return date!
+        return Calendar.current.date(from: components)!
     }
     
     static func getDateComponentsFromDate(_ date : Date) -> DateComponents {

@@ -46,7 +46,7 @@ class ReminderTimeTableViewController: UITableViewController {
             
             if !settingFacade.commit() {
                 
-                Utilities().diaplayError(message: "Unable to save settings!", inViewController: self)
+                Utilities().displayAlert(heading: "Error", message: "Unable to save settings!", inViewController: self)
             }
         }
         
@@ -153,7 +153,7 @@ class ReminderTimeTableViewController: UITableViewController {
                             }
 
                         default:
-                            Utilities().diaplayError(message: "No reminder type could be found for \(reminderItem.title)", inViewController: self)
+                            Utilities().displayAlert(heading: "Error", message: "No reminder type could be found for \(reminderItem.title)", inViewController: self)
                     }
                     
                     if isSelected {
@@ -192,7 +192,7 @@ class ReminderTimeTableViewController: UITableViewController {
                             }
                         
                         default:
-                            Utilities().diaplayError(message: "No reminder type could be found for \(reminderItem.title)", inViewController: self)
+                            Utilities().displayAlert(heading: "Error", message: "No reminder type could be found for \(reminderItem.title)", inViewController: self)
                     }
                     
                     if isSelected {

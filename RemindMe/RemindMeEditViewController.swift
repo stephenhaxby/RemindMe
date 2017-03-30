@@ -116,13 +116,11 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
             (granted, error) in
             // Enable or disable features based on authorization.
             
-            if granted {
+            self.save(remindMeItem: self.reminder ?? RemindMeItem())
+            
+            if !granted {
         
-                self.save(remindMeItem: self.reminder ?? RemindMeItem())
-            }
-            else {
-                
-                Utilities().diaplayError(message: "You must allow access to notifications in order to save a Reminder", inViewController: self)
+                Utilities().displayAlert(heading: "Warning", message: "You haven’t allowed access to Notifications so you won't receive an alert for this Reminder. If you wan’t to be reminded, please go to settings and allow Notifications.", inViewController: self)
             }
         }
     }
@@ -148,14 +146,14 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
                 remindMeItem.label = selectedSetting.name
                 
             default:
-                Utilities().diaplayError(message: "No reminder type could be found for \(reminderTitleTextView.text)", inViewController: self)
+                Utilities().displayAlert(heading: "Error", message: "No reminder type could be found for \(reminderTitleTextView.text)", inViewController: self)
                 return
             }
             
             if !storageFacade.createOrUpdateReminder(remindMeItem)
                 || !storageFacade.commit() {
                 
-                Utilities().diaplayError(message: "Unable to save Reminder", inViewController: self)
+                Utilities().displayAlert(heading: "Error", message: "Unable to save Reminder", inViewController: self)
             }
         }
     }
