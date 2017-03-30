@@ -28,14 +28,24 @@ class ReminderTimeTableViewCell: UITableViewCell {
                     
                     leftButton.setTitle(settingOne.name == "" ? "No Title" : settingOne.name, for: UIControlState())
                     leftButton.isHidden = false
-                    leftButton.tintColor = settingOne.type == Constants.ReminderType.dateTime ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
+
+                    leftButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
+                    leftButton.layer.borderWidth = 1.0
+                    leftButton.layer.cornerRadius = 5
+
+                    setButtonColourFor(settingButton: leftButton, withSettingItem: settingOne)
                 }
                 
                 if let settingTwo : SettingItem = settings!.settingTwo {
                     
                     rightButton.setTitle(settingTwo.name == "" ? "No Title" : settingTwo.name, for: UIControlState())
                     rightButton.isHidden = false
-                    rightButton.tintColor = settingTwo.type == Constants.ReminderType.dateTime ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
+
+                    rightButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
+                    rightButton.layer.borderWidth = 1.0
+                    rightButton.layer.cornerRadius = 5
+                    
+                    setButtonColourFor(settingButton: rightButton, withSettingItem: settingTwo)
                 }
             }
         }
@@ -61,8 +71,14 @@ class ReminderTimeTableViewCell: UITableViewCell {
                     reminderTimeTableViewController!.selectedSetting = settings!.settingTwo!
                 }
                 
-                button.isSelected = true
+                //button.isSelected = true
+                button.toggleTintAndBackground()
             }
         }
+    }
+    
+    func setButtonColourFor(settingButton : UIButton, withSettingItem settingItem : SettingItem) {
+        
+        settingButton.tintColor = settingItem.type == Constants.ReminderType.dateTime ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
     }
 }

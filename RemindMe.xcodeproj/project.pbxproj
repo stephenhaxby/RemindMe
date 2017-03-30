@@ -61,6 +61,7 @@
 		0E9630211E4FD97200600A14 /* SettingFacadeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9630201E4FD97200600A14 /* SettingFacadeProtocol.swift */; };
 		0EC042661E51DF19002B4DDD /* SettingFacadeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC042651E51DF19002B4DDD /* SettingFacadeFactory.swift */; };
 		0ED2E8AE1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */; };
+		0ED572CE1E694F0700DD7A9B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED572CD1E694F0700DD7A9B /* Extensions.swift */; };
 		0EE685861C0C656100E3317D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE685851C0C656100E3317D /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -137,6 +138,7 @@
 		0E9630201E4FD97200600A14 /* SettingFacadeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingFacadeProtocol.swift; sourceTree = "<group>"; };
 		0EC042651E51DF19002B4DDD /* SettingFacadeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingFacadeFactory.swift; sourceTree = "<group>"; };
 		0ED2E8AD1C844FA6009570EB /* TableRowSettingsFooterAddNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowSettingsFooterAddNew.swift; sourceTree = "<group>"; };
+		0ED572CD1E694F0700DD7A9B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		0EE685851C0C656100E3317D /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,6 +206,7 @@
 		0E40FE2A1C0702EC00ACB6F6 /* RemindMe */ = {
 			isa = PBXGroup;
 			children = (
+				0ED572CD1E694F0700DD7A9B /* Extensions.swift */,
 				0E3388CC1E0C5B2200BFEE14 /* RemindMe.entitlements */,
 				0E2C30CF1CEB2A7D00DD87A4 /* Repositories */,
 				0E2C30C81CEB29E600DD87A4 /* Facades */,
@@ -417,6 +420,7 @@
 				0E932BF11C7C55A10010CE0F /* TableRowFooterAddNew.swift in Sources */,
 				0E2C30D51CEB2B7000DD87A4 /* StorageFacadeFactory.swift in Sources */,
 				0EE685861C0C656100E3317D /* Constants.swift in Sources */,
+				0ED572CE1E694F0700DD7A9B /* Extensions.swift in Sources */,
 				0E3388CA1E0C4A3500BFEE14 /* CoreDataManager.swift in Sources */,
 				0E39D2D41E4E031E00639B27 /* ReminderItemSequenceRepository.swift in Sources */,
 				0E4F75AF1C3BC0B4003AFF2C /* Setting.swift in Sources */,

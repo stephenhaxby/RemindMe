@@ -61,7 +61,7 @@ class RemindMeTableViewCell: UITableViewCell {
                         
                         if let parentViewController = remindMeViewController {
                         
-                            Utilities().diaplayError(message: "No reminder type could be found for \(itemReminder.title)", inViewController: parentViewController)
+                            Utilities().displayAlert(heading: "Error", message: "No reminder type could be found for \(itemReminder.title)", inViewController: parentViewController)
                         }
                 }
             }
