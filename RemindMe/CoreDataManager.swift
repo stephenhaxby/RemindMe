@@ -41,6 +41,7 @@ class CoreDataManager {
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
+        // This is used for our app groups so the today extension can see our SQLite DB
         let directory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.Stephen.Haxby.RemindMe")
         
         let url = directory?.appendingPathComponent("SingleViewCoreData.sqlite")

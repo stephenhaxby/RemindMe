@@ -201,11 +201,11 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     func loadRemindersListAnd(scrollToBottom : Bool){
         
-        loadRemindersList()
+        DispatchQueue.main.async { () -> Void in
         
-        if scrollToBottom {
+            self.loadRemindersList()
             
-            DispatchQueue.main.async { () -> Void in
+            if scrollToBottom {
                 
                 let indexPath = IndexPath(row: self.reminderList.count-1, section: 0)
                 self.remindersTableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
