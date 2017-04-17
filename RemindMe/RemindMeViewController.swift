@@ -201,9 +201,9 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     func loadRemindersListAnd(scrollToBottom : Bool){
         
-        DispatchQueue.main.async { () -> Void in
+        loadRemindersList()
         
-            self.loadRemindersList()
+        DispatchQueue.main.async { () -> Void in
             
             if scrollToBottom {
                 
@@ -361,6 +361,8 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     
     //This method is for the swipe left to delete
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        self.isEditing = false
         
         if((indexPath as NSIndexPath).row < reminderList.count){
             
