@@ -95,6 +95,7 @@ class LocalNotificationManager {
         
         let notification = UNMutableNotificationContent()
         
+        notification.sound = UNNotificationSound.default()
         notification.categoryIdentifier = Constants.NotificationCategory
         
         notification.title = "Don't forget to:"
