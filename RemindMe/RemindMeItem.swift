@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RemindMeItem {
+class RemindMeItem : CustomStringConvertible {
     
     var id = String()
     
@@ -42,5 +42,14 @@ class RemindMeItem {
         longitude = nil
         
         type = Constants.ReminderType.dateTime
+    }
+    
+    public var description: String {
+        
+        var returnDescription : String = id
+        returnDescription.append(title)
+        returnDescription.append(label)
+        
+        return returnDescription
     }
 }

@@ -19,7 +19,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     
     var deliveredReminderList = [RemindMeItem]()
     
-    var reminderList = [RemindMeItem]()
+    var storageFacade : StorageFacadeProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +34,37 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
             
             tableView.addGestureRecognizer(pressGesture)
         }
+    }
+    
+    //TODO: Or should it be viewWillAppear?
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        let storageFacade = ReminderFacade(reminderRepository: ReminderRepository(managedObjectContext: coreDataContext))
-
-        storageFacade.getReminders(getReminders)
+        if deliveredReminderList.count == 0 {
+            
+            displayNoOverdueRemindersOverlay()
+        }
+        
+//        getStorageFacade().getReminders {
+//            reminders in
+//            
+//            self.localNotificationManager.getPendingReminderNotificationRequests{
+//                notificationRequests in
+//                
+//                let newDeliveredReminderList : [RemindMeItem] =
+//                    self.populateDeliveredReminderList(reminders: reminders, notificationRequests: notificationRequests)
+//                
+//                if self.hasDeliveredReminderListDataChanged(newDeliveredReminderList: newDeliveredReminderList) {
+//                
+//                    //self.displayLoadingOverlay()
+//                    
+//                    self.deliveredReminderList = newDeliveredReminderList
+//                    
+//                    //TODO: Not sure if we'll need to do this here or not... Depends if the table has loaded yet or not...
+//                    self.reloadTable()
+//                }
+//            }
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,11 +79,35 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         // If there's no update required, use NCUpdateResult.NoData
         // If there's an update, use NCUpdateResult.NewData
         
-        completionHandler(NCUpdateResult.newData)
+        //Load data here and call completionhandler ONLY AFTER DATA HAS LOADED (as it's done in another thread!)
+        getStorageFacade().getReminders {
+            reminders in
+            
+            self.localNotificationManager.getPendingReminderNotificationRequests{
+                notificationRequests in
+                
+                let newDeliveredReminderList : [RemindMeItem] =
+                    self.populateDeliveredReminderList(reminders: reminders, notificationRequests: notificationRequests)
+                
+                if self.hasDeliveredReminderListDataChanged(newDeliveredReminderList: newDeliveredReminderList) {
+                
+                    //self.displayLoadingOverlay()
+                    
+                    self.deliveredReminderList = newDeliveredReminderList
+                    
+                    self.reloadTable()
+                    completionHandler(NCUpdateResult.newData)
+                }
+                else {
+                    
+                    completionHandler(NCUpdateResult.noData)
+                }
+            }
+        }
     }
     
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
-     
+        
         if (activeDisplayMode == NCWidgetDisplayMode.compact) {
             self.preferredContentSize = CGSize(width: maxSize.width, height: CGFloat(64))
         }
@@ -75,37 +126,24 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         
         // Get the table cell
         let cell : RemindMeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ReminderCell")! as! RemindMeTableViewCell
-                
+        
         // Sets the reminder list item for the cell
         let reminderListItem : RemindMeItem = deliveredReminderList[(indexPath as NSIndexPath).row]
         cell.reminder = reminderListItem
+        
+        if indexPath.row == deliveredReminderList.count - 1 {
+            
+            clearTableOverlay()
+        }
         
         return cell
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
+
+        displayLoadingOverlay()
         
-        var numberOfSections = 0
-        
-        if deliveredReminderList.count > 0
-        {
-            numberOfSections = 1
-            tableView.backgroundView = nil
-        }
-        else
-        {
-            let rect : CGRect = CGRect(x: 0, y: 0, width: Double(tableView.bounds.size.width), height: Double(tableView.bounds.size.height))
-            
-            let noDataLabel: UILabel = UILabel(frame: rect)
-            
-            noDataLabel.text = "No Overdue Reminders"
-            noDataLabel.textColor = UIColor.black
-            noDataLabel.textAlignment = .center
-            tableView.backgroundView = noDataLabel
-            tableView.separatorStyle = .none
-        }
-        
-        return numberOfSections
+        return 1
     }
     
     func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
@@ -118,26 +156,21 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         }
     }
     
-    func getReminders(reminders : [RemindMeItem]) {
+    func populateDeliveredReminderList(reminders : [RemindMeItem], notificationRequests : [UNNotificationRequest]) -> [RemindMeItem] {
         
-        reminderList = reminders
+        var newDeliveredReminderList = [RemindMeItem]()
         
-        localNotificationManager.getPendingReminderNotificationRequests(getUNNotificationRequests: updateReminderListWithPendingNotifications)
-    }
-    
-    func updateReminderListWithPendingNotifications(notificationRequests : [UNNotificationRequest]) {
-        
-        for remindMeItem in reminderList {
+        for remindMeItem in reminders {
             
             if (!notificationRequests.contains { notificationRequest in
                 
                 return notificationRequest.identifier.hasPrefix(remindMeItem.id)
-            }){
-                deliveredReminderList.append(remindMeItem)
+                }){
+                newDeliveredReminderList.append(remindMeItem)
             }
         }
         
-        deliveredReminderList.sort {
+        newDeliveredReminderList.sort {
             (reminder1, reminder2) in
             if reminder1.type == Constants.ReminderType.dateTime && reminder2.type == Constants.ReminderType.dateTime {
                 return reminder1.date! < reminder2.date!
@@ -147,13 +180,75 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
             }
         }
         
+        return newDeliveredReminderList
+    }
+    
+    func hasDeliveredReminderListDataChanged(newDeliveredReminderList : [RemindMeItem]) -> Bool {
+        
+        if deliveredReminderList.count != newDeliveredReminderList.count {
+            
+            return true
+        }
+        
+        var hasDataChanged : Bool = false
+        
+        for deliveredReminderItem in deliveredReminderList {
+            
+            if (!newDeliveredReminderList.contains {
+                newDeliveredReminderItem in
+                
+                    return String(describing: deliveredReminderItem) == String(describing: newDeliveredReminderItem)}){
+
+                hasDataChanged = true
+                break
+            }
+        }
+        
+        return hasDataChanged
+    }
+    
+    func getStorageFacade() -> StorageFacadeProtocol {
+        
+        if storageFacade == nil {
+            
+            storageFacade = ReminderFacade(reminderRepository: ReminderRepository(managedObjectContext: coreDataContext))
+        }
+        
+        return storageFacade!
+    }
+    
+    func displayLoadingOverlay() {
+        
+        tableView.separatorStyle = .none
+        displayTableOverlay(message: "Loading data...")
+    }
+    
+    func displayNoOverdueRemindersOverlay () {
+        
+        tableView.separatorStyle = .none
+        displayTableOverlay(message: "No Overdue Reminders")
+    }
+    
+    func displayTableOverlay(message : String) {
+        
+        let rect : CGRect = CGRect(x: 0, y: 0, width: Double(tableView.bounds.size.width), height: Double(tableView.bounds.size.height))
+        
+        let noDataLabel: UILabel = UILabel(frame: rect)
+        
+        noDataLabel.text = message
+        noDataLabel.textColor = UIColor.black
+        noDataLabel.textAlignment = .center
+        tableView.backgroundView = noDataLabel
+    }
+    
+    func clearTableOverlay() {
+        
+        tableView.backgroundView = nil
+        tableView.separatorStyle = .singleLine
+    }
+    
+    func reloadTable() {
+        
         tableView.reloadData()
     }
 }
-
-
-
-
-
-
-
