@@ -44,27 +44,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
             
             displayNoOverdueRemindersOverlay()
         }
-        
-//        getStorageFacade().getReminders {
-//            reminders in
-//            
-//            self.localNotificationManager.getPendingReminderNotificationRequests{
-//                notificationRequests in
-//                
-//                let newDeliveredReminderList : [RemindMeItem] =
-//                    self.populateDeliveredReminderList(reminders: reminders, notificationRequests: notificationRequests)
-//                
-//                if self.hasDeliveredReminderListDataChanged(newDeliveredReminderList: newDeliveredReminderList) {
-//                
-//                    //self.displayLoadingOverlay()
-//                    
-//                    self.deliveredReminderList = newDeliveredReminderList
-//                    
-//                    //TODO: Not sure if we'll need to do this here or not... Depends if the table has loaded yet or not...
-//                    self.reloadTable()
-//                }
-//            }
-//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -90,12 +69,13 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
                     self.populateDeliveredReminderList(reminders: reminders, notificationRequests: notificationRequests)
                 
                 if self.hasDeliveredReminderListDataChanged(newDeliveredReminderList: newDeliveredReminderList) {
-                
-                    //self.displayLoadingOverlay()
-                    
+
                     self.deliveredReminderList = newDeliveredReminderList
                     
-                    self.reloadTable()
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                    
                     completionHandler(NCUpdateResult.newData)
                 }
                 else {
@@ -140,8 +120,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-
-        displayLoadingOverlay()
         
         return 1
     }
@@ -215,12 +193,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         }
         
         return storageFacade!
-    }
-    
-    func displayLoadingOverlay() {
-        
-        tableView.separatorStyle = .none
-        displayTableOverlay(message: "Loading data...")
     }
     
     func displayNoOverdueRemindersOverlay () {
