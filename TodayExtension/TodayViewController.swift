@@ -25,6 +25,8 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         super.viewDidLoad()
         // Do any additional setup after loading the view from its nib.
         
+        tableView.separatorStyle = .none
+        
         self.extensionContext?.widgetLargestAvailableDisplayMode = NCWidgetDisplayMode.expanded
         
         let pressGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.viewPressed(_:)))
@@ -40,10 +42,6 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if deliveredReminderList.count == 0 {
-            
-            displayNoOverdueRemindersOverlay()
-        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -68,11 +66,23 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
                 let newDeliveredReminderList : [RemindMeItem] =
                     self.populateDeliveredReminderList(reminders: reminders, notificationRequests: notificationRequests)
                 
+                if newDeliveredReminderList.count == 0
+                    && !self.hasTableOverlay() {
+                    
+                    DispatchQueue.main.async {
+                        
+                        self.displayNoOverdueRemindersOverlay()
+                        
+                        completionHandler(NCUpdateResult.newData)
+                    }
+                }
+                
                 if self.hasDeliveredReminderListDataChanged(newDeliveredReminderList: newDeliveredReminderList) {
 
                     self.deliveredReminderList = newDeliveredReminderList
                     
                     DispatchQueue.main.async {
+                        
                         self.tableView.reloadData()
                     }
                     
@@ -211,6 +221,11 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         noDataLabel.textColor = UIColor.black
         noDataLabel.textAlignment = .center
         tableView.backgroundView = noDataLabel
+    }
+    
+    func hasTableOverlay() -> Bool {
+        
+        return tableView.backgroundView != nil
     }
     
     func clearTableOverlay() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="84j-94-rQU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="84j-94-rQU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -149,9 +149,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-7V-Yux">
-                                <rect key="frame" x="10" y="72" width="355" height="93"/>
+                                <rect key="frame" x="10" y="72" width="355" height="118"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="93" id="HGY-1A-BI7"/>
+                                    <constraint firstAttribute="height" constant="118" id="HGY-1A-BI7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -171,7 +171,7 @@
                                 </connections>
                             </button>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRN-tb-41R">
-                                <rect key="frame" x="10" y="173" width="355" height="424"/>
+                                <rect key="frame" x="10" y="198" width="355" height="399"/>
                                 <connections>
                                     <segue destination="qDu-WY-K5e" kind="embed" id="UPC-nF-i6G"/>
                                 </connections>
@@ -215,14 +215,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ICY-yH-9Is" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="VWI-su-f3E" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1662" y="1705"/>
+            <point key="canvasLocation" x="1661.5999999999999" y="1704.1979010494754"/>
         </scene>
         <!--Reminder Time Table View Controller-->
         <scene sceneID="P01-2z-wxt">
             <objects>
                 <tableViewController id="qDu-WY-K5e" customClass="ReminderTimeTableViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="4Q9-IE-CmS">
-                        <rect key="frame" x="0.0" y="0.0" width="355" height="424"/>
+                        <rect key="frame" x="0.0" y="0.0" width="355" height="399"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -230,7 +230,7 @@
                                 <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T6N-Fe-SWo" id="arE-eE-t4o">
-                                    <rect key="frame" x="0.0" y="0.0" width="355" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="355" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY4-pg-qRC">
@@ -280,7 +280,7 @@
                                 <rect key="frame" x="0.0" y="72" width="355" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O7Q-vB-hvV" id="cgC-TY-ffJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="355" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="355" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
