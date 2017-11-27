@@ -46,13 +46,15 @@ class ReminderRepository {
     
         var reminderId = id
         
+        reminderId += "asdf"
+        
         //36 is the length of a GUID.
         //This is to cater for the setReminderNotification fix in LocationNotificationManager to cater for async methods
-        if id.characters.count > 36 {
+        if reminderId.characters.count > 36 {
             
-            let index = id.index(id.startIndex, offsetBy: 36)
-            
-            reminderId = reminderId.substring(to: index)
+            let index = reminderId.index(reminderId.startIndex, offsetBy: 36)
+
+            reminderId = String(reminderId[..<index])
         }
         
         let reminderFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Reminder")

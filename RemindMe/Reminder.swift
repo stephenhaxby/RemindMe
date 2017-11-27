@@ -54,7 +54,7 @@ class Reminder {
             
             if let latitudeValue = reminder.value(forKey: "latitude") as? NSNumber {
                 
-                return Double(latitudeValue)
+                return Double(truncating: latitudeValue)
             }
             
             return nil
@@ -71,7 +71,7 @@ class Reminder {
             
             if let longitudeValue = reminder.value(forKey: "longitude") as? NSNumber {
                 
-                return Double(longitudeValue)
+                return Double(truncating: longitudeValue)
             }
             
             return nil

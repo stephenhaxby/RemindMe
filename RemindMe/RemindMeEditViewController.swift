@@ -111,11 +111,14 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     // When the back (save?) button is pressed we need to save everything
     override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
+        let remindMeItem = self.reminder ?? RemindMeItem()
+        remindMeItem.title = reminderTitleTextView.text
+        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
             (granted, error) in
             // Enable or disable features based on authorization.
             
-            self.save(remindMeItem: self.reminder ?? RemindMeItem())
+            self.save(remindMeItem: remindMeItem)
             
             if !granted {
         
@@ -127,8 +130,6 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     func save(remindMeItem : RemindMeItem) {
         
         if let selectedSetting : SettingItem = reminderTimeTableViewController?.selectedSetting {
-            
-            remindMeItem.title = reminderTitleTextView.text
             
             switch selectedSetting.type {
             case Constants.ReminderType.dateTime:
