@@ -79,6 +79,6 @@ class ReminderTimeTableViewCell: UITableViewCell {
     
     func setButtonColourFor(settingButton : UIButton, withSettingItem settingItem : SettingItem) {
         
-        settingButton.tintColor = settingItem.type == Constants.ReminderType.dateTime ? UIColor.orange : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
+        settingButton.tintColor = settingItem.type == Constants.ReminderType.dateTime ? UIColor.orange : UIColor(displayP3Red: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
     }
 }

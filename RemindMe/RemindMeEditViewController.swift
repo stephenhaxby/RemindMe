@@ -13,8 +13,6 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var reminderTitleTextView: UITextView!
     
-    @IBOutlet weak var saveButton: UIButton!
-    
     @IBOutlet weak var reminderTimeTableViewControllerContainer: UIView!
     
     @IBOutlet weak var doneButton: UIButton!
@@ -47,9 +45,9 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
         //red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" />
         
         //Create a save button that looks like a button...
-        saveButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
-        saveButton.layer.borderWidth = 1.0
-        saveButton.layer.cornerRadius = 5
+//        saveButton.layer.borderColor = UIColor(red:0.5, green:0.5, blue:0.5, alpha:1.0).cgColor
+//        saveButton.layer.borderWidth = 1.0
+//        saveButton.layer.cornerRadius = 5
         
         if let reminderItem = reminder {
             
@@ -90,27 +88,28 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
             destinationViewController.reminder = reminder
         }
     }
-    
-    @IBAction func doneButtonTouchUpInside(_ sender: Any) {
-        
-        reminderTitleTextView.resignFirstResponder()
-        reminderTimeContainerView.isHidden = false
-    }
-    
+
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
-        if let button = sender as? UIButton,
-            let buttonLabel : UILabel = button.titleLabel {
+        if (sender as? UIButton) != nil {
+            
+            reminderTitleTextView.resignFirstResponder()
+            
+            if reminderTimeContainerView.isHidden {
                 
-            return buttonLabel.text == "Save"
-                && reminderTimeTableViewController?.selectedSetting != nil
+                reminderTimeContainerView.isHidden = false
+                
+                return false
+            }
+            
+            return reminderTimeTableViewController?.selectedSetting != nil
         }
         
         return true
     }
     
     // When the back (save?) button is pressed we need to save everything
-    @IBAction override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
+    override func unwind(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
             (granted, error) in
@@ -178,12 +177,10 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         
-        doneButton.isHidden = false
         reminderTimeContainerView.isHidden = true
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         
-        doneButton.isHidden = true
     }
 }

@@ -150,6 +150,13 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
             }
         }
     }
+
+    // This is needed to unwind the segue via the tool bar button, we point the exit / unwind to here in order to get it to work
+    @IBAction func unwindToDestinationViewController (sender: UIStoryboardSegue){
+        
+        // This method is used in the Unwind process from Edit back to here...
+        // DO NOT REMOVE!
+    }
     
     func refreshSequence() {
         
@@ -269,7 +276,7 @@ class RemindMeViewController: UITableViewController, UIGestureRecognizerDelegate
     }
     
     // This method gets called for our Gesture Recognizer
-    func cellLongPressed(_ gestureRecognizer:UIGestureRecognizer) {
+    @objc func cellLongPressed(_ gestureRecognizer:UIGestureRecognizer) {
         
         // If it's the begining of the gesture, set the table to editing mode
         if (gestureRecognizer.state == UIGestureRecognizerState.began){

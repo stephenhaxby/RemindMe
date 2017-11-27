@@ -246,7 +246,7 @@ class SettingsTableViewController : UITableViewController, UIGestureRecognizerDe
     }
     
     // Method for the long press gesture recognizer 
-    func cellLongPressed(_ gestureRecognizer:UIGestureRecognizer) {
+    @objc func cellLongPressed(_ gestureRecognizer:UIGestureRecognizer) {
 
         if (gestureRecognizer.state == UIGestureRecognizerState.began){
             

@@ -35,7 +35,7 @@ class RemindMeTableViewCell: UITableViewCell {
                     case Constants.ReminderType.location:
                     
                         reminderTimeLable.text = itemReminder.label
-                        reminderTimeLable.textColor = UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
+                        reminderTimeLable.textColor = UIColor(displayP3Red: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
                     
                     default:
                         reminderTimeLable.isHidden = true

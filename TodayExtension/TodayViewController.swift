@@ -134,7 +134,7 @@ class TodayViewController: UITableViewController, NCWidgetProviding {
         return 1
     }
     
-    func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
+    @objc func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
         
         let url: URL? = URL(string: "RemindMe:")!
         

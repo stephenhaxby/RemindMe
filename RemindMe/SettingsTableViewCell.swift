@@ -118,7 +118,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         
         reminderTypeSegmentedControll.tintColor = segmentIndex == Constants.ReminderType.dateTime.rawValue
             ? UIColor.orange
-            : UIColor(colorLiteralRed: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
+            : UIColor(displayP3Red: 0, green: 0.47843137250000001, blue: 1, alpha: 1)
         
         if segmentIndex != Constants.ReminderType.dateTime.rawValue {
             
@@ -145,7 +145,7 @@ class SettingsTableViewCell: UITableViewCell, UITextFieldDelegate, CLLocationMan
         displayLocation(forLatitude: latitude, andLongitude: longitude)
     }
     
-    func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
+    @objc func viewPressed(_ gestureRecognizer: UIGestureRecognizer) {
         
         settingsTableViewController.performSegue(withIdentifier: "mapSegue", sender: self)
     }

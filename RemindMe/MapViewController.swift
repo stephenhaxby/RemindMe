@@ -157,7 +157,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
 //        }
 //    }
     
-    func addAnnotation(_ gestureRecognizer:UIGestureRecognizer) {
+    @objc func addAnnotation(_ gestureRecognizer:UIGestureRecognizer) {
         
         map.removeAnnotations(map.annotations as [MKAnnotation])
         
@@ -227,7 +227,7 @@ class MapViewController : UIViewController, UIGestureRecognizerDelegate, UISearc
         let mapViewFrame : CGRect = view.frame
         
         let containerView : UIView = UIView(frame: CGRect(x: searchBarFrame.origin.x, y: 64.0, width: mapViewFrame.size.width, height: 44.0))
-        containerView.backgroundColor = UIColor(colorLiteralRed: 0.78800457715988159, green: 0.78874188661575317, blue: 0.80776858329772949, alpha: 1)
+        containerView.backgroundColor = UIColor(displayP3Red: 0.78800457715988159, green: 0.78874188661575317, blue: 0.80776858329772949, alpha: 1)
         
         containerView.addSubview((resultSearchController?.searchBar)!)
         

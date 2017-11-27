@@ -29,5 +29,6 @@ class NavigationController : UINavigationController {
         //navigationBar.barTintColor = .redColor()
         
         navigationBar.tintColor = UIColor.orange
+        //navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)]
     }
 }
