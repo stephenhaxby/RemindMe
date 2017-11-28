@@ -112,10 +112,10 @@
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" id="Cts-75-lUB">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nrd-FU-aCx">
-                                <rect key="frame" x="309" y="5" width="50" height="34"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nrd-FU-aCx">
+                                <rect key="frame" x="309" y="4.5" width="50" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <state key="normal">
                                     <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -149,15 +149,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XAk-7V-Yux">
-                                <rect key="frame" x="10" y="72" width="355" height="118"/>
+                                <rect key="frame" x="10" y="72" width="355" height="148"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="118" id="HGY-1A-BI7"/>
+                                    <constraint firstAttribute="height" constant="148" id="HGY-1A-BI7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRN-tb-41R">
-                                <rect key="frame" x="10" y="198" width="355" height="461"/>
+                                <rect key="frame" x="10" y="239" width="355" height="420"/>
                                 <connections>
                                     <segue destination="qDu-WY-K5e" kind="embed" id="UPC-nF-i6G"/>
                                 </connections>
@@ -168,7 +168,7 @@
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="leading" secondItem="pWQ-c8-V5M" secondAttribute="leadingMargin" constant="-6" id="4Vc-0K-SoQ"/>
                             <constraint firstItem="DRN-tb-41R" firstAttribute="leading" secondItem="XAk-7V-Yux" secondAttribute="leading" id="5Y2-9U-nJC"/>
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="top" secondItem="3W8-a2-l23" secondAttribute="bottom" constant="8" symbolic="YES" id="9dr-8Z-ZKr"/>
-                            <constraint firstItem="DRN-tb-41R" firstAttribute="top" secondItem="XAk-7V-Yux" secondAttribute="bottom" constant="8" symbolic="YES" id="J7d-KA-Bd6"/>
+                            <constraint firstItem="DRN-tb-41R" firstAttribute="top" secondItem="XAk-7V-Yux" secondAttribute="bottom" constant="19" id="J7d-KA-Bd6"/>
                             <constraint firstItem="5LR-ah-ZBm" firstAttribute="top" secondItem="DRN-tb-41R" secondAttribute="bottom" constant="8" id="XHB-hV-RE7"/>
                             <constraint firstItem="DRN-tb-41R" firstAttribute="trailing" secondItem="XAk-7V-Yux" secondAttribute="trailing" id="kJD-bb-s2h"/>
                             <constraint firstItem="XAk-7V-Yux" firstAttribute="centerX" secondItem="pWQ-c8-V5M" secondAttribute="centerX" id="yTB-M3-aI0"/>
@@ -179,7 +179,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PKT-Le-dGF">
                                 <rect key="frame" x="309" y="4.5" width="50" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <state key="normal" title="Done">
                                     <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -205,7 +205,7 @@
             <objects>
                 <tableViewController id="qDu-WY-K5e" customClass="ReminderTimeTableViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="4Q9-IE-CmS">
-                        <rect key="frame" x="0.0" y="0.0" width="355" height="461"/>
+                        <rect key="frame" x="0.0" y="0.0" width="355" height="420"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -217,7 +217,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xY4-pg-qRC">
-                                            <rect key="frame" x="188" y="4" width="151" height="36"/>
+                                            <rect key="frame" x="188" y="4" width="161" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <state key="normal" title="Button"/>
                                             <connections>
@@ -234,7 +234,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzW-9Q-3yt">
-                                            <rect key="frame" x="16" y="4" width="152" height="36"/>
+                                            <rect key="frame" x="6" y="4" width="162" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <state key="normal" title="Button"/>
                                             <connections>
@@ -243,12 +243,12 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="leading" secondItem="arE-eE-t4o" secondAttribute="leadingMargin" id="7Qk-nE-L2t"/>
+                                        <constraint firstItem="wzW-9Q-3yt" firstAttribute="leading" secondItem="arE-eE-t4o" secondAttribute="leadingMargin" constant="-10" id="7Qk-nE-L2t"/>
                                         <constraint firstItem="wzW-9Q-3yt" firstAttribute="centerY" secondItem="arE-eE-t4o" secondAttribute="centerY" id="Bk0-vd-ze9"/>
                                         <constraint firstItem="UU3-rT-AC1" firstAttribute="centerX" secondItem="arE-eE-t4o" secondAttribute="centerX" id="Ds3-cU-Hnm"/>
                                         <constraint firstItem="wzW-9Q-3yt" firstAttribute="baseline" secondItem="UU3-rT-AC1" secondAttribute="firstBaseline" id="RtT-dp-kFR"/>
                                         <constraint firstItem="UU3-rT-AC1" firstAttribute="leading" secondItem="wzW-9Q-3yt" secondAttribute="trailing" constant="8" symbolic="YES" id="WA0-Ze-CqR"/>
-                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="trailing" secondItem="arE-eE-t4o" secondAttribute="trailingMargin" id="hZG-zE-UkY"/>
+                                        <constraint firstItem="xY4-pg-qRC" firstAttribute="trailing" secondItem="arE-eE-t4o" secondAttribute="trailingMargin" constant="10" id="hZG-zE-UkY"/>
                                         <constraint firstItem="xY4-pg-qRC" firstAttribute="leading" secondItem="UU3-rT-AC1" secondAttribute="trailing" constant="8" symbolic="YES" id="l47-4G-huS"/>
                                         <constraint firstItem="wzW-9Q-3yt" firstAttribute="baseline" secondItem="UU3-rT-AC1" secondAttribute="baseline" id="myN-KE-9Fx"/>
                                         <constraint firstItem="UU3-rT-AC1" firstAttribute="baseline" secondItem="xY4-pg-qRC" secondAttribute="baseline" id="npc-0b-dSz"/>
@@ -276,7 +276,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wz6-O9-Thw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1660" y="2440.4797601199402"/>
+            <point key="canvasLocation" x="1659.5" y="2440"/>
         </scene>
         <!--Settings-->
         <scene sceneID="TQK-fy-SYz">
@@ -390,10 +390,10 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="f6W-am-ybN">
                         <barButtonItem key="rightBarButtonItem" style="done" id="kxP-R1-p1f">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UYc-9E-fNV">
-                                <rect key="frame" x="309" y="5" width="50" height="34"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UYc-9E-fNV">
+                                <rect key="frame" x="309" y="4" width="50" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <state key="normal">
                                     <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
