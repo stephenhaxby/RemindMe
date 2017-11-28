@@ -13,8 +13,6 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var reminderTitleTextView: UITextView!
     
-    @IBOutlet weak var reminderTimeTableViewControllerContainer: UIView!
-    
     @IBOutlet weak var doneButton: UIButton!
     
     @IBOutlet weak var reminderTimeContainerView: UIView!
@@ -69,13 +67,16 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
         imageView.center = view.center
         view.addSubview(imageView)
         self.view.sendSubview(toBack: imageView)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
         if reminder == nil {
-        
+            
             reminderTitleTextView.becomeFirstResponder()
         }
     }
-    
+
     // Sets up the relationships between controllers
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
@@ -96,9 +97,9 @@ class RemindMeEditViewController : UIViewController, UITextViewDelegate {
             reminderTitleTextView.resignFirstResponder()
             
             if reminderTimeContainerView.isHidden {
-                
+
                 reminderTimeContainerView.isHidden = false
-                
+
                 return false
             }
             
