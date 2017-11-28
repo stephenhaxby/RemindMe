@@ -46,11 +46,9 @@ class ReminderRepository {
     
         var reminderId = id
         
-        reminderId += "asdf"
-        
         //36 is the length of a GUID.
         //This is to cater for the setReminderNotification fix in LocationNotificationManager to cater for async methods
-        if reminderId.characters.count > 36 {
+        if reminderId.count > 36 {
             
             let index = reminderId.index(reminderId.startIndex, offsetBy: 36)
 
